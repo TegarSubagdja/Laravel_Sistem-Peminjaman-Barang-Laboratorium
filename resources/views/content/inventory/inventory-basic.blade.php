@@ -3,59 +3,75 @@
 @section('title', 'Inventory - Basic Tables')
 
 @section('content')
-    <div class="card">
-        <div class="card-datatable table-responsive">
-            <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
-                <div class="card-header flex-column flex-md-row pb-4">
-                    <div class="head-label text-center">
-                        <h5 class="card-title mb-0">DataTable with Buttons</h5>
-                    </div>
-                    <div class="dt-action-buttons text-end pt-6 pt-md-0">
-                        <div class="dt-buttons flex-wrap">
-                            <div class="btn-group" id="">
-                                
-                        </div>
-                    </div>
+    <div class="row mb-5">
+        <div class="col-md-6 col-lg-4 mb-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <h6 class="card-subtitle text-muted">Support card subtitle</h6>
                 </div>
-                <table class="datatables-basic table border-top dataTable no-footer dtr-column collapsed"
-                    id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info" style="width: 1390px;">
-                    <thead>
-                        <tr>
-                            <th>Project</th>
-                            <th>Client</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody class="table-border-bottom-0">
-                        @for ($i = 0; $i < 100; $i++)
-                            <tr>
-                                <td>
-                                    <i class="bx bxl-angular bx-sm text-danger me-3"></i>
-                                    <span class="fw-medium">Angular Project</span>
-                                </td>
-                                <td>Albert Cook as {{ $i }}</td>
-
-                                <td><span class="badge bg-label-danger me-1">Active</span></td>
-                                <td>
-                                    <div class="dropdown">
-                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                            data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
-                                        <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="javascript:void(0);"><i
-                                                    class="bx bx-edit-alt me-1"></i>
-                                                Edit</a>
-                                            <a class="dropdown-item" href="javascript:void(0);"><i
-                                                    class="bx bx-trash me-1"></i>
-                                                Delete</a>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        @endfor
-                    </tbody>
-                </table>
-                <div style="width: 1%;"></div>
+                <img class="img-fluid" src="http://127.0.0.1:8000/assets/img/elements/13.jpg" alt="Card image cap">
+                <div class="card-body">
+                    <p class="card-text">Bear claw sesame snaps gummies chocolate.</p>
+                    <a href="javascript:void(0);" class="card-link">Card link</a>
+                    <a href="javascript:void(0);" class="card-link">Another link</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-4 mb-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <h6 class="card-subtitle text-muted">Support card subtitle</h6>
+                </div>
+                <img class="img-fluid" src="http://127.0.0.1:8000/assets/img/elements/13.jpg" alt="Card image cap">
+                <div class="card-body">
+                    <p class="card-text">Bear claw sesame snaps gummies chocolate.</p>
+                    <a href="javascript:void(0);" class="card-link">Card link</a>
+                    <a href="javascript:void(0);" class="card-link">Another link</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-4 mb-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <h6 class="card-subtitle text-muted">Support card subtitle</h6>
+                </div>
+                <img class="img-fluid" src="http://127.0.0.1:8000/assets/img/elements/13.jpg" alt="Card image cap">
+                <div class="card-body">
+                    <p class="card-text">Bear claw sesame snaps gummies chocolate.</p>
+                    <a href="javascript:void(0);" class="card-link">Card link</a>
+                    <a href="javascript:void(0);" class="card-link">Another link</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-4 mb-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <h6 class="card-subtitle text-muted">Support card subtitle</h6>
+                </div>
+                <img class="img-fluid" src="http://127.0.0.1:8000/assets/img/elements/13.jpg" alt="Card image cap">
+                <div class="card-body">
+                    <p class="card-text">Bear claw sesame snaps gummies chocolate.</p>
+                    <a href="javascript:void(0);" class="card-link">Card link</a>
+                    <a href="javascript:void(0);" class="card-link">Another link</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-4 mb-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <h6 class="card-subtitle text-muted">Support card subtitle</h6>
+                </div>
+                <img class="img-fluid" src="http://127.0.0.1:8000/assets/img/elements/13.jpg" alt="Card image cap">
+                <div class="card-body">
+                    <p class="card-text">Bear claw sesame snaps gummies chocolate.</p>
+                    <a href="javascript:void(0);" class="card-link">Card link</a>
+                    <a href="javascript:void(0);" class="card-link">Another link</a>
+                </div>
             </div>
         </div>
     </div>
