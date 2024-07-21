@@ -12,7 +12,7 @@
     <div class="card">
         <div class="card-datatable table-responsive">
             <div class="dataTables_wrapper dt-bootstrap5 no-footer" id="DataTables_Table_0_wrapper">
-                <div class="card-header flex-column flex-md-row pb-0">
+                <div class="card-header flex-column flex-md-row pb-2">
                     <div class="head-label text-center">
                         <h5 class="card-title mb-0">DataTable with Buttons</h5>
                     </div>

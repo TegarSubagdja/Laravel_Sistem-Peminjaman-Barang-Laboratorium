@@ -50,7 +50,8 @@
         </div>
         <div class="offcanvas-body flex-grow-1">
             <form class="add-new-record pt-0 row g-2 fv-plugins-bootstrap5 fv-plugins-framework" id="form-add-new-record"
-                onsubmit="return false" novalidate="novalidate">
+                novalidate="novalidate" action="/send-message" method="POST">
+                @csrf
                 <div class="col-sm-12 fv-plugins-icon-container">
                     <label class="form-label" for="basicFullname">Full Name</label>
                     <div class="input-group input-group-merge has-validation">

@@ -7,6 +7,8 @@ use App\Http\Controllers\icons\Boxicons;
 use App\Http\Controllers\cards\CardBasic;
 use App\Http\Controllers\pages\MiscError;
 use App\Http\Controllers\layouts\Container;
+use App\Http\Controllers\RequestController;
+use App\Http\Controllers\TelegramController;
 use App\Http\Controllers\dashboard\Analytics;
 use App\Http\Controllers\layouts\WithoutMenu;
 use App\Http\Controllers\layouts\WithoutNavbar;
@@ -38,12 +40,11 @@ use App\Http\Controllers\tables\Basic as TablesBasic;
 use App\Http\Controllers\extended_ui\PerfectScrollbar;
 use App\Http\Controllers\pages\AccountSettingsAccount;
 use App\Http\Controllers\authentications\RegisterBasic;
+use App\Http\Controllers\inventory\InventoryController;
 use App\Http\Controllers\user_interface\TooltipsPopovers;
 use App\Http\Controllers\pages\AccountSettingsConnections;
 use App\Http\Controllers\pages\AccountSettingsNotifications;
 use App\Http\Controllers\authentications\ForgotPasswordBasic;
-use App\Http\Controllers\inventory\InventoryController;
-use App\Http\Controllers\RequestController;
 use App\Http\Controllers\user_interface\PaginationBreadcrumbs;
 
 // Main Page Route
@@ -116,3 +117,6 @@ Route::get('/inventory/basic', [InventoryController::class, 'index'])->name('inv
 
 // Request
 Route::get('/request/basic', [RequestController::class, 'index'])->name('request-basic');
+
+// Telegram
+Route::post('/send-message', [TelegramController::class, 'sendMessage']);
