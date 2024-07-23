@@ -22,6 +22,8 @@
     <!-- Data Table -->
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/DataTables/datatables.bootstrap5.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/DataTables/datatables.min.css') }}">
+    <!-- Scanner html5 -->
+    <link rel="stylesheet" href="{{ asset('css/scan-qr.css') }}">
     <!-- Include Styles -->
     @include('layouts/sections/styles')
 

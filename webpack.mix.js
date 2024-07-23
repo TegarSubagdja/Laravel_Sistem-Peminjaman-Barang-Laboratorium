@@ -116,6 +116,11 @@ mixAssetsDir('vendor/fonts/!(_)*.scss', (src, dest) =>
   mix.sass(src, dest.replace(/(\\|\/)scss(\\|\/)/, '$1css$2').replace(/\.scss$/, '.css'), { sassOptions })
 );
 
+// Scanner
+mix.js('resources/assets/js/scan-qr.js', 'public/js')
+  .css('resources/assets/css/scan-qr.css', 'public/css')
+  .sourceMaps();
+
 /*
  |--------------------------------------------------------------------------
  | Application assets

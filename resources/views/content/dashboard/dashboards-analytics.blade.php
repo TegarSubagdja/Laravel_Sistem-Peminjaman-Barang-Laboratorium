@@ -15,6 +15,7 @@
 @endsection
 
 @section('content')
+    {{-- Heading --}}
     <div class="row">
         <div class="mb-4">
             <div class="card">
@@ -39,6 +40,11 @@
             </div>
         </div>
     </div>
+    {{-- Scanner --}}
+    <button id="startScanButton" class="btn btn-primary mb-4">Start QR Code Scanner</button>
+    <div id="reader"></div>
+    <div id="qr-code-result" class="mb-4"></div>
+    {{-- Modal and Trigger --}}
     <button class="dt-button create-new btn btn-danger" tabindex="0" aria-controls="DataTables_Table_0" type="button"
         data-bs-toggle="offcanvas" data-bs-target="#add-new-record"><span><i class="bx bx-plus me-sm-1"></i> <span
                 class="d-none d-sm-inline-block">Add New
@@ -86,9 +92,9 @@
                     <label class="form-label" for="basicDate">Joining Date</label>
                     <div class="input-group input-group-merge has-validation">
                         <span id="basicDate2" class="input-group-text"><i class="bx bx-calendar"></i></span>
-                        <input type="text" class="form-control dt-date flatpickr-input" id="basicDate" name="basicDate"
-                            aria-describedby="basicDate2" placeholder="MM/DD/YYYY" aria-label="MM/DD/YYYY"
-                            readonly="readonly">
+                        <input type="text" class="form-control dt-date flatpickr-input" id="basicDate"
+                            name="basicDate" aria-describedby="basicDate2" placeholder="MM/DD/YYYY"
+                            aria-label="MM/DD/YYYY" readonly="readonly">
                     </div>
                     <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
                 </div>
@@ -109,4 +115,19 @@
             </form>
         </div>
     </div>
+
+    {{-- Dropdown Badge --}}
+    <div class="dropdown open text-white mt-4">
+        <a class="btn btn-danger dropdown-toggle" type="button" id="triggerId" data-bs-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Dropdown Anchor
+        </a>
+        <div class="dropdown-menu" aria-labelledby="triggerId">
+            <a class="dropdown-item" href="/badge/add/request-basic/danger/15">Add Badge</a>
+            <a class="dropdown-item" href="/badge/remove/request-basic">Remove Badge</a>
+        </div>
+    </div>
+
+
+
 @endsection

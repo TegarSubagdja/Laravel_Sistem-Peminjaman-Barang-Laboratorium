@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\layouts\Blank;
 use App\Http\Controllers\layouts\Fluid;
@@ -45,6 +46,7 @@ use App\Http\Controllers\user_interface\TooltipsPopovers;
 use App\Http\Controllers\pages\AccountSettingsConnections;
 use App\Http\Controllers\pages\AccountSettingsNotifications;
 use App\Http\Controllers\authentications\ForgotPasswordBasic;
+use App\Http\Controllers\badge\badgeController;
 use App\Http\Controllers\user_interface\PaginationBreadcrumbs;
 
 // Main Page Route
@@ -120,3 +122,8 @@ Route::get('/request/basic', [RequestController::class, 'index'])->name('request
 
 // Telegram
 Route::post('/send-message', [TelegramController::class, 'sendMessage']);
+
+
+// Manage Menu Badge
+Route::get('/badge/add/{slug}/{badgeType}/{badgeText}', [badgeController::class, 'addBadge']);
+Route::get('/badge/remove/{slug}', [badgeController::class, 'removeBadge']);

@@ -4,6 +4,7 @@
 <script src="{{ asset(mix('assets/vendor/js/bootstrap.js')) }}"></script>
 <script src="{{ asset(mix('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js')) }}"></script>
 <script src="{{ asset(mix('assets/vendor/js/menu.js')) }}"></script>
+<script src="{{ asset(mix('js/scan-qr.js')) }}"></script>
 @yield('vendor-script')
 <!-- END: Page Vendor JS-->
 
