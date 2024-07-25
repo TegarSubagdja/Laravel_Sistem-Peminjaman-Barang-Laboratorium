@@ -62,6 +62,21 @@
     });
 </script>
 
+{{-- Script Modal --}}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        fetch('/data')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('frekuensi').textContent = data.frekuensi;
+                document.getElementById('suhu').textContent = data.suhu;
+                document.getElementById('nilai').textContent = data.nilai;
+                $('#dataModal').modal('show');
+            })
+            .catch(error => console.error('Error:', error));
+    });
+</script>
+
 
 <!-- BEGIN: Theme JS-->
 <script src="{{ asset(mix('assets/js/main.js')) }}"></script>

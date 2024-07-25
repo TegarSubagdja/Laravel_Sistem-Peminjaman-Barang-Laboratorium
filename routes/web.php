@@ -47,7 +47,10 @@ use App\Http\Controllers\pages\AccountSettingsConnections;
 use App\Http\Controllers\pages\AccountSettingsNotifications;
 use App\Http\Controllers\authentications\ForgotPasswordBasic;
 use App\Http\Controllers\badge\badgeController;
+use App\Http\Controllers\detailScan\detailScanController;
 use App\Http\Controllers\user_interface\PaginationBreadcrumbs;
+use GuzzleHttp\Psr7\Request;
+use Illuminate\Http\Request as rq;
 
 // Main Page Route
 Route::get('/', [Analytics::class, 'index'])->name('dashboard')->middleware('guest');
@@ -127,3 +130,24 @@ Route::post('/send-message', [TelegramController::class, 'sendMessage']);
 // Manage Menu Badge
 Route::get('/badge/add/{slug}/{badgeType}/{badgeText}', [badgeController::class, 'addBadge']);
 Route::get('/badge/remove/{slug}', [badgeController::class, 'removeBadge']);
+
+// Result Scanner
+Route::get('/data/{value}', [detailScanController::class, 'index']);
+
+Route::get('/data/{value}', function ($value) {
+    return response()->json(['success' => true, 'data' => $value]);
+});
+
+Route::post('/data', [detailScanController::class, 'receiveData']);
+
+Route::post('/datas', function (rq $request) {
+    return response()->json([
+        'message' => 'Data received successfully',
+        'data' => $request->all(),
+    ]);
+});
+
+
+Route::get('test', function () {
+    return view('testRotueAjax');
+});

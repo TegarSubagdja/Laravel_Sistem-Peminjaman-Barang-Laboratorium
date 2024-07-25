@@ -41,7 +41,7 @@
         </div>
     </div>
     {{-- Scanner --}}
-    <button id="startScanButton" class="btn btn-primary mb-4">Start QR Code Scanner</button>
+    <button id="startScanButton" class="btn btn-primary">Start QR Code Scanner</button>
     <div id="reader"></div>
     <div id="qr-code-result" class="mb-4"></div>
     {{-- Modal and Trigger --}}
@@ -125,9 +125,7 @@
         <div class="dropdown-menu" aria-labelledby="triggerId">
             <a class="dropdown-item" href="/badge/add/request-basic/danger/15">Add Badge</a>
             <a class="dropdown-item" href="/badge/remove/request-basic">Remove Badge</a>
+            <a class="dropdown-item" href="/data/152021169">Test Route</a>
         </div>
     </div>
-
-
-
 @endsection
