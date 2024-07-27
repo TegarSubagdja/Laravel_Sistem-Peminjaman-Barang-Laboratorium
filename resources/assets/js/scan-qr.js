@@ -1,6 +1,17 @@
 import { Html5QrcodeScanner } from "html5-qrcode";
 
+let scanSuccessful = false;
+let html5QrcodeScanner;
+
 function onScanSuccess(decodedText, decodedResult) {
+    // If scan has already been successful, ignore subsequent scans
+    if (scanSuccessful) {
+        return;
+    }
+
+    // Set flag indicating scan was successful
+    scanSuccessful = true;
+
     // Handle the scanned code
     console.log(`Code matched = ${decodedText}`, decodedResult);
 
@@ -17,16 +28,24 @@ function onScanSuccess(decodedText, decodedResult) {
         },
         success: function (response) {
             console.log(response.data);
-            alert("Data sent successfully: " + response.data);
+            // alert("Data sent successfully: " + response.data);
+            var offcanvas = new bootstrap.Offcanvas($('#add-new-record'));
+            offcanvas.show();
+            // Stop the scanner
+            html5QrcodeScanner.clear().then(() => {
+                console.log("Scanner stopped.");
+            }).catch(error => {
+                console.error("Failed to stop the scanner: ", error);
+            });
         },
         error: function (xhr, status, error) {
             console.error("Error sending data: ", error);
             alert("Failed to send data");
+            // Reset the scan flag on error
+            scanSuccessful = false;
         }
     });
 }
-
-
 
 function onScanFailure(error) {
     // Handle scan failure (optional)
@@ -37,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const startButton = document.getElementById('startScanButton');
 
     // Instantiate Html5QrcodeScanner
-    const html5QrcodeScanner = new Html5QrcodeScanner(
+    html5QrcodeScanner = new Html5QrcodeScanner(
         "reader",
         { fps: 10, qrbox: { width: 500, height: 500 } },
         /* verbose= */ false

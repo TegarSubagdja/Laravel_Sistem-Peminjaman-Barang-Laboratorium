@@ -44,6 +44,7 @@
     <button id="startScanButton" class="btn btn-primary">Start QR Code Scanner</button>
     <div id="reader"></div>
     <div id="qr-code-result" class="mb-4"></div>
+
     {{-- Modal and Trigger --}}
     <button class="dt-button create-new btn btn-danger" tabindex="0" aria-controls="DataTables_Table_0" type="button"
         data-bs-toggle="offcanvas" data-bs-target="#add-new-record"><span><i class="bx bx-plus me-sm-1"></i> <span
