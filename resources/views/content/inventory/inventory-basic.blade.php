@@ -3,76 +3,121 @@
 @section('title', 'Inventory - Basic Tables')
 
 @section('content')
+    {{-- Header --}}
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <h4 class="py-3 mb-4">
+                <span class="text-muted fw-light">Dashboard / </span>
+                <span class="text-danger">Daftar Barang</span>
+            </h4>
+        </div>
+        <button class="dt-button create-new btn btn-danger" tabindex="0" aria-controls="DataTables_Table_0" type="button"
+            data-bs-toggle="offcanvas" data-bs-target="#add-new-record">
+            <span><i class="bx bx-plus me-sm-1"></i>
+                <span class="d-none d-sm-inline-block">Tambah Barang</span>
+            </span>
+        </button>
+    </div>
+
+    {{-- Content --}}
     <div class="row mb-5">
-        <div class="col-md-6 col-lg-4 mb-3">
-            <div class="card h-100">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <h6 class="card-subtitle text-muted">Support card subtitle</h6>
-                </div>
-                <img class="img-fluid" src="http://127.0.0.1:8000/assets/img/elements/13.jpg" alt="Card image cap">
-                <div class="card-body">
-                    <p class="card-text">Bear claw sesame snaps gummies chocolate.</p>
-                    <a href="javascript:void(0);" class="card-link">Card link</a>
-                    <a href="javascript:void(0);" class="card-link">Another link</a>
+        @for ($i = 1; $i <= 10; $i++)
+            <div class="col-md-6 col-lg-4 mb-3">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Gerinda Tangan</h5>
+                        <h6 class="card-subtitle text-muted">Orion w500</h6>
+                        <img class="img-fluid d-flex mx-auto my-4 rounded"
+                            src="https://down-id.img.susercontent.com/file/88afadb4117b4049ece5c8d3d4f04ce8"
+                            alt="Card image cap">
+                        @if ($i % 2 == 0)
+                            <h6 class="badge bg-label-warning">Multimedia</h6>
+                        @elseif ($i % 3 == 0)
+                            <h6 class="badge bg-label-danger">Jaringan</h6>
+                        @elseif ($i % 5 == 0)
+                            <h6 class="badge bg-label-info">ICT</h6>
+                        @else
+                            <h6 class="badge bg-label-success">Basis Data</h6>
+                        @endif
+                        <p class="card-text">Bear claw sesame snaps gummies chocolate.</p>
+                        <button type="button" class="btn btn-outline-danger">
+                            <span class="tf-icons bx bx-pie-chart-alt me-1"></span>Pinjam
+                        </button>
+                    </div>
                 </div>
             </div>
+        @endfor
+    </div>
+
+    {{-- Modal --}}
+    <div class="offcanvas offcanvas-end" id="add-new-record">
+        <div class="offcanvas-header border-bottom">
+            <h5 class="offcanvas-title" id="exampleModalLabel">New Record</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
-        <div class="col-md-6 col-lg-4 mb-3">
-            <div class="card h-100">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <h6 class="card-subtitle text-muted">Support card subtitle</h6>
+        <div class="offcanvas-body flex-grow-1">
+            <form class="add-new-record pt-0 row g-2 fv-plugins-bootstrap5 fv-plugins-framework" id="form-add-new-record"
+                novalidate="novalidate" action="/send-message" method="POST">
+                @csrf
+                <div class="col-sm-12 fv-plugins-icon-container">
+                    <label class="form-label" for="basicFullname">Full Name</label>
+                    <div class="input-group input-group-merge has-validation">
+                        <span id="basicFullname2" class="input-group-text"><i class="bx bx-user"></i></span>
+                        <input type="text" id="basicFullname" class="form-control dt-full-name" name="basicFullname"
+                            placeholder="John Doe" aria-label="John Doe" aria-describedby="basicFullname2">
+                    </div>
+                    <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
+                    </div>
                 </div>
-                <img class="img-fluid" src="http://127.0.0.1:8000/assets/img/elements/13.jpg" alt="Card image cap">
-                <div class="card-body">
-                    <p class="card-text">Bear claw sesame snaps gummies chocolate.</p>
-                    <a href="javascript:void(0);" class="card-link">Card link</a>
-                    <a href="javascript:void(0);" class="card-link">Another link</a>
+                <div class="col-sm-12 fv-plugins-icon-container">
+                    <label class="form-label" for="basicPost">Post</label>
+                    <div class="input-group input-group-merge has-validation">
+                        <span id="basicPost2" class="input-group-text"><i class="bx bxs-briefcase"></i></span>
+                        <input type="text" id="basicPost" name="basicPost" class="form-control dt-post"
+                            placeholder="Web Developer" aria-label="Web Developer" aria-describedby="basicPost2">
+                    </div>
+                    <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="col-md-6 col-lg-4 mb-3">
-            <div class="card h-100">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <h6 class="card-subtitle text-muted">Support card subtitle</h6>
+                <div class="col-sm-12 fv-plugins-icon-container">
+                    <label class="form-label" for="basicEmail">Email</label>
+                    <div class="input-group input-group-merge has-validation">
+                        <span class="input-group-text"><i class="bx bx-envelope"></i></span>
+                        <input type="text" id="basicEmail" name="basicEmail" class="form-control dt-email"
+                            placeholder="john.doe@example.com" aria-label="john.doe@example.com">
+                    </div>
+                    <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
+                    </div>
+                    <div class="form-text">
+                        You can use letters, numbers &amp; periods
+                    </div>
                 </div>
-                <img class="img-fluid" src="http://127.0.0.1:8000/assets/img/elements/13.jpg" alt="Card image cap">
-                <div class="card-body">
-                    <p class="card-text">Bear claw sesame snaps gummies chocolate.</p>
-                    <a href="javascript:void(0);" class="card-link">Card link</a>
-                    <a href="javascript:void(0);" class="card-link">Another link</a>
+                <div class="col-sm-12 fv-plugins-icon-container">
+                    <label class="form-label" for="basicDate">Joining Date</label>
+                    <div class="input-group input-group-merge has-validation">
+                        <span id="basicDate2" class="input-group-text"><i class="bx bx-calendar"></i></span>
+                        <input type="text" class="form-control dt-date flatpickr-input" id="basicDate" name="basicDate"
+                            aria-describedby="basicDate2" placeholder="MM/DD/YYYY" aria-label="MM/DD/YYYY"
+                            readonly="readonly">
+                    </div>
+                    <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="col-md-6 col-lg-4 mb-3">
-            <div class="card h-100">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <h6 class="card-subtitle text-muted">Support card subtitle</h6>
+                <div class="col-sm-12 fv-plugins-icon-container">
+                    <label class="form-label" for="basicSalary">Picture</label>
+                    <div class="input-group input-group-merge has-validation">
+                        {{-- <span id="basicSalary2" class="input-group-text"><i class="bx bx-dollar"></i></span> --}}
+                        <input class="form-control" type="file" id="formFileMultiple" multiple="">
+                    </div>
+                    <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
+                    </div>
                 </div>
-                <img class="img-fluid" src="http://127.0.0.1:8000/assets/img/elements/13.jpg" alt="Card image cap">
-                <div class="card-body">
-                    <p class="card-text">Bear claw sesame snaps gummies chocolate.</p>
-                    <a href="javascript:void(0);" class="card-link">Card link</a>
-                    <a href="javascript:void(0);" class="card-link">Another link</a>
+                <div class="col-sm-12 mt-4">
+                    <button type="submit" class="btn btn-danger data-submit me-sm-3 me-1">Submit</button>
+                    <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="offcanvas">Cancel</button>
                 </div>
-            </div>
-        </div>
-        <div class="col-md-6 col-lg-4 mb-3">
-            <div class="card h-100">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <h6 class="card-subtitle text-muted">Support card subtitle</h6>
-                </div>
-                <img class="img-fluid" src="http://127.0.0.1:8000/assets/img/elements/13.jpg" alt="Card image cap">
-                <div class="card-body">
-                    <p class="card-text">Bear claw sesame snaps gummies chocolate.</p>
-                    <a href="javascript:void(0);" class="card-link">Card link</a>
-                    <a href="javascript:void(0);" class="card-link">Another link</a>
-                </div>
-            </div>
+                <input type="hidden">
+            </form>
         </div>
     </div>
 

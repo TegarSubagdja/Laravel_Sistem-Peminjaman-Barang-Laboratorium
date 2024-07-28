@@ -5,7 +5,8 @@
 @section('content')
 
     <h4 class="py-3 mb-4">
-        <span class="text-muted fw-light">Persetujuan /</span> Table Permintaan
+        <span class="text-muted fw-light">Dashboard /</span>
+        <span class="text-danger">Request</span>
     </h4>
 
     <!-- Hoverable Table rows -->
@@ -25,7 +26,7 @@
                                 type="button" data-bs-toggle="offcanvas" data-bs-target="#add-new-record">
                                 <span>
                                     <i class="bx bx-plus bx-sm me-sm-2"></i>
-                                    <span class="d-none d-sm-inline-block">Add New Record</span>
+                                    <span class="d-none d-sm-inline-block">Tambar Record</span>
                                 </span>
                             </button>
                         </div>
@@ -41,6 +42,8 @@
                             <th>Project</th>
                             <th>Client</th>
                             <th>Status</th>
+                            <th>Rent</th>
+                            <th>Due</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -51,8 +54,9 @@
                                     <i class="bx bxl-angular bx-sm text-danger me-3"></i>
                                     <span class="fw-medium">Project {{ $i }}</span>
                                 </td>
-                                <td>Albert Cook as {{ $i }}</td>
-
+                                <td>
+                                    Albert Cook as {{ $i }}
+                                </td>
                                 <td>
                                     @if ($i % 3 == 0)
                                         <span class="badge bg-label-success me-1">Approved</span>
@@ -60,7 +64,12 @@
                                         <span class="badge bg-label-danger me-1">Rejected</span>
                                     @endif
                                 </td>
-
+                                <td>
+                                    Rent {{ $i }}
+                                </td>
+                                <td>
+                                    Due {{ $i }}
+                                </td>
                                 <td>
                                     <div class="dropdown">
                                         <button type="button" class="btn p-0 dropdown-toggle hide-arrow"

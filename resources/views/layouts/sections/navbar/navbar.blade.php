@@ -45,14 +45,31 @@
             </div>
         </div>
         <!-- /Search -->
+    @else
+        <!-- Search -->
+        <div class="navbar-nav align-items-center">
+            <div class="nav-item d-flex align-items-center">
+                <i class="bx bx-search fs-4 lh-0"></i>
+                <input type="text" class="form-control border-0 shadow-none ps-1 ps-sm-2 ms-4"
+                    placeholder="Search..." aria-label="Search..." disabled>
+            </div>
+        </div>
+        <!-- /Search -->
     @endif
     <ul class="navbar-nav flex-row align-items-center ms-auto">
 
         <!-- Place this tag where you want the button to render. -->
-        <li class="nav-item lh-1 me-3">
+        {{-- <li class="nav-item lh-1 me-3">
             <a class="github-button" href="https://github.com/themeselection/sneat-html-laravel-admin-template-free"
                 data-icon="octicon-star" data-size="large" data-show-count="true"
                 aria-label="Star themeselection/sneat-html-laravel-admin-template-free on GitHub">Star</a>
+        </li> --}}
+
+        <li class="nav-item lh-1 me-3 d-none d-sm-block">
+            <div class="col-12 col-sm-auto d-flex flex-column align-items-end">
+                <h6 class="mb-2 text-uppercase">Tegar Subagdja</h6>
+                <small class="text-muted">152021169</small>
+            </div>
         </li>
 
         <!-- User -->
@@ -60,7 +77,7 @@
             <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                 <div class="avatar avatar-online">
                     <img src="https://clipart-library.com/images/pi5dn47BT.jpg" alt
-                        class="w-px-40 h-auto rounded-circle">
+                        class="w-px-40 h-px-40 rounded-circle">
                 </div>
             </a>
             <ul class="dropdown-menu dropdown-menu-end">
@@ -70,7 +87,7 @@
                             <div class="flex-shrink-0 me-3">
                                 <div class="avatar avatar-online">
                                     <img src="https://clipart-library.com/images/pi5dn47BT.jpg" alt
-                                        class="w-px-40 h-auto rounded-circle">
+                                        class="w-px-40 h-px-40 rounded-circle">
                                 </div>
                             </div>
                             <div class="flex-grow-1">
@@ -117,6 +134,7 @@
             </ul>
         </li>
         <!--/ User -->
+
     </ul>
 </div>
 

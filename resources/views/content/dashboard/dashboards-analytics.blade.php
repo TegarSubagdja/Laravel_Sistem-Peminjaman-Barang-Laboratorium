@@ -12,37 +12,26 @@
 
 @section('content')
     {{-- Heading --}}
+    <h4 class="py-3 mb-4">
+        <span class="text-muted fw-light">Dashboard /</span>
+        <span class="text-danger"> Scan QR-code</span>
+    </h4>
     <div class="row">
-        <div class="mb-4">
-            <div class="card">
-                <div class="d-flex align-items-end row">
-                    <div class="col-sm-7">
-                        <div class="card-body">
-                            <h5 class="card-title text-danger">Congratulations John! 🎉</h5>
-                            <p class="mb-4">You have done <span class="fw-medium">72%</span> more sales today. Check your
-                                new badge in your profile.</p>
-
-                            <a href="javascript:;" class="btn btn-sm btn-outline-danger">View Badges</a>
-                        </div>
+        <div class="col-12 d-flex justify-content-center align-items-center">
+            <div class="card w-100 h-100">
+                <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                    <h5 class="card-title text-danger">Scan Barang</h5>
+                    <div id="reader" class="w-100 mb-4" style="max-width: 250px;">
                     </div>
-                    <div class="col-sm-5 text-center text-sm-left">
-                        <div class="card-body pb-0 px-0 px-md-4">
-                            <img src="{{ asset('assets/img/illustrations/man-with-laptop-light.png') }}" height="140"
-                                alt="View Badge User" data-app-dark-img="illustrations/man-with-laptop-dark.png"
-                                data-app-light-img="illustrations/man-with-laptop-light.png">
-                        </div>
-                    </div>
+                    <button href="#" class="btn btn-sm btn-outline-danger">Mulai Scan</button>
                 </div>
             </div>
         </div>
     </div>
-    {{-- Scanner --}}
-    <button id="startScanButton" class="btn btn-primary">Start QR Code Scanner</button>
-    <div id="reader"></div>
-    <div id="qr-code-result" class="mb-4"></div>
+
 
     {{-- Modal and Trigger --}}
-    <button class="dt-button create-new btn btn-danger" tabindex="0" aria-controls="DataTables_Table_0" type="button"
+    <button class="dt-button create-new btn btn-danger mt-4" tabindex="0" aria-controls="DataTables_Table_0" type="button"
         data-bs-toggle="offcanvas" data-bs-target="#add-new-record"><span><i class="bx bx-plus me-sm-1"></i> <span
                 class="d-none d-sm-inline-block">Add New
                 Record</span></span></button>
@@ -89,9 +78,9 @@
                     <label class="form-label" for="basicDate">Joining Date</label>
                     <div class="input-group input-group-merge has-validation">
                         <span id="basicDate2" class="input-group-text"><i class="bx bx-calendar"></i></span>
-                        <input type="text" class="form-control dt-date flatpickr-input" id="basicDate"
-                            name="basicDate" aria-describedby="basicDate2" placeholder="MM/DD/YYYY"
-                            aria-label="MM/DD/YYYY" readonly="readonly">
+                        <input type="text" class="form-control dt-date flatpickr-input" id="basicDate" name="basicDate"
+                            aria-describedby="basicDate2" placeholder="MM/DD/YYYY" aria-label="MM/DD/YYYY"
+                            readonly="readonly">
                     </div>
                     <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
                 </div>
