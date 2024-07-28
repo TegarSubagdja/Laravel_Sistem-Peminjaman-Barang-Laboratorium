@@ -18,7 +18,7 @@
     <!-- Canonical SEO -->
     <link rel="canonical" href="{{ config('variables.productPage') ? config('variables.productPage') : '' }}">
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/favicon/logo.png') }}" />
+    <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/logo/LOGOIF.png') }}" />
     <!-- Data Table -->
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/DataTables/datatables.bootstrap5.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/DataTables/datatables.min.css') }}">

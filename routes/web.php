@@ -55,6 +55,39 @@ use Illuminate\Http\Request as rq;
 // Main Page Route
 Route::get('/', [Analytics::class, 'index'])->name('dashboard')->middleware('guest');
 
+// inventory
+Route::get('/inventory/basic', [InventoryController::class, 'index'])->name('inventory-basic');
+
+// Request
+Route::get('/request/basic', [RequestController::class, 'index'])->name('request-basic');
+
+// Telegram
+Route::post('/send-message', [TelegramController::class, 'sendMessage']);
+
+// Manage Menu Badge
+Route::get('/badge/add/{slug}/{badgeType}/{badgeText}', [badgeController::class, 'addBadge']);
+Route::get('/badge/remove/{slug}', [badgeController::class, 'removeBadge']);
+
+// Result Scanner
+Route::get('/data/{value}', [detailScanController::class, 'index']);
+
+Route::get('/data/{value}', function ($value) {
+  return response()->json(['success' => true, 'data' => $value]);
+});
+
+Route::post('/data', [detailScanController::class, 'receiveData']);
+
+Route::post('/datas', function (rq $request) {
+  return response()->json([
+    'message' => 'Data received successfully',
+    'data' => $request->all(),
+  ]);
+});
+
+Route::get('test', function () {
+  return view('testRotueAjax');
+});
+
 // layout
 Route::get('/layouts/without-menu', [WithoutMenu::class, 'index'])->name('layouts-without-menu');
 Route::get('/layouts/without-navbar', [WithoutNavbar::class, 'index'])->name('layouts-without-navbar');
@@ -116,38 +149,3 @@ Route::get('/form/layouts-horizontal', [HorizontalForm::class, 'index'])->name('
 
 // tables
 Route::get('/tables/basic', [TablesBasic::class, 'index'])->name('tables-basic');
-
-// inventory
-Route::get('/inventory/basic', [InventoryController::class, 'index'])->name('inventory-basic');
-
-// Request
-Route::get('/request/basic', [RequestController::class, 'index'])->name('request-basic');
-
-// Telegram
-Route::post('/send-message', [TelegramController::class, 'sendMessage']);
-
-
-// Manage Menu Badge
-Route::get('/badge/add/{slug}/{badgeType}/{badgeText}', [badgeController::class, 'addBadge']);
-Route::get('/badge/remove/{slug}', [badgeController::class, 'removeBadge']);
-
-// Result Scanner
-Route::get('/data/{value}', [detailScanController::class, 'index']);
-
-Route::get('/data/{value}', function ($value) {
-    return response()->json(['success' => true, 'data' => $value]);
-});
-
-Route::post('/data', [detailScanController::class, 'receiveData']);
-
-Route::post('/datas', function (rq $request) {
-    return response()->json([
-        'message' => 'Data received successfully',
-        'data' => $request->all(),
-    ]);
-});
-
-
-Route::get('test', function () {
-    return view('testRotueAjax');
-});

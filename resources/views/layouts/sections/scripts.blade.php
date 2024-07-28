@@ -1,7 +1,9 @@
 <!-- BEGIN: Vendor JS-->
 <script src="{{ asset(mix('assets/vendor/libs/jquery/jquery.js')) }}"></script>
 <script src="{{ asset(mix('assets/vendor/libs/popper/popper.js')) }}"></script>
+@if (!Route::is('request-basic'))
 <script src="{{ asset(mix('assets/vendor/js/bootstrap.js')) }}"></script>
+@endif
 <script src="{{ asset(mix('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js')) }}"></script>
 <script src="{{ asset(mix('assets/vendor/js/menu.js')) }}"></script>
 @if (Route::is('dashboard'))
@@ -12,12 +14,16 @@
 
 <!-- Datatables -->
 @if (Route::is('request-basic'))
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script> --}}
     <script src="{{ asset('assets/vendor/libs/DataTables/datatables.min.js') }}"></script>
     <script>
         $(document).ready(function() {
             var table = $('#DataTables_Table_0').DataTable({
-                responsive: false
+                responsive: false,
+                language: {
+                    lengthMenu: "Show _MENU_ entries",
+                    searchPlaceholder: 'Search here...'
+                }
             });
 
             new $.fn.dataTable.Buttons(table, {
@@ -51,9 +57,8 @@
                             text: '<i class="bx bx-printer me-2"></i> Print'
                         }
                     ]
-                }]
+                }],
             });
-
             table.buttons().container()
                 .appendTo('#exportButtons');
         });
