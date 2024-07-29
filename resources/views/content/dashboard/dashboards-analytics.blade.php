@@ -23,82 +23,9 @@
                     <h5 class="card-title text-danger">Scan Barang</h5>
                     <div id="reader" class="w-100 mb-4" style="max-width: 250px;">
                     </div>
-                    <button href="#" class="btn btn-sm btn-outline-danger">Mulai Scan</button>
+                    <button id="startScan" class="btn btn-sm btn-outline-danger">Mulai Scan</button>
                 </div>
             </div>
-        </div>
-    </div>
-
-
-    {{-- Modal and Trigger --}}
-    <button class="dt-button create-new btn btn-danger mt-4" tabindex="0" aria-controls="DataTables_Table_0" type="button"
-        data-bs-toggle="offcanvas" data-bs-target="#add-new-record"><span><i class="bx bx-plus me-sm-1"></i> <span
-                class="d-none d-sm-inline-block">Add New
-                Record</span></span></button>
-    <div class="offcanvas offcanvas-end" id="add-new-record">
-        <div class="offcanvas-header border-bottom">
-            <h5 class="offcanvas-title" id="exampleModalLabel">New Record</h5>
-            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body flex-grow-1">
-            <form class="add-new-record pt-0 row g-2 fv-plugins-bootstrap5 fv-plugins-framework" id="form-add-new-record"
-                novalidate="novalidate" action="/send-message" method="POST">
-                @csrf
-                <div class="col-sm-12 fv-plugins-icon-container">
-                    <label class="form-label" for="basicFullname">Full Name</label>
-                    <div class="input-group input-group-merge has-validation">
-                        <span id="basicFullname2" class="input-group-text"><i class="bx bx-user"></i></span>
-                        <input type="text" id="basicFullname" class="form-control dt-full-name" name="basicFullname"
-                            placeholder="John Doe" aria-label="John Doe" aria-describedby="basicFullname2">
-                    </div>
-                    <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
-                </div>
-                <div class="col-sm-12 fv-plugins-icon-container">
-                    <label class="form-label" for="basicPost">Post</label>
-                    <div class="input-group input-group-merge has-validation">
-                        <span id="basicPost2" class="input-group-text"><i class="bx bxs-briefcase"></i></span>
-                        <input type="text" id="basicPost" name="basicPost" class="form-control dt-post"
-                            placeholder="Web Developer" aria-label="Web Developer" aria-describedby="basicPost2">
-                    </div>
-                    <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
-                </div>
-                <div class="col-sm-12 fv-plugins-icon-container">
-                    <label class="form-label" for="basicEmail">Email</label>
-                    <div class="input-group input-group-merge has-validation">
-                        <span class="input-group-text"><i class="bx bx-envelope"></i></span>
-                        <input type="text" id="basicEmail" name="basicEmail" class="form-control dt-email"
-                            placeholder="john.doe@example.com" aria-label="john.doe@example.com">
-                    </div>
-                    <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
-                    <div class="form-text">
-                        You can use letters, numbers &amp; periods
-                    </div>
-                </div>
-                <div class="col-sm-12 fv-plugins-icon-container">
-                    <label class="form-label" for="basicDate">Joining Date</label>
-                    <div class="input-group input-group-merge has-validation">
-                        <span id="basicDate2" class="input-group-text"><i class="bx bx-calendar"></i></span>
-                        <input type="text" class="form-control dt-date flatpickr-input" id="basicDate" name="basicDate"
-                            aria-describedby="basicDate2" placeholder="MM/DD/YYYY" aria-label="MM/DD/YYYY"
-                            readonly="readonly">
-                    </div>
-                    <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
-                </div>
-                <div class="col-sm-12 fv-plugins-icon-container">
-                    <label class="form-label" for="basicSalary">Salary</label>
-                    <div class="input-group input-group-merge has-validation">
-                        <span id="basicSalary2" class="input-group-text"><i class="bx bx-dollar"></i></span>
-                        <input type="number" id="basicSalary" name="basicSalary" class="form-control dt-salary"
-                            placeholder="12000" aria-label="12000" aria-describedby="basicSalary2">
-                    </div>
-                    <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
-                </div>
-                <div class="col-sm-12">
-                    <button type="submit" class="btn btn-danger data-submit me-sm-3 me-1">Submit</button>
-                    <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="offcanvas">Cancel</button>
-                </div>
-                <input type="hidden">
-            </form>
         </div>
     </div>
 
@@ -112,6 +39,55 @@
             <a class="dropdown-item" href="/badge/add/request-basic/danger/15">Add Badge</a>
             <a class="dropdown-item" href="/badge/remove/request-basic">Remove Badge</a>
             <a class="dropdown-item" href="/data/152021169">Test Route</a>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-uppercase" id="modalCenterTitle">Detail Barang</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-6">
+                            <label for="nameWithTitle" class="form-label">Foto Barang</label>
+                            <img class="img-fluid" src="http://127.0.0.1:8000/assets/img/elements/13.jpg"
+                                alt="Card image cap">
+                            <div class="col mt-3">
+                                <label class="form-label">Deskripsi Barang</label>
+                                <p id="desk" class="card-text">
+                                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Adipisci, accusantium!
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="col mb-3">
+                                <label for="nameWithTitle" class="form-label">Nama Barang</label>
+                                <input type="text" id="nameWithTitle" class="form-control" placeholder="Enter Name" disabled>
+                            </div>
+                            <div class="col mb-3">
+                                <label for="nameWithTitle" class="form-label">Jumlah</label>
+                                <input type="number" id="nameWithTitle" class="form-control" placeholder="Jumlah barang">
+                            </div>
+                            <div class="col mb-3">
+                                <label for="nameWithTitle" class="form-label">Tanggal Pinjam</label>
+                                <input type="date" id="nameWithTitle" class="form-control" placeholder="Enter Name">
+                            </div>
+                            <div class="col mb-3">
+                                <label for="nameWithTitle" class="form-label">Tanggal Penge</label>
+                                <input type="date" id="nameWithTitle" class="form-control" placeholder="Enter Name">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger">Pinjam</button>
+                </div>
+            </div>
         </div>
     </div>
 @endsection

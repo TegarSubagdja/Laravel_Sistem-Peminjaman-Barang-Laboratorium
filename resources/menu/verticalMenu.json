@@ -10,11 +10,7 @@
             "url": "\/request\/basic",
             "name": "Persetujuan",
             "icon": "menu-icon tf-icons bx bx-calendar-check",
-            "slug": "request-basic",
-            "badge": [
-                "danger",
-                "15"
-            ]
+            "slug": "request-basic"
         },
         {
             "url": "\/inventory\/basic",

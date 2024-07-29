@@ -100,68 +100,60 @@
 
     {{-- Modal --}}
     <div class="offcanvas offcanvas-end" id="add-new-record">
-        <div class="offcanvas-header border-bottom">
-            <h5 class="offcanvas-title" id="exampleModalLabel">New Record</h5>
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="exampleModalLabel">Tambah Record</h5>
             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body flex-grow-1">
             <form class="add-new-record pt-0 row g-2 fv-plugins-bootstrap5 fv-plugins-framework" id="form-add-new-record"
                 onsubmit="return false" novalidate="novalidate">
                 <div class="col-sm-12 fv-plugins-icon-container">
-                    <label class="form-label" for="basicFullname">Full Name</label>
+                    <label class="form-label" for="basicFullname">NRP / NODOS</label>
                     <div class="input-group input-group-merge has-validation">
                         <span id="basicFullname2" class="input-group-text"><i class="bx bx-user"></i></span>
                         <input type="text" id="basicFullname" class="form-control dt-full-name" name="basicFullname"
-                            placeholder="John Doe" aria-label="John Doe" aria-describedby="basicFullname2">
+                            placeholder="NRP/NODOS" aria-label="John Doe" aria-describedby="basicFullname2">
                     </div>
                     <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
                     </div>
                 </div>
                 <div class="col-sm-12 fv-plugins-icon-container">
-                    <label class="form-label" for="basicPost">Post</label>
+                    <label class="form-label" for="basicPost">Nama</label>
                     <div class="input-group input-group-merge has-validation">
-                        <span id="basicPost2" class="input-group-text"><i class="bx bxs-briefcase"></i></span>
+                        <span id="basicPost2" class="input-group-text"><i class="bx bx-user"></i></span>
                         <input type="text" id="basicPost" name="basicPost" class="form-control dt-post"
-                            placeholder="Web Developer" aria-label="Web Developer" aria-describedby="basicPost2">
+                            placeholder="Nama peminjam" aria-label="Web Developer" aria-describedby="basicPost2">
                     </div>
                     <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
                     </div>
                 </div>
                 <div class="col-sm-12 fv-plugins-icon-container">
-                    <label class="form-label" for="basicEmail">Email</label>
+                    <label class="form-label" for="basicEmail">Tanggal Peminjaman</label>
                     <div class="input-group input-group-merge has-validation">
-                        <span class="input-group-text"><i class="bx bx-envelope"></i></span>
-                        <input type="text" id="basicEmail" name="basicEmail" class="form-control dt-email"
-                            placeholder="john.doe@example.com" aria-label="john.doe@example.com">
+                        <span class="input-group-text"><i class="bx bx-calendar"></i></span>
+                        <input type="date" id="basicEmail" name="basicEmail" class="form-control dt-email"
+                            placeholder="MM/DD/YYYY">
                     </div>
-                    <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
+                    <div
+                        class="fv-plugins-message-container
+                            fv-plugins-message-container--enabled invalid-feedback">
                     </div>
                     <div class="form-text">
                         You can use letters, numbers &amp; periods
                     </div>
                 </div>
                 <div class="col-sm-12 fv-plugins-icon-container">
-                    <label class="form-label" for="basicDate">Joining Date</label>
+                    <label class="form-label" for="basicDate">Tanggal Pengembalian</label>
                     <div class="input-group input-group-merge has-validation">
                         <span id="basicDate2" class="input-group-text"><i class="bx bx-calendar"></i></span>
-                        <input type="text" class="form-control dt-date flatpickr-input" id="basicDate"
+                        <input type="date" class="form-control dt-date flatpickr-input" id="basicDate"
                             name="basicDate" aria-describedby="basicDate2" placeholder="MM/DD/YYYY"
                             aria-label="MM/DD/YYYY" readonly="readonly">
                     </div>
                     <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
                     </div>
                 </div>
-                <div class="col-sm-12 fv-plugins-icon-container">
-                    <label class="form-label" for="basicSalary">Salary</label>
-                    <div class="input-group input-group-merge has-validation">
-                        <span id="basicSalary2" class="input-group-text"><i class="bx bx-dollar"></i></span>
-                        <input type="number" id="basicSalary" name="basicSalary" class="form-control dt-salary"
-                            placeholder="12000" aria-label="12000" aria-describedby="basicSalary2">
-                    </div>
-                    <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
-                    </div>
-                </div>
-                <div class="col-sm-12">
+                <div class="col-sm-12 mt-4">
                     <button type="submit" class="btn btn-danger data-submit me-sm-3 me-1">Submit</button>
                     <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="offcanvas">Cancel</button>
                 </div>
@@ -190,5 +182,4 @@
             });
         });
     </script>
-
 @endsection
