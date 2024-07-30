@@ -154,8 +154,8 @@
                     </div>
                 </div>
                 <div class="col-sm-12 mt-4">
-                    <button type="submit" class="btn btn-danger data-submit me-sm-3 me-1">Submit</button>
-                    <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="offcanvas">Cancel</button>
+                    <button type="submit" class="btn btn-danger data-submit me-sm-3 me-1">Simpan</button>
+                    <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="offcanvas">Batal</button>
                 </div>
                 <input type="hidden">
             </form>
