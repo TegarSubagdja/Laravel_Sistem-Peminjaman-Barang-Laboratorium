@@ -38,56 +38,82 @@
         <div class="dropdown-menu" aria-labelledby="triggerId">
             <a class="dropdown-item" href="/badge/add/request-basic/danger/15">Add Badge</a>
             <a class="dropdown-item" href="/badge/remove/request-basic">Remove Badge</a>
-            <a class="dropdown-item" href="/data/152021169">Test Route</a>
+            <a class="dropdown-item" href="/test">Test Route</a>
         </div>
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title text-uppercase" id="modalCenterTitle">Detail Barang</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-6">
-                            <label for="nameWithTitle" class="form-label">Foto Barang</label>
-                            <img class="img-fluid" src="http://127.0.0.1:8000/assets/img/elements/13.jpg"
-                                alt="Card image cap">
-                            <div class="col mt-3">
-                                <label class="form-label">Deskripsi Barang</label>
-                                <p id="desk" class="card-text">
-                                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Adipisci, accusantium!
-                                </p>
-                            </div>
+    <form action="/rent" method="POST">
+        @csrf
+        <div class="modal fade" id="myModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header d-flex justify-content-between align-items-start">
+                        <div class="col">
+                            <h5 class="modal-title text-uppercase" id="modalCenterTitle">Detail Barang</h5>
+                            <h6 id="lab" class="badge bg-label-success"></h6>
                         </div>
-                        <div class="col-6">
-                            <div class="col mb-3">
-                                <label for="nameWithTitle" class="form-label">Nama Barang</label>
-                                <input type="text" id="nameWithTitle" class="form-control" placeholder="Enter Name" disabled>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-6">
+                                <label for="nameWithTitle" class="form-label">Foto Barang</label>
+                                <img id="pic" class="img-fluid" src="" alt="Card image cap">
+                                <div class="col mt-3">
+                                    <label class="form-label">Deskripsi Barang</label>
+                                    <p id="desk" class="card-text">
+                                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Adipisci, accusantium!
+                                    </p>
+                                </div>
                             </div>
-                            <div class="col mb-3">
-                                <label for="nameWithTitle" class="form-label">Jumlah</label>
-                                <input type="number" id="nameWithTitle" class="form-control" placeholder="Jumlah barang">
-                            </div>
-                            <div class="col mb-3">
-                                <label for="nameWithTitle" class="form-label">Tanggal Pinjam</label>
-                                <input type="date" id="nameWithTitle" class="form-control" placeholder="Enter Name">
-                            </div>
-                            <div class="col mb-3">
-                                <label for="nameWithTitle" class="form-label">Tanggal Penge</label>
-                                <input type="date" id="nameWithTitle" class="form-control" placeholder="Enter Name">
+                            <div class="col-6">
+                                <div class="col mb-3">
+                                    <label for="nameWithTitle" class="form-label">Nama Barang</label>
+                                    <input type="hidden" id="name" class="form-control" placeholder="Enter Name"
+                                        name="item">
+                                </div>
+                                <div class="col mb-3">
+                                    <label for="nameWithTitle" class="form-label">Jumlah</label>
+                                    <input type="number" value="1" id="amount" class="form-control" name="amount"
+                                        placeholder="Jumlah barang">
+                                </div>
+                                <div class="col mb-3">
+                                    <label for="nameWithTitle" class="form-label">Tanggal Peminjaman</label>
+                                    <input required type="date" id="nameWithTitle" class="form-control"
+                                        placeholder="Enter Name" name="date">
+                                </div>
+                                <div class="col mb-3">
+                                    <label for="nameWithTitle" class="form-label">Tanggal Pengembalian</label>
+                                    <input required type="date" id="nameWithTitle" class="form-control"
+                                        placeholder="Enter Name" name="due">
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-danger">Pinjam</button>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-danger">Pinjam</button>
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </form>
+
+    <form action="/test" method="POST">
+        @csrf
+        <div class="mb-3">
+            <label class="form-label">Text Scan</label>
+            <input type="text" class="form-control" name="decodeText" id="" aria-describedby="emailHelpId"
+                placeholder="abc@mail.com" value="102030" />
+            <small id="emailHelpId" class="form-text text-muted">Help text</small>
+            <button type="submit" class="btn btn-outline-danger">Submit</button>
+        </div>
+    </form>
+    <!-- Blade Template -->
+    <script>
+        var baseUrl = "{{ asset('') }}";
+    </script>
+
 @endsection

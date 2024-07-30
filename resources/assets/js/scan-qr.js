@@ -13,7 +13,7 @@ function onScanSuccess(decodedText, decodedResult) {
   console.log(`Code matched = ${decodedText}`, decodedResult);
 
   $.ajax({
-    url: '/datas',
+    url: '/test',
     type: 'POST',
     contentType: 'application/json',
     data: JSON.stringify({
@@ -23,13 +23,23 @@ function onScanSuccess(decodedText, decodedResult) {
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     },
     success: function (response) {
-      console.log(response.data);
+      console.log(response);
 
+      // Assuming response is the JSON object returned from the server
+      var item = response.item;
+      var $name = document.getElementById('name');
+      var $desk = document.getElementById('desk');
+      var $pic = document.getElementById('pic');
+      var $lab = document.getElementById('lab');
 
-      // var offcanvas = new bootstrap.Offcanvas($('#add-new-record'));
-      // offcanvas.show();
+      // Update the modal content
+      $name.value = item.name;
+      $desk.innerHTML = item.description;
+      $pic.src = `${baseUrl}assets/img/items/${item.picture}`;
+      $lab.innerHTML = item.lab.name;
 
-
+      // Show the modal
+      $('#myModal').modal('show');
 
       html5Qrcode.stop().then(() => {
         console.log("Scanner stopped.");
@@ -46,13 +56,14 @@ function onScanSuccess(decodedText, decodedResult) {
 }
 
 function onScanFailure(error) {
-  console.warn(`Code scan error = ${error}`);
+  // console.warn(`Code scan error = ${error}`);
 }
 
 document.addEventListener('DOMContentLoaded', function () {
   html5Qrcode = new Html5Qrcode("reader");
 
   document.getElementById('startScan').addEventListener('click', function () {
+    scanSuccessful = false;
     html5Qrcode.start(
       { facingMode: "environment" },
       { fps: 10, qrbox: { width: 500, height: 500 } },
@@ -60,15 +71,6 @@ document.addEventListener('DOMContentLoaded', function () {
       onScanFailure
     ).then(() => {
       console.log("Scanning started.");
-
-      
-      var $name = document.getElementById('nameWithTitle');
-      var $desk = document.getElementById('desk');
-      $name.value = "Tegar Subagdja";
-      $desk.innerHTML = "Kita Coba Dlu";
-      $('#myModal').modal('show');
-
-
     }).catch(err => {
       console.error("Unable to start scanning:", err);
     });

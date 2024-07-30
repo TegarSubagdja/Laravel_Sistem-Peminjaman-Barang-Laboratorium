@@ -48,9 +48,10 @@ use App\Http\Controllers\pages\AccountSettingsNotifications;
 use App\Http\Controllers\authentications\ForgotPasswordBasic;
 use App\Http\Controllers\badge\badgeController;
 use App\Http\Controllers\detailScan\detailScanController;
+use App\Http\Controllers\rent\rentController;
 use App\Http\Controllers\user_interface\PaginationBreadcrumbs;
-use GuzzleHttp\Psr7\Request;
-use Illuminate\Http\Request as rq;
+use App\Models\Item;
+use Illuminate\Http\Request;
 
 // Main Page Route
 Route::get('/', [Analytics::class, 'index'])->name('dashboard')->middleware('guest');
@@ -62,7 +63,23 @@ Route::get('/inventory/basic', [InventoryController::class, 'index'])->name('inv
 Route::get('/request/basic', [RequestController::class, 'index'])->name('request-basic');
 
 // Telegram
-Route::post('/send-message', [TelegramController::class, 'sendMessage']);
+Route::post('/send-message', [TelegramController::class, 'sendMessage'])->name('sendMessage');
+
+// Rent
+Route::post('/rent', [rentController::class, 'rent'])->name('rent');
+
+// Test
+Route::post('/test', function (Request $req) {
+  // Mengambil item berdasarkan code
+  $item = Item::where('code', $req->decodeText)->firstOrFail();
+
+  // Mengambil nama laboratorium dari item tersebut
+  $item->lab;
+
+  return response()->json([
+    'item' => $item,
+  ]);
+});
 
 // Manage Menu Badge
 Route::get('/badge/add/{slug}/{badgeType}/{badgeText}', [badgeController::class, 'addBadge']);
@@ -77,15 +94,11 @@ Route::get('/data/{value}', function ($value) {
 
 Route::post('/data', [detailScanController::class, 'receiveData']);
 
-Route::post('/datas', function (rq $request) {
+Route::post('/datas', function (Request $request) {
   return response()->json([
     'message' => 'Data received successfully',
     'data' => $request->all(),
   ]);
-});
-
-Route::get('test', function () {
-  return view('testRotueAjax');
 });
 
 // layout
