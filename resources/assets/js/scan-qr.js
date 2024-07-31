@@ -27,12 +27,14 @@ function onScanSuccess(decodedText, decodedResult) {
 
       // Assuming response is the JSON object returned from the server
       var item = response.item;
+      var $code = document.getElementById('code');
       var $name = document.getElementById('name');
       var $desk = document.getElementById('desk');
       var $pic = document.getElementById('pic');
       var $lab = document.getElementById('lab');
 
       // Update the modal content
+      $code.value = item.id;
       $name.value = item.name;
       $desk.innerHTML = item.description;
       $pic.src = `${baseUrl}assets/img/items/${item.picture}`;

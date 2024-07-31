@@ -39,8 +39,8 @@
                     id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info" style="width: 1390px;">
                     <thead>
                         <tr>
-                            <th>Project</th>
-                            <th>Client</th>
+                            <th>User_id</th>
+                            <th>Item_id</th>
                             <th>Status</th>
                             <th>Rent</th>
                             <th>Due</th>
@@ -48,27 +48,33 @@
                         </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
-                        @for ($i = 0; $i < 100; $i++)
+                        @foreach ($dataRequest as $loan)
                             <tr>
                                 <td>
                                     <i class="bx bxl-angular bx-sm text-danger me-3"></i>
-                                    <span class="fw-medium">Project {{ $i }}</span>
+                                    <span class="fw-medium">{{ $loan->user_id }}</span>
                                 </td>
                                 <td>
-                                    Albert Cook as {{ $i }}
+                                    {{ $loan->item_id }}
                                 </td>
                                 <td>
-                                    @if ($i % 3 == 0)
-                                        <span class="badge bg-label-success me-1">Approved</span>
-                                    @else
-                                        <span class="badge bg-label-danger me-1">Rejected</span>
+                                    @if ($loan->status == 'waiting')
+                                        <span class="badge bg-label-secondary me-1">{{ $loan->status }}</span>
+                                    @elseif ($loan->status == 'approved')
+                                        <span class="badge bg-label-success me-1">{{ $loan->status }}</span>
+                                    @elseif ($loan->status == 'rejected')
+                                        <span class="badge bg-label-danger me-1">{{ $loan->status }}</span>
+                                    @elseif ($loan->status == 'cancelled')
+                                        <span class="badge bg-label-dark me-1">{{ $loan->status }}</span>
+                                    @elseif ($loan->status == 'done')
+                                        <span class="badge bg-label-info me-1">{{ $loan->status }}</span>
                                     @endif
                                 </td>
                                 <td>
-                                    Rent {{ $i }}
+                                    {{ $loan->loan_date }}
                                 </td>
                                 <td>
-                                    Due {{ $i }}
+                                    {{ $loan->return_date }}
                                 </td>
                                 <td>
                                     <div class="dropdown">
@@ -90,7 +96,7 @@
                                     </div>
                                 </td>
                             </tr>
-                        @endfor
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -127,8 +133,9 @@
                     <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
                     </div>
                 </div>
-                <div class="col-sm-12 fv-plugins-icon-container">
-                    <label class="form-label" for="basicEmail">Tanggal Peminjaman</label>
+                <div class="col-sm-12 fv-plugins-icon-container
+                    <label class="form-label"
+                    for="basicEmail">Tanggal Peminjaman</label>
                     <div class="input-group input-group-merge has-validation">
                         <span class="input-group-text"><i class="bx bx-calendar"></i></span>
                         <input type="date" id="basicEmail" name="basicEmail" class="form-control dt-email"

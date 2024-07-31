@@ -60,7 +60,7 @@ Route::get('/', [Analytics::class, 'index'])->name('dashboard')->middleware('aut
 Route::get('/inventory/basic', [InventoryController::class, 'index'])->name('inventory-basic');
 
 // Request
-Route::get('/request/basic', [RequestController::class, 'index'])->name('request-basic');
+Route::get('/request/basic', [RequestController::class, 'getRequest'])->name('request-basic');
 
 // Telegram
 Route::post('/send-message', [TelegramController::class, 'sendMessage'])->name('sendMessage');
@@ -71,6 +71,8 @@ Route::post('/rent', [rentController::class, 'rent'])->name('rent');
 // authentication
 Route::post('/login', [LoginBasic::class, 'auth'])->name('login');
 Route::post('/logout', [LoginBasic::class, 'logout'])->name('logout');
+Route::post('/register', [RegisterBasic::class, 'register'])->name('logout');
+
 Route::get('/auth/login-basic', [LoginBasic::class, 'index'])->name('auth-login-basic');
 Route::get('/auth/register-basic', [RegisterBasic::class, 'index'])->name('auth-register-basic');
 Route::get('/auth/forgot-password-basic', [ForgotPasswordBasic::class, 'index'])->name('auth-reset-password-basic');
@@ -78,10 +80,7 @@ Route::get('/auth/forgot-password-basic', [ForgotPasswordBasic::class, 'index'])
 // Test
 Route::post('/test', function (Request $req) {
   // Mengambil item berdasarkan code
-  $item = Item::where('code', $req->decodeText)->firstOrFail();
-
-  // Mengambil nama laboratorium dari item tersebut
-  $item->lab;
+  $item = Item::with('lab')->where('code', $req->decodeText)->first();
 
   return response()->json([
     'item' => $item,

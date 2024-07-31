@@ -16,25 +16,27 @@
                 <div class="card">
                     <div class="card-body">
                         <!-- Logo -->
-                        {{-- <div class="app-brand justify-content-center">
-                            <a href="{{ url('/') }}" class="app-brand-link gap-2">
-                                <span class="app-brand-logo demo">@include('_partials.macros', [
-                                    'width' => 25,
-                                    'withbg' => 'var(--bs-danger)',
-                                ])</span>
-                                <span
-                                    class="app-brand-text demo text-body fw-bold">{{ config('variables.templateName') }}</span>
+                        <div class="app-brand justify-content-center">
+                            <a href="{{ url('/') }}" class="app-brand-link">
+                                <img src="{{ asset('assets/img/logo/LOGOIF.png') }}" width="25" alt="">
+                                <span class="app-brand-text demo menu-text fw-bold ms-2">Informatika</span>
                             </a>
-                        </div>  --}}
+                        </div>
                         <!-- /Logo -->
                         <h4 class="mb-2">Selamat Datang di Laboratorium Informatika</h4>
                         <p class="mb-4">Silahkan untuk daftar terlebih dahulu.</p>
 
-                        <form id="formAuthentication" class="mb-3" action="{{ url('/') }}" method="GET">
+                        <form id="formAuthentication" class="mb-3" action="/register" method="POST">
+                            @csrf
+                            <div class="mb-3">
+                                <label for="username" class="form-label">Nama</label>
+                                <input type="text" class="form-control" id="username" name="username"
+                                    placeholder="Masukan Nama Lengkap" autofocus>
+                            </div>
                             <div class="mb-3">
                                 <label for="username" class="form-label">NRP</label>
-                                <input type="text" class="form-control" id="username" name="username"
-                                    placeholder="Daftar menggunakan NRP" autofocus>
+                                <input type="text" class="form-control" id="username" name="nrp"
+                                    placeholder="Masukan NRP">
                             </div>
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email</label>
@@ -45,12 +47,10 @@
                                 <label class="form-label" for="password">Password</label>
                                 <div class="input-group input-group-merge">
                                     <input type="password" id="password" class="form-control" name="password"
-                                        placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                                        aria-describedby="password" />
+                                        placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;" aria-describedby="password" />
                                     <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                                 </div>
                             </div>
-
                             {{-- <div class="mb-3">
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" id="terms-conditions" name="terms">

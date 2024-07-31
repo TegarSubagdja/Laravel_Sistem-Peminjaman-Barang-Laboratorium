@@ -35,10 +35,10 @@ class LoginBasic extends Controller
 
     $fieldType = $isEmail ? 'email' : 'nrp';
 
-    if (Auth::attempt([$fieldType => $credentials['identifier'], 'password' => $credentials['password']])) {
-      $request->session()->regenerate();
-      return redirect()->route('dashboard');
-    }
+      if (Auth::attempt([$fieldType => $credentials['identifier'], 'password' => $credentials['password']])) {
+        $request->session()->regenerate();
+        return redirect()->route('dashboard');
+      }
 
     echo 'Validation Not Success';
     exit;  // Tambahkan exit untuk menghentikan eksekusi dan melihat hasilnya
