@@ -67,8 +67,8 @@
 
         <li class="nav-item lh-1 me-3 d-none d-sm-block">
             <div class="col-12 col-sm-auto d-flex flex-column align-items-end">
-                <h6 class="mb-2 text-uppercase">Tegar Subagdja</h6>
-                <small class="text-muted">152021169</small>
+                <h6 class="mb-2 text-uppercase">{{ Auth::user()->name }}</h6>
+                <small class="text-muted">{{ Auth::user()->nrp }}</small>
             </div>
         </li>
 
@@ -126,10 +126,13 @@
                     <div class="dropdown-divider"></div>
                 </li>
                 <li>
-                    <a class="dropdown-item" href="javascript:void(0);">
-                        <i class='bx bx-power-off me-2'></i>
-                        <span class="align-middle">Log Out</span>
-                    </a>
+                    <form action="/logout" method="POST">
+                        @csrf
+                        <button class="dropdown-item" href="/logout">
+                            <i class='bx bx-power-off me-2'></i>
+                            <span class="align-middle">Log Out</span>
+                        </button>
+                    </form>
                 </li>
             </ul>
         </li>

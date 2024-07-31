@@ -54,7 +54,7 @@ use App\Models\Item;
 use Illuminate\Http\Request;
 
 // Main Page Route
-Route::get('/', [Analytics::class, 'index'])->name('dashboard')->middleware('guest');
+Route::get('/', [Analytics::class, 'index'])->name('dashboard')->middleware('auth');
 
 // inventory
 Route::get('/inventory/basic', [InventoryController::class, 'index'])->name('inventory-basic');
@@ -67,6 +67,13 @@ Route::post('/send-message', [TelegramController::class, 'sendMessage'])->name('
 
 // Rent
 Route::post('/rent', [rentController::class, 'rent'])->name('rent');
+
+// authentication
+Route::post('/login', [LoginBasic::class, 'auth'])->name('login');
+Route::post('/logout', [LoginBasic::class, 'logout'])->name('logout');
+Route::get('/auth/login-basic', [LoginBasic::class, 'index'])->name('auth-login-basic');
+Route::get('/auth/register-basic', [RegisterBasic::class, 'index'])->name('auth-register-basic');
+Route::get('/auth/forgot-password-basic', [ForgotPasswordBasic::class, 'index'])->name('auth-reset-password-basic');
 
 // Test
 Route::post('/test', function (Request $req) {
@@ -115,12 +122,6 @@ Route::get('/pages/account-settings-connections', [AccountSettingsConnections::c
 Route::get('/pages/misc-error', [MiscError::class, 'index'])->name('pages-misc-error');
 Route::get('/pages/misc-under-maintenance', [MiscUnderMaintenance::class, 'index'])->name('pages-misc-under-maintenance');
 
-// authentication
-Route::get('/login', [LoginBasic::class, 'index'])->name('login');
-Route::get('/auth/login-basic', [LoginBasic::class, 'index'])->name('auth-login-basic');
-Route::get('/auth/register-basic', [RegisterBasic::class, 'index'])->name('auth-register-basic');
-Route::get('/auth/forgot-password-basic', [ForgotPasswordBasic::class, 'index'])->name('auth-reset-password-basic');
-
 // cards
 Route::get('/cards/basic', [CardBasic::class, 'index'])->name('cards-basic');
 
@@ -162,7 +163,4 @@ Route::get('/form/layouts-horizontal', [HorizontalForm::class, 'index'])->name('
 
 // tables
 Route::get('/tables/basic', [TablesBasic::class, 'index'])->name('tables-basic');
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

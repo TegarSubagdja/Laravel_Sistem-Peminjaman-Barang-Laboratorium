@@ -15,20 +15,21 @@
                 <div class="card">
                     <div class="card-body">
                         <!-- Logo -->
-                        {{-- <div class="app-brand justify-content-center">
-                            <a href="{{ url('/') }}" class="app-brand-link gap-2">
-                                <img src="https://www.itenas.ac.id/wp-content/uploads/2020/07/Varian-Logo-Itenas-04-1024x260.png"
-                                    width="200" alt="">
+                        <div class="app-brand justify-content-center">
+                            <a href="{{ url('/') }}" class="app-brand-link">
+                                <img src="{{ asset('assets/img/logo/LOGOIF.png') }}" width="25" alt="">
+                                <span class="app-brand-text demo menu-text fw-bold ms-2">Informatika</span>
                             </a>
-                        </div> --}}
+                        </div>
                         <!-- /Logo -->
                         <h4 class="mb-2">Selamat Datang di Laboratorium Informatika</h4>
                         <p class="mb-4">Silahkan untuk login menggunakan user SIKAD</p>
 
-                        <form id="formAuthentication" class="mb-3" action="{{ url('/') }}" method="GET">
+                        <form id="formAuthentication" class="mb-3" action="/login" method="POST">
+                            @csrf
                             <div class="mb-3">
                                 <label for="email" class="form-label">NRP / NODOS</label>
-                                <input type="text" class="form-control" id="email" name="email-username"
+                                <input type="text" class="form-control" id="email" name="identifier"
                                     placeholder="Enter your email or username" autofocus>
                             </div>
                             <div class="mb-3 form-password-toggle">
@@ -40,8 +41,7 @@
                                 </div>
                                 <div class="input-group input-group-merge">
                                     <input type="password" id="password" class="form-control" name="password"
-                                        placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                                        aria-describedby="password" />
+                                        placeholder="" aria-describedby="password" />
                                     <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                                 </div>
                             </div>
