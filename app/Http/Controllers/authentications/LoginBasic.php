@@ -1,14 +1,31 @@
 <?php
 
-namespace App\Http\Controllers\authentications;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
 
-class LoginBasic extends Controller
+class LoginController extends Controller
 {
-  public function index()
+  /**
+   * Handle an authentication attempt.
+   */
+  public function authenticate(Request $request)
   {
-    return view('content.authentications.auth-login-basic');
+    $credentials = $request->validate([
+      'email' => ['required', 'email'],
+      'password' => ['required'],
+    ]);
+
+    if (Auth::attempt($credentials)) {
+      $request->session()->regenerate();
+
+      return redirect()->intended('dashboard');
+    }
+
+    return back()->withErrors([
+      'email' => 'The provided credentials do not match our records.',
+    ])->onlyInput('email');
   }
 }

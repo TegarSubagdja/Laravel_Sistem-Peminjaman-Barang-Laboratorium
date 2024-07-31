@@ -72,7 +72,7 @@
                                 <div class="col mb-3">
                                     <label for="nameWithTitle" class="form-label">Nama Barang</label>
                                     <input type="hidden" id="name" class="form-control" placeholder="Enter Name"
-                                        name="item">
+                                        name="item" readonly>
                                 </div>
                                 <div class="col mb-3">
                                     <label for="nameWithTitle" class="form-label">Jumlah</label>
@@ -106,7 +106,7 @@
         <div class="mb-3">
             <label class="form-label">Text Scan</label>
             <input type="text" class="form-control" name="decodeText" id="" aria-describedby="emailHelpId"
-                placeholder="abc@mail.com" value="102030" />
+                placeholder="abc@mail.com" value="102030" readonly/>
             <small id="emailHelpId" class="form-text text-muted">Help text</small>
             <button type="submit" class="btn btn-outline-danger">Submit</button>
         </div>

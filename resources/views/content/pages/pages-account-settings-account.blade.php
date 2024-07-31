@@ -29,31 +29,31 @@
                         <div class="row">
                             <div class="mb-3 col-md-6">
                                 <label for="firstName" class="form-label">NRP</label>
-                                <input disabled class="form-control" type="text" id="firstName" name="firstName" value="John"
+                                <input readonly class="form-control" type="text" id="firstName" name="firstName" value="John"
                                     autofocus />
                             </div>
                             <div class="mb-3 col-md-6">
                                 <label for="lastName" class="form-label">Nama</label>
-                                <input disabled class="form-control" type="text" name="lastName" id="lastName" value="Doe" />
+                                <input readonly class="form-control" type="text" name="lastName" id="lastName" value="Doe" />
                             </div>
                             <div class="mb-3 col-md-6">
                                 <label for="email" class="form-label">E-mail</label>
-                                <input disabled class="form-control" type="text" id="email" name="email"
+                                <input readonly class="form-control" type="text" id="email" name="email"
                                     value="john.doe@example.com" placeholder="john.doe@example.com" />
                             </div>
                             <div class="mb-3 col-md-6">
                                 <label for="organization" class="form-label">Nomer Telepon</label>
-                                <input disabled type="text" class="form-control" id="organization" name="organization"
+                                <input readonly type="text" class="form-control" id="organization" name="organization"
                                     value="082320317070" />
                             </div>
                             <div class="mb-3 col-md-6">
                                 <label for="organization" class="form-label">IPK</label>
-                                <input disabled type="text" class="form-control" id="organization" name="organization"
+                                <input readonly type="text" class="form-control" id="organization" name="organization"
                                     value="3.85" />
                             </div>
                             <div class="mb-3 col-md-6">
                                 <label for="address" class="form-label">Alamat</label>
-                                <input disabled type="text" class="form-control" id="address" name="address"
+                                <input readonly type="text" class="form-control" id="address" name="address"
                                     placeholder="Address" value="Cimahi" />
                             </div>
                         </div>

@@ -162,3 +162,7 @@ Route::get('/form/layouts-horizontal', [HorizontalForm::class, 'index'])->name('
 
 // tables
 Route::get('/tables/basic', [TablesBasic::class, 'index'])->name('tables-basic');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
