@@ -8,7 +8,7 @@ use App\Http\Controllers\icons\Boxicons;
 use App\Http\Controllers\cards\CardBasic;
 use App\Http\Controllers\pages\MiscError;
 use App\Http\Controllers\layouts\Container;
-use App\Http\Controllers\RequestController;
+use App\Http\Controllers\request\RequestController;
 use App\Http\Controllers\TelegramController;
 use App\Http\Controllers\dashboard\Analytics;
 use App\Http\Controllers\layouts\WithoutMenu;
@@ -60,12 +60,11 @@ Route::post('/detail-item', [InventoryController::class, 'getItem'])->name('deta
 // inventory
 Route::get('/inventory/basic', [InventoryController::class, 'index'])->name('inventory-basic');
 Route::post('/item', [InventoryController::class, 'getItems'])->name('detail');
+Route::post('/add-item', [InventoryController::class, 'addItem'])->name('addItem');
 
 // Request
+// Route::get('/request/basic', [RequestController::class, 'index'])->name('request-basic');
 Route::get('/request/basic', [RequestController::class, 'getRequest'])->name('request-basic');
-
-// Telegram
-Route::post('/send-message', [TelegramController::class, 'sendMessage'])->name('sendMessage');
 
 // Rent
 Route::post('/rent', [rentController::class, 'rent'])->name('rent');

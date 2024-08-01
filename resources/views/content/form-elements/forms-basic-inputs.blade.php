@@ -125,7 +125,7 @@
         </div>
         <div class="mb-3">
           <label for="defaultSelect" class="form-label">Default select</label>
-          <select id="defaultSelect" class="form-select">
+          <select id="defaultSelect" class="form-select" name="lab">
             <option>Default select</option>
             <option value="1">One</option>
             <option value="2">Two</option>

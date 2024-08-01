@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\request;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Models\Loan;
+use App\Http\Controllers\Controller;
 
 class RequestController extends Controller
 {

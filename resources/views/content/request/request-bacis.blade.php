@@ -51,7 +51,7 @@
                         @foreach ($dataRequest as $loan)
                             <tr>
                                 <td>
-                                    <i class="bx bxl-angular bx-sm text-danger me-3"></i>
+                                    <i class="bx bx-user bx-sm text-danger me-3"></i>
                                     <span class="fw-medium">{{ $loan->user->name }}</span>
                                 </td>
                                 <td>
@@ -70,7 +70,7 @@
                                         <span class="badge bg-label-info me-1">{{ $loan->status }}</span>
                                     @endif
                                 </td>
-                                <td>
+                                <td class="">
                                     {{ $loan->loan_date }}
                                 </td>
                                 <td>
