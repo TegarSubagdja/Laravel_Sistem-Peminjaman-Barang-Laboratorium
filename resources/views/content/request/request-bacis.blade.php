@@ -52,10 +52,10 @@
                             <tr>
                                 <td>
                                     <i class="bx bxl-angular bx-sm text-danger me-3"></i>
-                                    <span class="fw-medium">{{ $loan->user_id }}</span>
+                                    <span class="fw-medium">{{ $loan->user->name }}</span>
                                 </td>
                                 <td>
-                                    {{ $loan->item_id }}
+                                    {{ $loan->item->name }}
                                 </td>
                                 <td>
                                     @if ($loan->status == 'waiting')
@@ -83,10 +83,8 @@
                                         <div class="dropdown-menu">
                                             <a class="dropdown-item edit-record" href="javascript:void(0);"
                                                 data-bs-toggle="offcanvas" data-bs-target="#add-new-record"
-                                                data-fullname="John Doe {{ $i }}"
-                                                data-post="Web Developer {{ $i }}"
-                                                data-email="john.doe{{ $i }}@example.com"
-                                                data-date="01/01/202{{ $i % 10 }}" data-salary="12000">
+                                                data-fullname="{{ $loan->user_id }}" data-post="{{ $loan->item_id }}"
+                                                data-email="{{ $loan->loan_date }}" data-date="{{ $loan->return_date }}">
                                                 <i class="bx bx-edit-alt me-1"></i> Edit
                                             </a>
                                             <a class="dropdown-item" href="javascript:void(0);"><i
@@ -133,9 +131,8 @@
                     <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
                     </div>
                 </div>
-                <div class="col-sm-12 fv-plugins-icon-container
-                    <label class="form-label"
-                    for="basicEmail">Tanggal Peminjaman</label>
+                <div class="col-sm-12 fv-plugins-icon-container">
+                    <label class="form-label" for="basicEmail">Tanggal Peminjaman</label>
                     <div class="input-group input-group-merge has-validation">
                         <span class="input-group-text"><i class="bx bx-calendar"></i></span>
                         <input type="date" id="basicEmail" name="basicEmail" class="form-control dt-email"

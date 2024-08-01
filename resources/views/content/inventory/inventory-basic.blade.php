@@ -21,33 +21,33 @@
 
     {{-- Content --}}
     <div class="row mb-5">
-        @for ($i = 1; $i <= 10; $i++)
+        @foreach ($items as $item)
             <div class="col-md-6 col-lg-4 mb-3">
                 <div class="card h-100">
                     <div class="card-body">
-                        <h5 class="card-title">Gerinda Tangan</h5>
-                        <h6 class="card-subtitle text-muted">Orion w500</h6>
-                        <img class="img-fluid d-flex mx-auto my-4 rounded"
-                            src="https://down-id.img.susercontent.com/file/88afadb4117b4049ece5c8d3d4f04ce8"
-                            alt="Card image cap">
-                        @if ($i % 2 == 0)
-                            <h6 class="badge bg-label-warning">Multimedia</h6>
-                        @elseif ($i % 3 == 0)
-                            <h6 class="badge bg-label-danger">Jaringan</h6>
-                        @elseif ($i % 5 == 0)
-                            <h6 class="badge bg-label-info">ICT</h6>
+                        <h5 class="card-title">{{ $item->name }}</h5>
+                        @if ($item->lab->name == 'Lab ICT')
+                            <h6 class="badge bg-label-warning">{{ $item->lab->name }}</h6>
+                        @elseif ($item->lab->name == 'Jaringan Komputer')
+                            <h6 class="badge bg-label-danger">{{ $item->lab->name }}</h6>
+                        @elseif ($item->lab->name == 'Basis Data')
+                            <h6 class="badge bg-label-info">{{ $item->lab->name }}</h6>
                         @else
-                            <h6 class="badge bg-label-success">Basis Data</h6>
+                            <h6 class="badge bg-label-success">{{ $item->lab->name }}</h6>
                         @endif
-                        <p class="card-text">Bear claw sesame snaps gummies chocolate.</p>
+                        <img class="img-fluid d-flex mx-auto mb-4 rounded"
+                            src="{{ asset('assets/img/items/' . $item->picture) }}" alt="Card image cap">
+                        <h6>Deskripsi</h6>
+                        <p class="card-text">{{ $item->description }}</p>
                         <button type="button" class="btn btn-outline-danger">
                             <span class="tf-icons bx bx-pie-chart-alt me-1"></span>Pinjam
                         </button>
                     </div>
                 </div>
             </div>
-        @endfor
+        @endforeach
     </div>
+    {{ $items->links() }}
 
     {{-- Modal --}}
     <div class="offcanvas offcanvas-end" id="add-new-record">
@@ -114,7 +114,7 @@
                     </div>
                 </div>
                 <div class="col-sm-12 mt-4">
-                    <button type="submit" class="btn btn-danger data-submit me-sm-3 me-1">Simpan</button>
+                    <butt type="submit" class="btn btn-danger data-submit me-sm-3 me-1">Simpan</butt on>
                     <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="offcanvas">Batal</button>
                 </div>
                 <input type="hidden">

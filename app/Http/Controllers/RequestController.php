@@ -16,7 +16,7 @@ class RequestController extends Controller
 
   public function getRequest()
   {
-    $dataRequest = Loan::all();
+    $dataRequest = Loan::with(['user', 'item'])->get();
 
     // return view('loans.index', ['loans' => $dataRequest]);
     return view('content.request.request-bacis', compact('dataRequest'));

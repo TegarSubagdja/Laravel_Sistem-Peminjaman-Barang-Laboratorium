@@ -53,11 +53,13 @@ use App\Http\Controllers\user_interface\PaginationBreadcrumbs;
 use App\Models\Item;
 use Illuminate\Http\Request;
 
-// Main Page Route
+// Dashboard
 Route::get('/', [Analytics::class, 'index'])->name('dashboard')->middleware('auth');
+Route::post('/detail-item', [InventoryController::class, 'getItem'])->name('detail');
 
 // inventory
 Route::get('/inventory/basic', [InventoryController::class, 'index'])->name('inventory-basic');
+Route::post('/item', [InventoryController::class, 'getItems'])->name('detail');
 
 // Request
 Route::get('/request/basic', [RequestController::class, 'getRequest'])->name('request-basic');
@@ -76,16 +78,6 @@ Route::post('/register', [RegisterBasic::class, 'register'])->name('logout');
 Route::get('/auth/login-basic', [LoginBasic::class, 'index'])->name('auth-login-basic');
 Route::get('/auth/register-basic', [RegisterBasic::class, 'index'])->name('auth-register-basic');
 Route::get('/auth/forgot-password-basic', [ForgotPasswordBasic::class, 'index'])->name('auth-reset-password-basic');
-
-// Test
-Route::post('/test', function (Request $req) {
-  // Mengambil item berdasarkan code
-  $item = Item::with('lab')->where('code', $req->decodeText)->first();
-
-  return response()->json([
-    'item' => $item,
-  ]);
-});
 
 // Manage Menu Badge
 Route::get('/badge/add/{slug}/{badgeType}/{badgeText}', [badgeController::class, 'addBadge']);

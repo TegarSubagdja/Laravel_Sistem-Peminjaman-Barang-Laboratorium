@@ -29,32 +29,33 @@
                         <div class="row">
                             <div class="mb-3 col-md-6">
                                 <label for="firstName" class="form-label">NRP</label>
-                                <input readonly class="form-control" type="text" id="firstName" name="firstName" value="John"
-                                    autofocus />
+                                <input readonly class="form-control" type="text" id="firstName" name="firstName"
+                                    value="{{ Auth::user()->nrp }}" />
                             </div>
                             <div class="mb-3 col-md-6">
                                 <label for="lastName" class="form-label">Nama</label>
-                                <input readonly class="form-control" type="text" name="lastName" id="lastName" value="Doe" />
+                                <input readonly class="form-control" type="text" name="lastName" id="lastName"
+                                    value="{{ Auth::user()->name }}" />
                             </div>
                             <div class="mb-3 col-md-6">
                                 <label for="email" class="form-label">E-mail</label>
                                 <input readonly class="form-control" type="text" id="email" name="email"
-                                    value="john.doe@example.com" placeholder="john.doe@example.com" />
+                                    value="{{ Auth::user()->email }}" placeholder="john.doe@example.com" />
                             </div>
                             <div class="mb-3 col-md-6">
                                 <label for="organization" class="form-label">Nomer Telepon</label>
                                 <input readonly type="text" class="form-control" id="organization" name="organization"
-                                    value="082320317070" />
+                                    value="-" />
                             </div>
                             <div class="mb-3 col-md-6">
                                 <label for="organization" class="form-label">IPK</label>
                                 <input readonly type="text" class="form-control" id="organization" name="organization"
-                                    value="3.85" />
+                                    value="-" />
                             </div>
                             <div class="mb-3 col-md-6">
                                 <label for="address" class="form-label">Alamat</label>
                                 <input readonly type="text" class="form-control" id="address" name="address"
-                                    placeholder="Address" value="Cimahi" />
+                                    placeholder="-" value="Cimahi" />
                             </div>
                         </div>
                         {{-- <div class="mt-2">

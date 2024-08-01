@@ -13,7 +13,7 @@ function onScanSuccess(decodedText, decodedResult) {
   console.log(`Code matched = ${decodedText}`, decodedResult);
 
   $.ajax({
-    url: '/test',
+    url: '/detail-item',
     type: 'POST',
     contentType: 'application/json',
     data: JSON.stringify({
