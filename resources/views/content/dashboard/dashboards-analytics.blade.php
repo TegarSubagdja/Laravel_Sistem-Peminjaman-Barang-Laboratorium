@@ -39,8 +39,20 @@
             <a class="dropdown-item" href="/badge/add/request-basic/danger/15">Add Badge</a>
             <a class="dropdown-item" href="/badge/remove/request-basic">Remove Badge</a>
             <a class="dropdown-item" href="/test">Test Route</a>
+            <a class="dropdown-item" href="/isAdmin">Text Fungsi di model</a>
         </div>
     </div>
+
+    <form action="/test" method="POST">
+        @csrf
+        <div class="mb-3">
+            <label class="form-label">Text Scan</label>
+            <input type="text" class="form-control" name="decodeText" id="" aria-describedby="emailHelpId"
+                placeholder="abc@mail.com" value="102030" readonly />
+            <small id="emailHelpId" class="form-text text-muted">Help text</small>
+            <button type="submit" class="btn btn-outline-danger">Submit</button>
+        </div>
+    </form>
 
     <!-- Modal -->
     <form action="/rent" method="POST">
@@ -106,16 +118,6 @@
         </div>
     </form>
 
-    <form action="/test" method="POST">
-        @csrf
-        <div class="mb-3">
-            <label class="form-label">Text Scan</label>
-            <input type="text" class="form-control" name="decodeText" id="" aria-describedby="emailHelpId"
-                placeholder="abc@mail.com" value="102030" readonly />
-            <small id="emailHelpId" class="form-text text-muted">Help text</small>
-            <button type="submit" class="btn btn-outline-danger">Submit</button>
-        </div>
-    </form>
     <!-- Blade Template -->
     <script>
         var baseUrl = "{{ asset('') }}";

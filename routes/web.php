@@ -52,50 +52,54 @@ use App\Http\Controllers\rent\rentController;
 use App\Http\Controllers\user_interface\PaginationBreadcrumbs;
 use App\Models\Item;
 use Illuminate\Http\Request;
-
-// Dashboard
-Route::get('/', [Analytics::class, 'index'])->name('dashboard')->middleware('auth');
-Route::post('/detail-item', [InventoryController::class, 'getItem'])->name('detail');
-
-// inventory
-Route::get('/inventory/basic', [InventoryController::class, 'index'])->name('inventory-basic');
-Route::post('/item', [InventoryController::class, 'getItems'])->name('detail');
-Route::post('/add-item', [InventoryController::class, 'addItem'])->name('addItem');
-
-// Request
-// Route::get('/request/basic', [RequestController::class, 'index'])->name('request-basic');
-Route::get('/request/basic', [RequestController::class, 'getRequest'])->name('request-basic');
-
-// Rent
-Route::post('/rent', [rentController::class, 'rent'])->name('rent');
+use Illuminate\Support\Facades\Auth;
 
 // authentication
 Route::post('/login', [LoginBasic::class, 'auth'])->name('login');
-Route::post('/logout', [LoginBasic::class, 'logout'])->name('logout');
-Route::post('/register', [RegisterBasic::class, 'register'])->name('logout');
-
 Route::get('/auth/login-basic', [LoginBasic::class, 'index'])->name('auth-login-basic');
 Route::get('/auth/register-basic', [RegisterBasic::class, 'index'])->name('auth-register-basic');
 Route::get('/auth/forgot-password-basic', [ForgotPasswordBasic::class, 'index'])->name('auth-reset-password-basic');
 
-// Manage Menu Badge
-Route::get('/badge/add/{slug}/{badgeType}/{badgeText}', [badgeController::class, 'addBadge']);
-Route::get('/badge/remove/{slug}', [badgeController::class, 'removeBadge']);
+Route::middleware('auth')->group(function () {
 
-// Result Scanner
-Route::get('/data/{value}', [detailScanController::class, 'index']);
+  // Auth
+  Route::post('/logout', [LoginBasic::class, 'logout'])->name('logout');
+  Route::post('/register', [RegisterBasic::class, 'register'])->name('register');
 
-Route::get('/data/{value}', function ($value) {
-  return response()->json(['success' => true, 'data' => $value]);
-});
+  // Dashboard
+  Route::get('/', [Analytics::class, 'index'])->name('dashboard')->middleware('auth');
+  Route::post('/detail-item', [InventoryController::class, 'getItem'])->name('detail');
 
-Route::post('/data', [detailScanController::class, 'receiveData']);
+  // inventory
+  Route::get('/inventory/basic', [InventoryController::class, 'index'])->name('inventory-basic');
+  Route::post('/item', [InventoryController::class, 'getItems'])->name('detail');
+  Route::post('/add-item', [InventoryController::class, 'addItem'])->name('addItem');
 
-Route::post('/datas', function (Request $request) {
-  return response()->json([
-    'message' => 'Data received successfully',
-    'data' => $request->all(),
-  ]);
+  // Request
+  Route::get('/request/basic', [RequestController::class, 'getRequest'])->name('request-basic');
+
+  // Rent
+  Route::post('/rent', [rentController::class, 'rent'])->name('rent');
+
+  // Manage Menu Badge
+  Route::get('/badge/add/{slug}/{badgeType}/{badgeText}', [badgeController::class, 'addBadge']);
+  Route::get('/badge/remove/{slug}', [badgeController::class, 'removeBadge']);
+
+  // Result Scanner
+  Route::get('/data/{value}', [detailScanController::class, 'index']);
+
+  Route::get('/data/{value}', function ($value) {
+    return response()->json(['success' => true, 'data' => $value]);
+  });
+
+  Route::post('/data', [detailScanController::class, 'receiveData']);
+
+  Route::post('/datas', function (Request $request) {
+    return response()->json([
+      'message' => 'Data received successfully',
+      'data' => $request->all(),
+    ]);
+  });
 });
 
 // layout

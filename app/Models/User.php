@@ -27,4 +27,9 @@ class User extends Authenticatable
   {
     return $this->hasMany(Loan::class);
   }
+
+  public function isAdmin()
+  {
+    return $this->role === 'admin'; // Asumsikan ada atribut 'role' pada tabel user
+  }
 }

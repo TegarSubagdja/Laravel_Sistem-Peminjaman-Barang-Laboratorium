@@ -21,14 +21,6 @@
                         <div class="dt-buttons flex-wrap" id="export">
                             {{-- Export Button --}}
                             <div id="exportButtons" class="btn-group"></div>
-                            {{-- Button Add New Record --}}
-                            <button class="btn btn-danger create-new" tabindex="0" aria-controls="DataTables_Table_0"
-                                type="button" data-bs-toggle="offcanvas" data-bs-target="#add-new-record">
-                                <span>
-                                    <i class="bx bx-plus bx-sm me-sm-2"></i>
-                                    <span class="d-none d-sm-inline-block">Tambar Record</span>
-                                </span>
-                            </button>
                         </div>
                     </div>
                 </div>
@@ -48,33 +40,33 @@
                         </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
-                        @foreach ($dataRequest as $loan)
+                        @foreach ($requests as $req)
                             <tr>
                                 <td>
                                     <i class="bx bx-user bx-sm text-danger me-3"></i>
-                                    <span class="fw-medium">{{ $loan->user->name }}</span>
+                                    <span class="fw-medium">{{ $req->user->name }}</span>
                                 </td>
                                 <td>
-                                    {{ $loan->item->name }}
+                                    {{ $req->item->name }}
                                 </td>
                                 <td>
-                                    @if ($loan->status == 'waiting')
-                                        <span class="badge bg-label-secondary me-1">{{ $loan->status }}</span>
-                                    @elseif ($loan->status == 'approved')
-                                        <span class="badge bg-label-success me-1">{{ $loan->status }}</span>
-                                    @elseif ($loan->status == 'rejected')
-                                        <span class="badge bg-label-danger me-1">{{ $loan->status }}</span>
-                                    @elseif ($loan->status == 'cancelled')
-                                        <span class="badge bg-label-dark me-1">{{ $loan->status }}</span>
-                                    @elseif ($loan->status == 'done')
-                                        <span class="badge bg-label-info me-1">{{ $loan->status }}</span>
+                                    @if ($req->status == 'waiting')
+                                        <span class="badge bg-label-warning me-1">{{ $req->status }}</span>
+                                    @elseif ($req->status == 'approved')
+                                        <span class="badge bg-label-success me-1">{{ $req->status }}</span>
+                                    @elseif ($req->status == 'rejected')
+                                        <span class="badge bg-label-danger me-1">{{ $req->status }}</span>
+                                    @elseif ($req->status == 'cancelled')
+                                        <span class="badge bg-label-dark me-1">{{ $req->status }}</span>
+                                    @elseif ($req->status == 'done')
+                                        <span class="badge bg-label-info me-1">{{ $req->status }}</span>
                                     @endif
                                 </td>
-                                <td class="">
-                                    {{ $loan->loan_date }}
+                                <td class="small">
+                                    {{ $req->loan_date }}
                                 </td>
-                                <td>
-                                    {{ $loan->return_date }}
+                                <td class="small">
+                                    {{ $req->return_date }}
                                 </td>
                                 <td>
                                     <div class="dropdown">
@@ -83,8 +75,8 @@
                                         <div class="dropdown-menu">
                                             <a class="dropdown-item edit-record" href="javascript:void(0);"
                                                 data-bs-toggle="offcanvas" data-bs-target="#add-new-record"
-                                                data-fullname="{{ $loan->user_id }}" data-post="{{ $loan->item_id }}"
-                                                data-email="{{ $loan->loan_date }}" data-date="{{ $loan->return_date }}">
+                                                data-fullname="{{ $req->user_id }}" data-post="{{ $req->item_id }}"
+                                                data-email="{{ $req->loan_date }}" data-date="{{ $req->return_date }}">
                                                 <i class="bx bx-edit-alt me-1"></i> Edit
                                             </a>
                                             <a class="dropdown-item" href="javascript:void(0);"><i
