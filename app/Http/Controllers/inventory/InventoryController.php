@@ -13,10 +13,18 @@ use Illuminate\Support\Facades\Storage;
 class InventoryController extends Controller
 {
   //
-  public function index()
+  public function index(Request $request)
   {
-    $items = Item::with('lab')->paginate(9);
+    $search = $request->input('search');
+
+    if ($search) {
+      $items = Item::search($search)->paginate(9);
+    } else {
+      $items = Item::with('lab')->paginate(9);
+    }
+
     $labs = Lab::all();
+
     return view('content.inventory.inventory-basic', compact('items', 'labs'));
   }
 

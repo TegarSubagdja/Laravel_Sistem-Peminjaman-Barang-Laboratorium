@@ -37,13 +37,16 @@
 <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
     @if (Route::is('inventory-basic'))
         <!-- Search -->
-        <div class="navbar-nav align-items-center">
-            <div class="nav-item d-flex align-items-center">
-                <i class="bx bx-search fs-4 lh-0"></i>
-                <input type="text" class="form-control border-0 shadow-none ps-1 ps-sm-2" placeholder="Search..."
-                    aria-label="Search...">
-            </div>
-        </div>
+        <form action="/inventory/basic" method="GET">
+          @csrf
+          <div class="navbar-nav align-items-center">
+              <div class="nav-item d-flex align-items-center">
+                  <i class="bx bx-search fs-4 lh-0"></i>
+                  <input type="text" class="form-control border-0 shadow-none ps-1 ps-sm-2" placeholder="Search..."
+                      aria-label="Search..." name="search">
+              </div>
+          </div>
+        </form>
         <!-- /Search -->
     @else
         <!-- Search -->

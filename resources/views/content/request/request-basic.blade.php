@@ -14,7 +14,7 @@
         <div class="card-datatable table-responsive">
             <div class="dataTables_wrapper dt-bootstrap5 no-footer" id="DataTables_Table_0_wrapper">
                 <div class="card-header flex-column flex-md-row pb-2">
-                    <div class="head-label text-center">
+                    <div class="head-label text-start">
                         <h5 class="card-title mb-0">DataTable with Buttons</h5>
                     </div>
                     <div class="dt-action-buttons text-end p-sm-2">
@@ -31,25 +31,27 @@
                     id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info" style="width: 1390px;">
                     <thead>
                         <tr>
-                            <th>User_id</th>
-                            <th>Item_id</th>
-                            <th>Status</th>
-                            <th>Rent</th>
-                            <th>Due</th>
-                            <th>Actions</th>
+                            <th class="text-start">User_id</th>
+                            <th class="text-start">Item_id</th>
+                            <th class="text-start">Status</th>
+                            <th class="text-start">Rent</th>
+                            <th class="text-start">Due</th>
+                            @if (auth()->user()->isAdmin())
+                                <th class="text-start">Actions</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
                         @foreach ($requests as $req)
                             <tr>
-                                <td>
+                                <td class="text-start">
                                     <i class="bx bx-user bx-sm text-danger me-3"></i>
                                     <span class="fw-medium">{{ $req->user->name }}</span>
                                 </td>
-                                <td>
+                                <td class="text-start">
                                     {{ $req->item->name }}
                                 </td>
-                                <td>
+                                <td class="text-start">
                                     @if ($req->status == 'waiting')
                                         <span class="badge bg-label-warning me-1">{{ $req->status }}</span>
                                     @elseif ($req->status == 'approved')
@@ -62,29 +64,32 @@
                                         <span class="badge bg-label-info me-1">{{ $req->status }}</span>
                                     @endif
                                 </td>
-                                <td class="small">
+                                <td class="text-start small">
                                     {{ $req->loan_date }}
                                 </td>
-                                <td class="small">
+                                <td class="text-start small">
                                     {{ $req->return_date }}
                                 </td>
-                                <td>
-                                    <div class="dropdown">
-                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                            data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
-                                        <div class="dropdown-menu">
-                                            <a class="dropdown-item edit-record" href="javascript:void(0);"
-                                                data-bs-toggle="offcanvas" data-bs-target="#add-new-record"
-                                                data-fullname="{{ $req->user_id }}" data-post="{{ $req->item_id }}"
-                                                data-email="{{ $req->loan_date }}" data-date="{{ $req->return_date }}">
-                                                <i class="bx bx-edit-alt me-1"></i> Edit
-                                            </a>
-                                            <a class="dropdown-item" href="javascript:void(0);"><i
-                                                    class="bx bx-trash me-1"></i>
-                                                Delete</a>
+                                @if (auth()->user()->isAdmin())
+                                    <td class="text-start">
+                                        <div class="dropdown">
+                                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
+                                                data-bs-toggle="dropdown"><i
+                                                    class="bx bx-dots-vertical-rounded"></i></button>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item edit-record" href="javascript:void(0);"
+                                                    data-bs-toggle="offcanvas" data-bs-target="#add-new-record"
+                                                    data-fullname="{{ $req->user_id }}" data-post="{{ $req->item_id }}"
+                                                    data-email="{{ $req->loan_date }}"
+                                                    data-date="{{ $req->return_date }}">
+                                                    <i class="bx bx-edit-alt me-1"></i> Edit
+                                                </a>
+                                                <a class="dropdown-item" href="javascript:void(0);"><i
+                                                        class="bx bx-trash me-1"></i> Delete</a>
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
+                                    </td>
+                                @endif
                             </tr>
                         @endforeach
                     </tbody>

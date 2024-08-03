@@ -74,6 +74,7 @@ Route::middleware('auth')->group(function () {
   Route::get('/inventory/basic', [InventoryController::class, 'index'])->name('inventory-basic');
   Route::post('/item', [InventoryController::class, 'getItems'])->name('detail');
   Route::post('/add-item', [InventoryController::class, 'addItem'])->name('addItem');
+  Route::get('/inventory/search', [InventoryController::class, 'search'])->name('search');
 
   // Request
   Route::get('/request/basic', [RequestController::class, 'getRequest'])->name('request-basic');
