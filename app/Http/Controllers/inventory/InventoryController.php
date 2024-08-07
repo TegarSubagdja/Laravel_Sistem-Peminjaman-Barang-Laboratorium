@@ -25,7 +25,7 @@ class InventoryController extends Controller
 
     $labs = Lab::all();
 
-    return view('content.inventory.inventory-basic', compact('items', 'labs'));
+    return view('content.inventory.inventory-basic', compact('items', 'labs', 'search'));
   }
 
   public function getItem(Request $req)

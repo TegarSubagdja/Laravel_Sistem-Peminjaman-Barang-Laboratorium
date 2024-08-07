@@ -13,7 +13,7 @@ class CreateItemsTable extends Migration
       $table->string('name');
       $table->text('description');
       $table->string('picture')->nullable();
-      $table->string('code')->unique();
+      $table->unsignedBigInteger('code')->unique();
       $table->foreignId('lab_id')->constrained('labs')->onDelete('cascade');
       $table->timestamps();
     });

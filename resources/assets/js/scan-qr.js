@@ -34,7 +34,7 @@ function onScanSuccess(decodedText, decodedResult) {
       var $lab = document.getElementById('lab');
 
       // Update the modal content
-      $code.value = item.id;
+      $code.value = item.code;
       $name.value = item.name;
       $desk.innerHTML = item.description;
       $pic.src = `${baseUrl}assets/img/items/${item.picture}`;

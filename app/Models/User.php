@@ -25,11 +25,11 @@ class User extends Authenticatable
 
   public function loans()
   {
-    return $this->hasMany(Loan::class);
+    return $this->hasMany(Loan::class, 'user_id', 'nrp');
   }
 
   public function isAdmin()
   {
-    return $this->role === 'admin'; // Asumsikan ada atribut 'role' pada tabel user
+    return $this->role === 'admin';
   }
 }

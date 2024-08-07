@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\layouts\Blank;
@@ -49,10 +50,15 @@ use App\Http\Controllers\authentications\ForgotPasswordBasic;
 use App\Http\Controllers\badge\badgeController;
 use App\Http\Controllers\detailScan\detailScanController;
 use App\Http\Controllers\rent\rentController;
+use App\Http\Controllers\user\userController;
 use App\Http\Controllers\user_interface\PaginationBreadcrumbs;
 use App\Models\Item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+
+// livesearch
+Route::get('/index', [userController::class, 'index'])->name('index');
+Route::get('/search', [userController::class, 'search'])->name('search');
 
 // authentication
 Route::post('/login', [LoginBasic::class, 'auth'])->name('login');
@@ -67,14 +73,26 @@ Route::middleware('auth')->group(function () {
   Route::post('/register', [RegisterBasic::class, 'register'])->name('register');
 
   // Dashboard
-  Route::get('/', [Analytics::class, 'index'])->name('dashboard')->middleware('auth');
+  Route::get('/', [Analytics::class, 'index'])->name('dashboard');
   Route::post('/detail-item', [InventoryController::class, 'getItem'])->name('detail');
 
   // inventory
   Route::get('/inventory/basic', [InventoryController::class, 'index'])->name('inventory-basic');
   Route::post('/item', [InventoryController::class, 'getItems'])->name('detail');
-  Route::post('/add-item', [InventoryController::class, 'addItem'])->name('addItem');
   Route::get('/inventory/search', [InventoryController::class, 'search'])->name('search');
+
+  // Admin
+
+  // Admin Access
+  Route::middleware('admin')->group(function () {
+    Route::get('/admin-panel', [AdminController::class, 'index'])->name('admin-panel');
+    Route::post('/add-item', [InventoryController::class, 'addItem'])->name('addItem');
+    Route::post('/add-loan', [RequestController::class, 'user'])->name('addLoan');
+    Route::post('/add-loan-new', [RequestController::class, 'newUser'])->name('addLoan.new');
+    Route::post('/approve/{id_loan}', [RequestController::class, 'approve'])->name('approve');
+    Route::post('/done/{id_loan}', [RequestController::class, 'done'])->name('done');
+    Route::post('/delete/{id_loan}', [RequestController::class, 'delete'])->name('delete');
+  });
 
   // Request
   Route::get('/request/basic', [RequestController::class, 'getRequest'])->name('request-basic');
@@ -86,21 +104,21 @@ Route::middleware('auth')->group(function () {
   Route::get('/badge/add/{slug}/{badgeType}/{badgeText}', [badgeController::class, 'addBadge']);
   Route::get('/badge/remove/{slug}', [badgeController::class, 'removeBadge']);
 
-  // Result Scanner
-  Route::get('/data/{value}', [detailScanController::class, 'index']);
+  // // Result Scanner
+  // Route::get('/data/{value}', [detailScanController::class, 'index']);
 
-  Route::get('/data/{value}', function ($value) {
-    return response()->json(['success' => true, 'data' => $value]);
-  });
+  // Route::get('/data/{value}', function ($value) {
+  //   return response()->json(['success' => true, 'data' => $value]);
+  // });
 
-  Route::post('/data', [detailScanController::class, 'receiveData']);
+  // Route::post('/data', [detailScanController::class, 'receiveData']);
 
-  Route::post('/datas', function (Request $request) {
-    return response()->json([
-      'message' => 'Data received successfully',
-      'data' => $request->all(),
-    ]);
-  });
+  // Route::post('/datas', function (Request $request) {
+  //   return response()->json([
+  //     'message' => 'Data received successfully',
+  //     'data' => $request->all(),
+  //   ]);
+  // });
 });
 
 // layout

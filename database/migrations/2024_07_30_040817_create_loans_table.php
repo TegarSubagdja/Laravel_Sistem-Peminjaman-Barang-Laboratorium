@@ -10,8 +10,10 @@ class CreateLoansTable extends Migration
   {
     Schema::create('loans', function (Blueprint $table) {
       $table->id();
-      $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-      $table->foreignId('item_id')->constrained('items')->onDelete('cascade');
+      $table->unsignedBigInteger('user_id');
+      $table->unsignedBigInteger('item_id');
+      $table->foreign('user_id')->references('nrp')->on('users')->onDelete('cascade');
+      $table->foreign('item_id')->references('code')->on('items')->onDelete('cascade');
       $table->dateTime('loan_date');
       $table->dateTime('return_date')->nullable();
       $table->enum('status', ['waiting', 'approved', 'rejected', 'done', 'cancelled'])->default('waiting');

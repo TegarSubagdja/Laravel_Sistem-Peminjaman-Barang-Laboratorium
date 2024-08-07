@@ -14,9 +14,9 @@
 
 <!-- Datatables -->
 @if (Route::is('request-basic'))
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script> --}}
-    <script src="{{ asset('assets/vendor/libs/DataTables/datatables.min.js') }}"></script>
     @if (Auth::user()->isAdmin())
+        <script src="{{ asset('assets/vendor/libs/DataTables/datatables.min.js') }}"></script>
+        <script src="{{ asset('assets/vendor/libs/Typehead/bootstrap3-typeahead.min.js') }}"></script>
         <script>
             $(document).ready(function() {
                 var table = $('#DataTables_Table_0').DataTable({
@@ -58,7 +58,12 @@
                             {
                                 extend: 'print',
                                 className: 'dropdown-item',
-                                text: '<i class="bx bx-printer me-2"></i> Print'
+                                text: '<i class="bx bx-printer me-2"></i> Print',
+                                exportOptions: {
+                                    columns: [0, 1, 2, 3, 4]
+                                },
+                                title: 'Rekap Peminjaman Barang Laboratorium Informatika',
+                                messageTop: 'Rekap Peminjaman Barang Laboratorium'
                             }
                         ]
                     }],
@@ -73,6 +78,20 @@
                     <span class="d-none d-sm-inline-block">Tambah Record</span>
                 </span>
             </button>`);
+            });
+        </script>
+        <script type="text/javascript">
+            var path = "/search";
+            $('#nomorIndukPencarian').typeahead({
+                source: function(query, process) {
+                    return $.get(path, {
+                        query: query
+                    }, function(data) {
+                        return process(data.map(function(user) {
+                            return user.nrp + ' ' + user.name;
+                        }));
+                    });
+                }
             });
         </script>
     @else

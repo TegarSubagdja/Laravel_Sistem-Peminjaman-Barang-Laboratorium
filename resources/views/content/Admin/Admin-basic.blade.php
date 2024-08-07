@@ -10,7 +10,7 @@
 
     <h4 class="py-3 mb-4">
         <span class="text-muted fw-light">Dashboard /</span>
-        <span class="text-danger">Request</span>
+        <span class="text-danger">Admin</span>
     </h4>
     @if (session('success'))
         <div class="alert alert-danger alert-dismissible" role="alert">
@@ -25,7 +25,7 @@
             <div class="dataTables_wrapper dt-bootstrap5 no-footer" id="DataTables_Table_0_wrapper">
                 <div class="card-header flex-column flex-md-row pb-2">
                     <div class="head-label text-start small">
-                        <h5 class="card-title mb-0">Daftar Pengajuan</h5>
+                        <h5 class="card-title mb-0">Daftar Pengguna</h5>
                     </div>
                     <div class="dt-action-buttons text-end p-sm-2">
                         <div class="dt-buttons flex-wrap" id="export">
@@ -41,92 +41,25 @@
                     id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info" style="width: 1390px;">
                     <thead>
                         <tr>
+                            <th class="text-start small">NRP</th>
                             <th class="text-start small">Nama</th>
-                            <th class="text-start small">Item</th>
-                            <th class="text-start small">Status</th>
-                            <th class="text-start small">Tanggal Pinjam</th>
-                            <th class="text-start small">Tanggal Kembali</th>
-                            <th class="text-start small">Keterangan</th>
+                            <th class="text-start small">E-Mail</th>
+                            <th class="text-start small">Password</th>
+                            <th class="text-start small">Role</th>
                             @if (auth()->user()->isAdmin())
                                 <th class="text-start small">Actions</th>
                             @endif
                         </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
-                        @foreach ($requests as $req)
+                        @foreach ($users as $user)
                             <tr>
-                                <td class="text-start small">
-                                    {{-- <i class="bx bx-user bx-sm text-danger me-3"></i> --}}
-                                    <span class="fw-medium">{{ $req->user->name }}</span>
-                                </td>
-                                <td class="text-start small">
-                                    {{ $req->item->name }}
-                                </td>
-                                <td class="text-start small">
-                                    @if ($req->status == 'waiting')
-                                        <span class="badge bg-label-warning me-1">{{ $req->status }}</span>
-                                    @elseif ($req->status == 'approved')
-                                        <span class="badge bg-label-success me-1">{{ $req->status }}</span>
-                                    @elseif ($req->status == 'rejected')
-                                        <span class="badge bg-label-danger me-1">{{ $req->status }}</span>
-                                    @elseif ($req->status == 'cancelled')
-                                        <span class="badge bg-label-dark me-1">{{ $req->status }}</span>
-                                    @elseif ($req->status == 'done')
-                                        <span class="badge bg-label-info me-1">{{ $req->status }}</span>
-                                    @endif
-                                </td>
-                                <td class="text-start small text-truncate small" style="max-width: 2vw">
-                                    {{ $req->loan_date }}
-                                </td>
-                                <td class="text-start small text-truncate small" style="max-width: 2vw">
-                                    {{ $req->return_date }}
-                                </td>
-                                <td class="text-start small" style="max-width: 5vw">
-                                    Keterangan
-                                </td>
-                                @if (auth()->user()->isAdmin())
-                                    <td class="text-start small">
-                                        <div class="dropdown">
-                                            @if ($req->isWaiting())
-                                                <form action="/approve/{{ $req->id }}" method="POST"
-                                                    style="display: inline">
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-warning btn-sm">Approve</button>
-                                                </form>
-                                            @elseif ($req->isApprove())
-                                                <form action="/done/{{ $req->id }}" method="POST"
-                                                    style="display: inline">
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-success btn-sm">Done</button>
-                                                </form>
-                                            @endif
-                                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                                data-bs-toggle="dropdown"><i
-                                                    class="bx bx-dots-vertical-rounded"></i></button>
-                                            <div class="dropdown-menu">
-                                                {{-- <a class="dropdown-item edit-record" href="javascript:void(0);"
-                                                    data-bs-toggle="offcanvas" data-bs-target="#add-new-record"
-                                                    data-nomorInduk="{{ $req->user_id }}"
-                                                    data-name="{{ $req->item_id }}"
-                                                    data-email="{{ $req->loan_date }}"
-                                                    data-date="{{ $req->return_date }}">
-                                                    <i class="bx bx-edit-alt me-1"></i> Edit
-                                                </a> --}}
-                                                <a class="dropdown-item" href="javascript:void(0);"><i
-                                                        class="bx bx-check me-1"></i> Approve</a>
-                                                <a class="dropdown-item" href="javascript:void(0);"><i
-                                                        class="bx bx-x me-1"></i> Reject</a>
-                                                <a class="dropdown-item" href="javascript:void(0);"><i
-                                                        class="bx bx-revision me-1"></i> Returned</a>
-                                                <form action="/delete/{{ $req->id }}" method="POST">
-                                                    @csrf
-                                                    <button type="submit" class="dropdown-item"><i
-                                                            class="bx bx-trash me-1"></i> Delete</button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </td>
-                                @endif
+                                <td class="text-start">{{ $user->nrp }}</td>
+                                <td class="text-start">{{ $user->name }}</td>
+                                <td class="text-start">{{ $user->email }}</td>
+                                <td class="text-start text-truncate" style="max-width: 5vw">{{ $user->password }}</td>
+                                <td class="text-start">{{ $user->role }}</td>
+                                <td class="text-start">Action</td>
                             </tr>
                         @endforeach
                     </tbody>

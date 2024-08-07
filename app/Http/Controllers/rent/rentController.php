@@ -25,7 +25,7 @@ class rentController extends Controller
   {
     // Membuat entri baru di tabel Loan
     $loan = Loan::create([
-      'user_id' => Auth::id(), // Mendapatkan user_id dari pengguna yang sedang login
+      'user_id' => Auth::user()->nrp,
       'item_id' => $request->code,
       'loan_date' => $request->date,
       'return_date' => $request->due,
@@ -35,10 +35,12 @@ class rentController extends Controller
     // Kirim notifikasi ke Telegram
     $this->sendMessage($loan);
 
-    return response()->json([
-      'message' => 'Loan created successfully',
-      'loan' => $loan
-    ], 200);
+    // return response()->json([
+    //   'message' => 'Loan created successfully',
+    //   'loan' => $loan
+    // ], 200);
+
+    return redirect()->back()->with('success', 'Permintaan berhasil dikirim');
   }
 
   public function sendMessage($loan)

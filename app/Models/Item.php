@@ -28,7 +28,7 @@ class Item extends Model
 
   public function loanItems()
   {
-    return $this->hasMany(LoanItem::class);
+    return $this->hasMany(LoanItem::class, 'item_id', 'code');
   }
 
   public function toSearchableArray()

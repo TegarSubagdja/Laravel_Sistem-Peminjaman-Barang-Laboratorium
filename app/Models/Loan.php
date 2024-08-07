@@ -17,14 +17,34 @@ class Loan extends Model
     'status',
   ];
 
+  public function isWaiting()
+  {
+    return $this->status === 'waiting';
+  }
+
+  public function isApprove()
+  {
+    return $this->status === 'approved';
+  }
+
+  public function isRejected()
+  {
+    return $this->status === 'rejected';
+  }
+
+  public function isCancelled()
+  {
+    return $this->status === 'cancelled';
+  }
+
   public function user()
   {
-    return $this->belongsTo(User::class);
+    return $this->belongsTo(User::class, 'user_id', 'nrp');
   }
 
   public function item()
   {
-    return $this->belongsTo(Item::class);
+    return $this->belongsTo(Item::class, 'item_id', 'code');
   }
 
   public function loanItems()

@@ -17,10 +17,6 @@ class LoginBasic extends Controller
     return view('content.authentications.auth-login-basic');
   }
 
-
-
-
-
   public function auth(Request $request)
   {
     $credentials = $request->validate([
@@ -47,10 +43,6 @@ class LoginBasic extends Controller
       'identifier' => 'The provided credentials do not match our records.',
     ])->onlyInput('identifier');
   }
-
-
-
-
 
   public function logout(Request $request)
   {

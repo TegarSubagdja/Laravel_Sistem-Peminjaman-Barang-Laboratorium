@@ -11,12 +11,12 @@ class CreateUsersTable extends Migration
     Schema::create('users', function (Blueprint $table) {
       $table->id();
       $table->string('name');
-      $table->string('nrp');
+      $table->unsignedBigInteger('nrp')->unique();
       $table->string('email')->unique();
       $table->string('password');
       $table->enum('role', ['user', 'admin', 'technician']);
       $table->timestamps();
-    });
+  });
   }
 
   public function down()
