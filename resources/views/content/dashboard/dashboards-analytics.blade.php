@@ -18,6 +18,14 @@
     </h4>
     {{-- End Heading --}}
 
+    <div class="form-password-toggle">
+        <div class="input-group">
+            <a type="password" value="Tegar Ganteng" class="form-control" id="basic-default-password12" placeholder="············"
+                aria-describedby="basic-default-password2"></a>
+            <span id="basic-default-password2" class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+        </div>
+    </div>
+
     {{-- Alert --}}
     @if (session('success'))
         <div class="alert alert-danger alert-dismissible" role="alert">

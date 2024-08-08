@@ -92,6 +92,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/approve/{id_loan}', [RequestController::class, 'approve'])->name('approve');
     Route::post('/done/{id_loan}', [RequestController::class, 'done'])->name('done');
     Route::post('/delete/{id_loan}', [RequestController::class, 'delete'])->name('delete');
+    Route::post('/add-user', [userController::class, 'add'])->name('add.user');
+    Route::post('/delete-user/{nrp}', [userController::class, 'delete'])->name('delete.user');
+    Route::post('/update-user/{nrp}', [userController::class, 'update'])->name('update.user');
   });
 
   // Request

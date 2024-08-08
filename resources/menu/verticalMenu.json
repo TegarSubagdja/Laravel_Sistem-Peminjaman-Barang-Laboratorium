@@ -20,8 +20,8 @@
     },
     {
       "url": "/admin-panel",
-      "name": "Admin",
-      "icon": "menu-icon tf-icons bx bx-package",
+      "name": "User",
+      "icon": "menu-icon tf-icons bx bx-user",
       "slug": "admin-panel"
     },
     {

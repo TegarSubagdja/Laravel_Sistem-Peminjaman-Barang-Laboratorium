@@ -10,7 +10,7 @@
 
     <h4 class="py-3 mb-4">
         <span class="text-muted fw-light">Dashboard /</span>
-        <span class="text-danger">Admin</span>
+        <span class="text-danger">Admin </span>
     </h4>
     @if (session('success'))
         <div class="alert alert-danger alert-dismissible" role="alert">
@@ -57,9 +57,36 @@
                                 <td class="text-start">{{ $user->nrp }}</td>
                                 <td class="text-start">{{ $user->name }}</td>
                                 <td class="text-start">{{ $user->email }}</td>
-                                <td class="text-start text-truncate" style="max-width: 5vw">{{ $user->password }}</td>
+                                <td class="text-start text-truncate" style="max-width: 5vw">
+                                    <div class="form-password-toggle">
+                                        <div class="input-group">
+                                            <input type="password" class="form-control" id="{{ $user->id }}"
+                                                placeholder="············" value="{{ $user->password }}" readonly>
+                                            <span id="{{ $user->id }}" class="input-group-text cursor-pointer"><i
+                                                    class="bx bx-hide"></i></span>
+                                        </div>
+                                    </div>
+                                </td>
                                 <td class="text-start">{{ $user->role }}</td>
-                                <td class="text-start">Action</td>
+                                <td class="text-start small">
+                                    <div class="dropdown">
+                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
+                                            data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item edit-record" href="javascript:void(0);"
+                                                data-bs-toggle="offcanvas" data-bs-target="#add-new-record"
+                                                data-nomorInduk="{{ $user->nrp }}" data-name="{{ $user->name }}"
+                                                data-email="{{ $user->email }}" data-password="{{ $user->password }}">
+                                                <i class="bx bx-edit-alt me-1"></i> Edit
+                                            </a>
+                                            <form action="/delete-user/{{ $user->nrp }}" method="POST">
+                                                @csrf
+                                                <button type="submit" class="dropdown-item"><i
+                                                        class="bx bx-trash me-1"></i> Delete</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -76,224 +103,74 @@
             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body flex-grow-1">
-            <div class="nav-align-top mb-4">
-                <ul class="nav nav-pills mb-3 nav-fill" role="tablist">
-                    <li class="nav-item">
-                        <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab"
-                            data-bs-target="#navs-pills-justified-registered"
-                            aria-controls="navs-pills-justified-registered" aria-selected="true"><i
-                                class="tf-icons bx bx-user-check me-1"></i><span class="d-none d-sm-block">
-                                Terdaftar</span></button>
-                    </li>
-                    <li class="nav-item">
-                        <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
-                            data-bs-target="#navs-pills-justified-new-user" aria-controls="navs-pills-justified-new-user"
-                            aria-selected="false"><i class="tf-icons bx bx-user-plus me-1"></i><span
-                                class="d-none d-sm-block">
-                                User Baru</span></button>
-                    </li>
-                </ul>
-                <div class="tab-content p-0">
-                    {{-- Tabs user --}}
-                    <div class="tab-pane fade active show" id="navs-pills-justified-registered" role="tabpanel">
-                        <form action="/add-loan" method="POST"
-                            class="add-new-record pt-0 row g-2 fv-plugins-bootstrap5 fv-plugins-framework"
-                            id="form-add-record" novalidate="novalidate">
-                            @csrf
-                            <div class="col-sm-12 fv-plugins-icon-container">
-                                <label class="form-label" for="nomorInduk">NRP / NODOS</label>
-                                <div class="input-group input-group-merge has-validation">
-                                    <span id="nomorInduk2" class="input-group-text"><i class="bx bx-id-card"></i></span>
-                                    <input type="text" id="nomorIndukPencarian" class="form-control dt-full-name"
-                                        name="nrp" placeholder="Masukan Nomer Induk" value="152021171" required>
-                                </div>
-                                <div
-                                    class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
-                                </div>
-                            </div>
-                            <div class="col-sm-12 fv-plugins-icon-container">
-                                <label class="form-label" for="code">Code Barang</label>
-                                <div class="input-group input-group-merge has-validation">
-                                    <span class="input-group-text"><i class="bx bx-barcode"></i></span>
-                                    <input type="number" id="code" name="code" class="form-control dt-code"
-                                        placeholder="Masukan Code Barang" value="102030" required>
-                                </div>
-                                <div
-                                    class="fv-plugins-message-container
-                                    fv-plugins-message-container--enabled invalid-feedback">
-                                </div>
-                            </div>
-                            <div class="col-sm-12 fv-plugins-icon-container">
-                                <label class="form-label" for="loan_date">Tanggal Peminjaman</label>
-                                <div class="input-group input-group-merge has-validation">
-                                    <span class="input-group-text"><i class="bx bx-calendar-plus"></i></span>
-                                    <input type="date" id="loan_date" name="loan_date"
-                                        class="form-control dt-loan_date" placeholder="" required>
-                                </div>
-                                <div
-                                    class="fv-plugins-message-container
-                                    fv-plugins-message-container--enabled invalid-feedback">
-                                </div>
-                            </div>
-                            <div class="col-sm-12 fv-plugins-icon-container">
-                                <label class="form-label" for="return_date">Tanggal Pengembalian</label>
-                                <div class="input-group input-group-merge has-validation">
-                                    <span class="input-group-text"><i class="bx bx-calendar-minus"></i></span>
-                                    <input type="date" id="return_date" name="return_date"
-                                        class="form-control dt-return_date" placeholder="">
-                                </div>
-                                <div
-                                    class="fv-plugins-message-container
-                                    fv-plugins-message-container--enabled invalid-feedback">
-                                </div>
-                            </div>
-                            <div class="col-sm-12 mt-4">
-                                <button type="submit" class="btn btn-danger data-submit me-sm-3 me-1">Simpan</button>
-                                <button type="reset" class="btn btn-outline-secondary"
-                                    data-bs-dismiss="offcanvas">Batal</button>
-                            </div>
-                            <input type="hidden">
-                        </form>
+            <form action="/add-user" method="POST"
+                class="add-new-record pt-0 row g-2 fv-plugins-bootstrap5 fv-plugins-framework" id="form-add-record"
+                novalidate="novalidate">
+                @csrf
+                <div class="col-sm-12 fv-plugins-icon-container">
+                    <label class="form-label">NRP / NODOS</label>
+                    <div class="input-group input-group-merge has-validation">
+                        <span id="nomorInduk2" class="input-group-text"><i class="bx bx-id-card"></i></span>
+                        <input type="text" id="number" class="form-control dt-full-name" name="nrp"
+                            placeholder="Masukan Nomer Induk" required>
                     </div>
-                    {{-- End Tabs user --}}
-                    {{-- Tabs new User --}}
-                    <div class="tab-pane fade" id="navs-pills-justified-new-user" role="tabpanel">
-                        <form action="/add-loan-new" method="POST"
-                            class="add-new-record pt-0 row g-2 fv-plugins-bootstrap5 fv-plugins-framework"
-                            id="form-add-new-record" novalidate="novalidate">
-                            @csrf
-                            <div class="col-sm-12 fv-plugins-icon-container">
-                                <label class="form-label">NRP / NODOS</label>
-                                <div class="input-group input-group-merge has-validation">
-                                    <span id="nomorInduk2" class="input-group-text"><i class="bx bx-id-card"></i></span>
-                                    <input type="text" id="nomorInduk" class="form-control dt-full-name"
-                                        name="nomorInduk" placeholder="Masukan Nomer Induk" value="152021171" required>
-                                </div>
-                                <div
-                                    class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
-                                </div>
-                            </div>
-                            <div class="col-sm-12 fv-plugins-icon-container">
-                                <label class="form-label" for="basicPost">Nama</label>
-                                <div class="input-group input-group-merge has-validation">
-                                    <span id="username" class="input-group-text"><i class="bx bx-user"></i></span>
-                                    <input type="text" id="basicPost" name="username" class="form-control dt-post"
-                                        placeholder="Masukan Nama" value="Alif" required>
-                                </div>
-                                <div
-                                    class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
-                                </div>
-                            </div>
-                            <div class="col-sm-12 fv-plugins-icon-container">
-                                <label class="form-label" for="email">Email</label>
-                                <div class="input-group input-group-merge has-validation">
-                                    <span class="input-group-text"><i class="bx bx-envelope"></i></span>
-                                    <input type="email" id="email" name="email" class="form-control dt-email"
-                                        placeholder="Masukan Email" value="alif@gmail.com">
-                                </div>
-                                <div
-                                    class="fv-plugins-message-container
-                              fv-plugins-message-container--enabled invalid-feedback">
-                                </div>
-                            </div>
-                            <div class="col-sm-12 fv-plugins-icon-container">
-                                <label class="form-label" for="password">Password</label>
-                                <div class="input-group input-group-merge has-validation">
-                                    <span class="input-group-text"><i class="bx bx-key"></i></span>
-                                    <input type="password" id="password" name="password"
-                                        class="form-control dt-password" placeholder="Masukan Password" value="password"
-                                        required>
-                                </div>
-                                <div
-                                    class="fv-plugins-message-container
-                            fv-plugins-message-container--enabled invalid-feedback">
-                                </div>
-                            </div>
-                            <div class="col-sm-12 fv-plugins-icon-container">
-                                <label class="form-label">Role User</label>
-                                <select id="lab" class="form-select" name="role" required>
-                                    <option value="user">User</option>
-                                    <option value="admin">Admin</option>
-                                </select>
-                                <div
-                                    class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
-                                </div>
-                            </div>
-                            <div class="col-sm-12 fv-plugins-icon-container">
-                                <label class="form-label" for="code">Code Barang</label>
-                                <div class="input-group input-group-merge has-validation">
-                                    <span class="input-group-text"><i class="bx bx-barcode"></i></span>
-                                    <input type="number" id="new-code" name="code" class="form-control dt-code"
-                                        placeholder="Masukan Code Barang" value="102030" required>
-                                </div>
-                                <div
-                                    class="fv-plugins-message-container
-                          fv-plugins-message-container--enabled invalid-feedback">
-                                </div>
-                            </div>
-                            <div class="col-sm-12 fv-plugins-icon-container">
-                                <label class="form-label" for="loan_date">Tanggal Peminjaman</label>
-                                <div class="input-group input-group-merge has-validation">
-                                    <span class="input-group-text"><i class="bx bx-calendar-plus"></i></span>
-                                    <input type="date" id="new-loan_date" name="loan_date"
-                                        class="form-control dt-loan_date" placeholder="" required>
-                                </div>
-                                <div
-                                    class="fv-plugins-message-container
-                          fv-plugins-message-container--enabled invalid-feedback">
-                                </div>
-                            </div>
-                            <div class="col-sm-12 fv-plugins-icon-container">
-                                <label class="form-label" for="return_date">Tanggal Pengembalian</label>
-                                <div class="input-group input-group-merge has-validation">
-                                    <span class="input-group-text"><i class="bx bx-calendar-minus"></i></span>
-                                    <input type="date" id="new-return_date" name="return_date"
-                                        class="form-control dt-return_date" placeholder="">
-                                </div>
-                                <div
-                                    class="fv-plugins-message-container
-                          fv-plugins-message-container--enabled invalid-feedback">
-                                </div>
-                            </div>
-                            <div class="col-sm-12 mt-4">
-                                <button type="submit" class="btn btn-danger data-submit me-sm-3 me-1">Simpan</button>
-                                <button type="reset" class="btn btn-outline-secondary"
-                                    data-bs-dismiss="offcanvas">Batal</button>
-                            </div>
-                            <input type="hidden">
-                        </form>
+                    <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
                     </div>
-                    {{-- End new user --}}
                 </div>
-            </div>
-
+                <div class="col-sm-12 fv-plugins-icon-container">
+                    <label class="form-label">Nama</label>
+                    <div class="input-group input-group-merge has-validation">
+                        <span class="input-group-text"><i class="bx bx-barcode"></i></span>
+                        <input type="text" id="name" name="name" class="form-control dt-code"
+                            placeholder="Masukan Nama" required>
+                    </div>
+                    <div
+                        class="fv-plugins-message-container
+                  fv-plugins-message-container--enabled invalid-feedback">
+                    </div>
+                </div>
+                <div class="col-sm-12 fv-plugins-icon-container">
+                    <label class="form-label">E-Mail</label>
+                    <div class="input-group input-group-merge has-validation">
+                        <span class="input-group-text"><i class="bx bx-envelope"></i></span>
+                        <input type="email" id="email" name="email" class="form-control dt-loan_date"
+                            placeholder="Masukan E-mail" required>
+                    </div>
+                    <div
+                        class="fv-plugins-message-container
+                  fv-plugins-message-container--enabled invalid-feedback">
+                    </div>
+                </div>
+                <div class="col-sm-12 fv-plugins-icon-container">
+                    <label class="form-label">Password</label>
+                    <div class="input-group input-group-merge has-validation">
+                        <span class="input-group-text"><i class="bx bx-key"></i></span>
+                        <input type="password" id="password" name="password" class="form-control dt-return_date"
+                            placeholder="Masukan Password">
+                    </div>
+                    <div
+                        class="fv-plugins-message-container
+                  fv-plugins-message-container--enabled invalid-feedback">
+                    </div>
+                </div>
+                <div class="col-sm-12 fv-plugins-icon-container">
+                    <label class="form-label">Role User</label>
+                    <select id="lab" class="form-select" name="role" required>
+                        <option value="user">User</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                    <div
+                        class="fv-plugins-message-container
+                  fv-plugins-message-container--enabled invalid-feedback">
+                    </div>
+                </div>
+                <div class="col-sm-12 mt-4">
+                    <button type="submit" class="btn btn-danger data-submit me-sm-3 me-1">Simpan</button>
+                    <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="offcanvas">Batal</button>
+                </div>
+                <input type="hidden">
+            </form>
         </div>
     </div>
     {{-- End Moal Tambah --}}
-
-    {{-- <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const editButtons = document.querySelectorAll('.edit-record');
-            editButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const nomorInduk = this.getAttribute('data-fullname');
-                    const post = this.getAttribute('data-post');
-                    const email = this.getAttribute('data-email');
-                    const date = this.getAttribute('data-date');
-                    const salary = this.getAttribute('data-salary');
-
-                    document.querySelector('#nomorInduk').value = fullname;
-                    document.querySelector('#basicPost').value = post;
-                    document.querySelector('#email').value = email;
-                    document.querySelector('#basicDate').value = date;
-                    document.querySelector('#basicSalary').value = salary;
-                });
-            });
-            $('#DataTables_Table_0').on('click', '.lihat-selengkapnya', function(event) {
-                event.preventDefault();
-                const content = $(this).data('content');
-                $('#modalText').text(content);
-            });
-        });
-    </script> --}}
 @endsection
