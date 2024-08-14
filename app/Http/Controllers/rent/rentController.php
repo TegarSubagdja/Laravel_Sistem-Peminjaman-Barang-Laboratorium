@@ -35,11 +35,6 @@ class rentController extends Controller
     // Kirim notifikasi ke Telegram
     $this->sendMessage($loan);
 
-    // return response()->json([
-    //   'message' => 'Loan created successfully',
-    //   'loan' => $loan
-    // ], 200);
-
     return redirect()->back()->with('success', 'Permintaan berhasil dikirim');
   }
 

@@ -34,10 +34,16 @@ class RequestController extends Controller
     return view('content.request.request-basic', compact('requests'));
   }
 
-  public function approve($id)
+  public function approve($id, Request $request)
   {
     $loan = Loan::find($id);
-    $loan->status = "approved";
+
+    if ($request) {
+      $loan->status = "approved";
+      $loan->desc = $request->desc;
+    } else {
+      $loan->status = "approved";
+    }
     $loan->save();
 
     return redirect()->back()->with('success', 'Status berhasil diperbarui.');

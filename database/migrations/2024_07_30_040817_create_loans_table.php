@@ -16,6 +16,7 @@ class CreateLoansTable extends Migration
       $table->foreign('item_id')->references('code')->on('items')->onDelete('cascade');
       $table->dateTime('loan_date');
       $table->dateTime('return_date')->nullable();
+      $table->string('desc')->nullable();
       $table->enum('status', ['waiting', 'approved', 'rejected', 'done', 'cancelled'])->default('waiting');
       $table->timestamps();
     });

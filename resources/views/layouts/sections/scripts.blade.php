@@ -8,16 +8,41 @@
 
 @if (Route::is('dashboard'))
     <script src="{{ asset(mix('js/scan-qr.js')) }}"></script>
+@elseif (!Route::is('inventory-basic'))
+    <script src="{{ asset('assets/vendor/libs/DataTables/datatables.min.js') }}"></script>
 @endif
 
 @if (Route::is('request-basic'))
     @if (Auth::user()->isAdmin())
-        <script src="{{ asset('assets/vendor/libs/DataTables/datatables.min.js') }}"></script>
         <script src="{{ asset('assets/vendor/libs/Typehead/bootstrap3-typeahead.min.js') }}"></script>
+
         <script>
             $(document).ready(function() {
                 var table = $('#DataTables_Table_0').DataTable({
-                    responsive: false,
+                    responsive: true,
+                    select: true,
+                    columnDefs: [{
+                            responsivePriority: 1,
+                            targets: 1
+                        },
+                        {
+                            responsivePriority: 2,
+                            targets: 2
+                        },
+                        {
+                            responsivePriority: 3,
+                            targets: 3
+                        },
+                        {
+                            responsivePriority: 3,
+                            targets: 7
+                        },
+                        {
+                            className: '',
+                            orderable: false,
+                            targets: 0,
+                        }
+                    ],
                     order: [
                         [3, 'desc']
                     ],
@@ -57,7 +82,7 @@
                                 className: 'dropdown-item',
                                 text: '<i class="bx bx-printer me-2"></i> Print',
                                 exportOptions: {
-                                    columns: [0, 1, 2, 3, 4]
+                                    columns: [1, 2, 3, 4, 5]
                                 },
                                 title: 'Rekap Peminjaman Barang Laboratorium Informatika',
                                 messageTop: 'Rekap Peminjaman Barang Laboratorium'
@@ -67,7 +92,6 @@
                 });
                 table.buttons().container()
                     .appendTo('#exportButtons');
-                // Menambahkan tombol "Tambah Record" di sebelah kanan dropdown export
                 $('#exportButtons').after(`
             <button class="btn btn-danger create-new ms-2" tabindex="0" aria-controls="DataTables_Table_0" type="button" data-bs-toggle="offcanvas" data-bs-target="#add-new-record">
                 <span>
@@ -77,6 +101,7 @@
             </button>`);
             });
         </script>
+
         <script type="text/javascript">
             var path = "/search";
             $('#nomorIndukPencarian').typeahead({
@@ -91,11 +116,57 @@
                 }
             });
         </script>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const editButtons = document.querySelectorAll('.approve');
+
+                editButtons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        const id = this.getAttribute('data-id');
+                        const user = this.getAttribute('data-user');
+                        const item = this.getAttribute('data-item');
+                        // const desc = this.getAttribute('data-item');
+
+                        document.querySelector('#user').value = user;
+                        document.querySelector('#item').value = item;
+                        // document.querySelector('#desc').value = desc;
+
+                        document.querySelector('#add-desc').setAttribute('action',
+                            `/approve/${id}`);
+                    });
+                });
+
+                const modalDesc = document.getElementById('smallModal');
+                modalDesc.addEventListener('hidden.bs.offcanvas', function() {
+                    document.querySelector('#add-desc').reset();
+                    // document.querySelector('#form-add-record').setAttribute('action', '/add-user');
+                });
+            });
+        </script>
     @else
         <script>
             $(document).ready(function() {
                 var table = $('#DataTables_Table_0').DataTable({
-                    responsive: false,
+                    responsive: true,
+                    columnDefs: [{
+                            responsivePriority: 1,
+                            targets: 1
+                        },
+                        {
+                            responsivePriority: 2,
+                            targets: 2
+                        },
+                        {
+                            responsivePriority: 3,
+                            targets: 3
+                        },
+                        {
+                            className: '',
+                            orderable: false,
+                            targets: 0,
+                        }
+                    ],
                     order: [
                         [3, 'desc']
                     ],
@@ -109,8 +180,48 @@
     @endif
 @endif
 
+@if (Route::is('inventory-basic'))
+    @if (Auth::user()->isAdmin())
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const editButtons = document.querySelectorAll('.edit-item');
+                const title = document.getElementById('exampleModalLabel');
+
+                editButtons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        const labOption = document.getElementById('lab');
+                        const name = this.getAttribute('data-name');
+                        const lab = this.getAttribute('data-lab');
+                        const desc = this.getAttribute('data-desc');
+                        const code = this.getAttribute('data-code');
+
+                        title.innerHTML = 'Edit Item';
+                        document.querySelector('#name').value = name;
+                        for (let i = 0; i < labOption.options.length; i++) {
+                            if (labOption.options[i].value === lab) {
+                                labOption.selectedIndex = i;
+                                break;
+                            }
+                        }
+                        document.querySelector('#desc').value = desc;
+                        document.querySelector('#code').value = code;
+                        document.querySelector('#form-add-new-record').setAttribute('action',
+                            `/update-item/${code}`);
+                    });
+                });
+
+                const offcanvasElement = document.getElementById('add-new-record');
+                offcanvasElement.addEventListener('hidden.bs.offcanvas', function() {
+                    title.innerHTML = "Tambah Barang";
+                    document.querySelector('#form-add-new-record').reset();
+                    document.querySelector('#form-add-new-record').setAttribute('action', '/add-item');
+                });
+            });
+        </script>
+    @endif
+@endif
+
 @if (Route::is('admin-panel'))
-    <script src="{{ asset('assets/vendor/libs/DataTables/datatables.min.js') }}"></script>
     <script>
         $(document).ready(function() {
             var table = $('#DataTables_Table_0').DataTable({

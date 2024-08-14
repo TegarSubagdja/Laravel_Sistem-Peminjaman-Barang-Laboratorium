@@ -42,7 +42,7 @@
           <div class="navbar-nav align-items-center">
               <div class="nav-item d-flex align-items-center">
                   <i class="bx bx-search fs-4 lh-0"></i>
-                  <input type="text" class="form-control border-0 shadow-none ps-1 ps-sm-2" placeholder="Search..."
+                  <input type="text" class="form-control border-0 shadow-none ps-1 ps-sm-2 ms-md-4 ms-1" placeholder="Search..."
                       aria-label="Search..." name="search" value="{{ $search }}">
               </div>
           </div>
@@ -53,7 +53,7 @@
         <div class="navbar-nav align-items-center">
             <div class="nav-item d-flex align-items-center">
                 <i class="bx bx-search fs-4 lh-0"></i>
-                <input type="text" class="form-control border-0 shadow-none ps-1 ps-sm-2 ms-4"
+                <input type="text" class="form-control border-0 shadow-none ps-1 ps-sm-2 ms-md-4 ms-1"
                     placeholder="Search..." aria-label="Search..." disabled>
             </div>
         </div>
@@ -94,8 +94,8 @@
                                 </div>
                             </div>
                             <div class="flex-grow-1">
-                                <span class="fw-medium d-block">John Doe</span>
-                                <small class="text-muted">Admin</small>
+                                <span class="fw-medium d-block">{{ Auth::user()->name }}</span>
+                                <small class="text-muted">{{ Auth::user()->role }}</small>
                             </div>
                         </div>
                     </a>
@@ -107,22 +107,6 @@
                     <a class="dropdown-item" href="/pages/account-settings-account">
                         <i class="bx bx-user me-2"></i>
                         <span class="align-middle">My Profile</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="dropdown-item" href="javascript:void(0);">
-                        <i class='bx bx-cog me-2'></i>
-                        <span class="align-middle">Settings</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="dropdown-item" href="javascript:void(0);">
-                        <span class="d-flex align-items-center align-middle">
-                            <i class="flex-shrink-0 bx bx-credit-card me-2 pe-1"></i>
-                            <span class="flex-grow-1 align-middle">Billing</span>
-                            <span
-                                class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">4</span>
-                        </span>
                     </a>
                 </li>
                 <li>

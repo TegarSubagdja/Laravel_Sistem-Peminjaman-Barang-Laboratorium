@@ -27,7 +27,25 @@
             <div class="col-md-6 col-lg-4 mb-3">
                 <div class="card h-100">
                     <div class="card-body">
-                        <h5 class="card-title">{{ $item->name }}</h5>
+                        <div class="d-flex flex-row align-items-start justify-content-between">
+                            <h5 class="card-title">{{ $item->name }}</h5>
+                            @if (Auth::user()->isAdmin())
+                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
+                                    data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
+                                <div class="dropdown-menu">
+                                    <button data-bs-toggle="offcanvas" data-bs-target="#add-new-record"
+                                        class="dropdown-item edit-item" data-name="{{ $item->name }}"
+                                        data-lab="{{ $item->lab_id }}" data-desc="{{ $item->description }}"
+                                        data-code="{{ $item->code }}"><i class="bx bx-revision me-1"></i>
+                                        Edit</button>
+                                    <form action="/delete-item/{{ $item->code }}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="dropdown-item"><i class="bx bx-trash me-1"></i>
+                                            Delete</button>
+                                    </form>
+                                </div>
+                            @endif
+                        </div>
                         @if ($item->lab->name == 'Lab ICT')
                             <h6 class="badge bg-label-warning">{{ $item->lab->name }}</h6>
                         @elseif ($item->lab->name == 'Jaringan Komputer')
@@ -61,27 +79,24 @@
             <div class="offcanvas-body flex-grow-1">
                 <form action="/add-item" method="POST"
                     class="add-new-record pt-0 row g-2 fv-plugins-bootstrap5 fv-plugins-framework" id="form-add-new-record"
-                    action="/send-message" method="POST" enctype="multipart/form-data">
+                    enctype="multipart/form-data">
                     @csrf
                     <div class="col-sm-12 fv-plugins-icon-container">
                         <label class="form-label">Nama</label>
                         <div class="input-group input-group-merge has-validation">
                             <span class="input-group-text"><i class="bx bx-paperclip"></i></span>
                             <input type="text" class="form-control dt-full-name" name="name"
-                                placeholder="Masukan nama barang" required>
+                                placeholder="Masukan nama barang" id="name" required>
                         </div>
                         <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
                         </div>
                     </div>
                     <div class="col-sm-12 fv-plugins-icon-container">
-                        <label for="defaultSelect" class="form-label">Lab</label>
-                        <select id="defaultSelect" class="form-select" name="lab">
+                        <label for="lab" class="form-label">Lab</label>
+                        <select class="form-select" id="lab" name="lab">
                             @foreach ($labs as $lab)
                                 <option value="{{ $lab->id }}">{{ $lab->name }}</option>
                             @endforeach
-                            {{-- <option value="2">Jaringan Komputer</option>
-                        <option value="3">Basis Data</option>
-                        <option value="4">Multimedia</option> --}}
                         </select>
                         <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
                         </div>
@@ -90,7 +105,7 @@
                         <label class="form-label">Deskripsi</label>
                         <div class="input-group input-group-merge has-validation">
                             <span class="input-group-text"><i class="bx bx-detail"></i></span>
-                            <input type="text" name="description" class="form-control dt-email"
+                            <input type="text" id="desc" name="description" class="form-control dt-email"
                                 placeholder="Masukan deskripsi barang">
                         </div>
                         <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
@@ -103,8 +118,8 @@
                         <label class="form-label">Code Barang</label>
                         <div class="input-group input-group-merge has-validation">
                             <span class="input-group-text"><i class="bx bx-barcode"></i></span>
-                            <input type="text" class="form-control dt-date flatpickr-input" id="basicDate" name="code"
-                                placeholder="Masukan code barang">
+                            <input type="text" id="code" class="form-control dt-date flatpickr-input"
+                                id="basicDate" name="code" placeholder="Masukan code barang">
                         </div>
                         <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
                         </div>
@@ -120,12 +135,12 @@
                     </div>
                     <div class="col-sm-12 mt-4">
                         <button type="submit" class="btn btn-danger data-submit me-sm-3 me-1">Simpan</button>
-                        <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="offcanvas">Batal</button>
+                        <button type="reset" class="btn btn-outline-secondary"
+                            data-bs-dismiss="offcanvas">Batal</button>
                     </div>
                     <input type="hidden">
                 </form>
             </div>
         </div>
     @endif
-
 @endsection

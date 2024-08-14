@@ -41,28 +41,29 @@
                     id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info" style="width: 1390px;">
                     <thead>
                         <tr>
-                            <th class="text-start small">Nama</th>
-                            <th class="text-start small">Item</th>
-                            <th class="text-start small">Status</th>
-                            <th class="text-start small">Tanggal Pinjam</th>
-                            <th class="text-start small">Tanggal Kembali</th>
-                            <th class="text-start small">Keterangan</th>
+                            <th></th>
+                            <th class="text-start">Nama</th>
+                            <th class="text-start">Item</th>
+                            <th class="text-start">Status</th>
+                            <th class="text-start">Tanggal Pinjam</th>
+                            <th class="text-start">Tanggal Kembali</th>
+                            <th class="text-start">Keterangan</th>
                             @if (auth()->user()->isAdmin())
-                                <th class="text-start small">Actions</th>
+                                <th class="text-start">Actions</th>
                             @endif
                         </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
                         @foreach ($requests as $req)
                             <tr>
-                                <td class="text-start small">
-                                    {{-- <i class="bx bx-user bx-sm text-danger me-3"></i> --}}
-                                    <span class="fw-medium">{{ $req->user->name }}</span>
+                                <td></td>
+                                <td class="text-start">
+                                    {{ $req->user->name }}
                                 </td>
-                                <td class="text-start small">
+                                <td class="text-start">
                                     {{ $req->item->name }}
                                 </td>
-                                <td class="text-start small">
+                                <td class="text-start">
                                     @if ($req->status == 'waiting')
                                         <span class="badge bg-label-warning me-1">{{ $req->status }}</span>
                                     @elseif ($req->status == 'approved')
@@ -75,24 +76,27 @@
                                         <span class="badge bg-label-info me-1">{{ $req->status }}</span>
                                     @endif
                                 </td>
-                                <td class="text-start small text-truncate small" style="max-width: 2vw">
+                                <td class="text-start small">
                                     {{ $req->loan_date }}
                                 </td>
-                                <td class="text-start small text-truncate small" style="max-width: 2vw">
+                                <td class="text-start small">
                                     {{ $req->return_date }}
                                 </td>
-                                <td class="text-start small" style="max-width: 5vw">
-                                    Keterangan
+                                <td class="text-start text-truncate" style="max-width: 100px">
+                                    @if ($req->desc)
+                                        {{ $req->desc }}
+                                    @else
+                                        Keterangan tidak tersedia
+                                    @endif
                                 </td>
                                 @if (auth()->user()->isAdmin())
-                                    <td class="text-start small">
+                                    <td class="text-start">
                                         <div class="dropdown">
                                             @if ($req->isWaiting())
-                                                <form action="/approve/{{ $req->id }}" method="POST"
-                                                    style="display: inline">
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-warning btn-sm">Approve</button>
-                                                </form>
+                                                <button type="button" class="btn btn-warning btn-sm approve"
+                                                    data-bs-toggle="modal" data-bs-target="#smallModal"
+                                                    data-id="{{ $req->id }}" data-user="{{ $req->user->name }}"
+                                                    data-item="{{ $req->item->name }}">Approve</button>
                                             @elseif ($req->isApprove())
                                                 <form action="/done/{{ $req->id }}" method="POST"
                                                     style="display: inline">
@@ -104,23 +108,14 @@
                                                 data-bs-toggle="dropdown"><i
                                                     class="bx bx-dots-vertical-rounded"></i></button>
                                             <div class="dropdown-menu">
-                                                {{-- <a class="dropdown-item edit-record" href="javascript:void(0);"
-                                                    data-bs-toggle="offcanvas" data-bs-target="#add-new-record"
-                                                    data-nomorInduk="{{ $req->user_id }}"
-                                                    data-name="{{ $req->item_id }}"
-                                                    data-email="{{ $req->loan_date }}"
-                                                    data-date="{{ $req->return_date }}">
-                                                    <i class="bx bx-edit-alt me-1"></i> Edit
-                                                </a> --}}
-                                                <a class="dropdown-item" href="javascript:void(0);"><i
-                                                        class="bx bx-check me-1"></i> Approve</a>
-                                                <a class="dropdown-item" href="javascript:void(0);"><i
-                                                        class="bx bx-x me-1"></i> Reject</a>
-                                                <a class="dropdown-item" href="javascript:void(0);"><i
-                                                        class="bx bx-revision me-1"></i> Returned</a>
+                                                <button class="dropdown-item" href="javascript:void(0);"><i
+                                                        class="bx bx-x me-1"></i> Reject</button>
+                                                <button type="button" id="toggle" class="dropdown-item"
+                                                    href="javascript:void(0);"><i class="bx bx-revision me-1"></i>
+                                                    Returned</button>
                                                 <form action="/delete/{{ $req->id }}" method="POST">
                                                     @csrf
-                                                    <button type="submit" class="dropdown-item"><i
+                                                    <button type="submit" class="dropdown-item text-danger"><i
                                                             class="bx bx-trash me-1"></i> Delete</button>
                                                 </form>
                                             </div>
@@ -336,31 +331,42 @@
 
         </div>
     </div>
-    {{-- End Moal Tambah --}}
+    {{-- End Modal Tambah --}}
 
-    {{-- <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const editButtons = document.querySelectorAll('.edit-record');
-            editButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const nomorInduk = this.getAttribute('data-fullname');
-                    const post = this.getAttribute('data-post');
-                    const email = this.getAttribute('data-email');
-                    const date = this.getAttribute('data-date');
-                    const salary = this.getAttribute('data-salary');
-
-                    document.querySelector('#nomorInduk').value = fullname;
-                    document.querySelector('#basicPost').value = post;
-                    document.querySelector('#email').value = email;
-                    document.querySelector('#basicDate').value = date;
-                    document.querySelector('#basicSalary').value = salary;
-                });
-            });
-            $('#DataTables_Table_0').on('click', '.lihat-selengkapnya', function(event) {
-                event.preventDefault();
-                const content = $(this).data('content');
-                $('#modalText').text(content);
-            });
-        });
-    </script> --}}
+    <!-- Small Modal -->
+    <div class="modal fade" id="smallModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel2">Tambahkan Keterangan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="#" method="POST" id="add-desc">
+                        @csrf
+                        <div class="row g-2 mb-2">
+                            <div class="col mb-0">
+                                <label class="form-label" for="user">User</label>
+                                <input type="text" class="form-control" id="user">
+                            </div>
+                            <div class="col mb-0">
+                                <label for="item" class="form-label">Item</label>
+                                <input id="item" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col mb-0">
+                                <label for="text-keterangan" class="form-label">Masukan Keterangan</label>
+                                <textarea class="form-control" name="desc" id="text-keterangan" rows="3"></textarea>
+                            </div>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Lewati</button>
+                    <button type="submit" class="btn btn-danger">Simpan</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
 @endsection
