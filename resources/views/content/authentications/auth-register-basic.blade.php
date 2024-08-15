@@ -26,7 +26,7 @@
                         <h4 class="mb-2">Selamat Datang di Laboratorium Informatika</h4>
                         <p class="mb-4">Silahkan untuk daftar terlebih dahulu.</p>
 
-                        <form id="formAuthentication" class="mb-3" action="/register" method="POST">
+                        <form class="mb-3" action="/register" method="POST">
                             @csrf
                             <div class="mb-3">
                                 <label for="username" class="form-label">Nama</label>
@@ -60,7 +60,7 @@
                                     </label>
                                 </div>
                             </div> --}}
-                            <button class="btn btn-danger d-grid w-100">
+                            <button type="submit" class="btn btn-danger d-grid w-100">
                                 Sign up
                             </button>
                         </form>

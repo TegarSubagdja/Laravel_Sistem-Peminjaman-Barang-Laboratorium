@@ -6,6 +6,7 @@ use App\Models\Item;
 use App\Models\Lab;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Queue\Jobs\RedisJob;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -30,52 +31,59 @@ class InventoryController extends Controller
 
   public function getItem(Request $req)
   {
-    $item = Item::with('lab')->where('code', $req->decodeText)->first();
-
-    return response()->json([
-      'item' => $item,
-    ]);
+    try {
+      $item = Item::with('lab')->where('code', $req->decodeText)->first();
+      return response()->json([
+        'item' => $item,
+      ]);
+    } catch (\Throwable $th) {
+      return redirect()->back()->with('error', 'Terjadi kesalahan saat meminta data');
+    }
   }
 
   public function addItem(Request $request)
   {
-    $item = new Item();
-    $item->name = $request->name;
-    $item->lab_id = $request->lab;
-    $item->description = $request->description;
-    $item->code = $request->code;
+    try {
+      $item = new Item();
+      $item->name = $request->name;
+      $item->lab_id = $request->lab;
+      $item->description = $request->description;
+      $item->code = $request->code;
 
-    if ($request->hasFile('picture')) {
-      $file = $request->file('picture');
-      $filename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-      $extension = $file->getClientOriginalExtension();
-      $filename = Str::slug($filename);
-      $counter = 1;
-      $originalFilename = $filename;
+      if ($request->hasFile('picture')) {
+        $file = $request->file('picture');
+        $filename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+        $extension = $file->getClientOriginalExtension();
+        $filename = Str::slug($filename);
+        $counter = 1;
+        $originalFilename = $filename;
 
-      // Check if file already exists and add a counter if it does
-      while (Storage::disk('public')->exists('assets/img/items/' . $filename . '.' . $extension)) {
-        $filename = $originalFilename . '-' . $counter;
-        $counter++;
+        // Check if file already exists and add a counter if it does
+        while (Storage::disk('public')->exists('assets/img/items/' . $filename . '.' . $extension)) {
+          $filename = $originalFilename . '-' . $counter;
+          $counter++;
+        }
+
+        $filename = $filename . '.' . $extension;
+
+        // Make directory if it doesn't exist
+        if (!Storage::disk('public')->exists('assets/img/items')) {
+          Storage::disk('public')->makeDirectory('assets/img/items');
+        }
+
+        $path = $file->storeAs('assets/img/items', $filename, 'public');
+
+        // Logging for debugging
+        Log::info('File stored at: ' . $path);
+
+        $item->picture = basename($path);
       }
 
-      $filename = $filename . '.' . $extension;
+      $item->save();
 
-      // Make directory if it doesn't exist
-      if (!Storage::disk('public')->exists('assets/img/items')) {
-        Storage::disk('public')->makeDirectory('assets/img/items');
-      }
-
-      $path = $file->storeAs('assets/img/items', $filename, 'public');
-
-      // Logging for debugging
-      Log::info('File stored at: ' . $path);
-
-      $item->picture = basename($path);
+      return redirect()->back()->with('success', 'Item berhasil ditambahkan!');
+    } catch (\Throwable $th) {
+      return redirect()->back()->with('error', 'Terjadi kesalahan saat menambahkan item');
     }
-
-    $item->save();
-
-    return redirect()->back()->with('success', 'Item berhasil ditambahkan!');
   }
 }

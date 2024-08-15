@@ -5,6 +5,7 @@ namespace App\Http\Controllers\authentications;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -17,22 +18,23 @@ class RegisterBasic extends Controller
 
   public function register(Request $request)
   {
-    // Buat user baru
-    $user = User::create([
-      'name' => $request->username,
-      'email' => $request->email,
-      'nrp' => $request->nrp,
-      'password' => Hash::make($request->password),
-      'role' => 'user'
-    ]);
+    try {
+      $user = User::create([
+        'name' => $request->username,
+        'email' => $request->email,
+        'nrp' => $request->nrp,
+        'password' => Hash::make($request->password),
+        'role' => 'user'
+      ]);
 
-    // Login user
-    Auth::login($user);
+      Auth::login($user);
 
-    // Regenerasi session
-    $request->session()->regenerate();
+      $request->session()->regenerate();
 
-    // Redirect ke halaman dashboard atau home
-    return redirect()->route('dashboard');
+      return redirect()->route('dashboard');
+    } catch (\Throwable $th) {
+      Log::error('Error during user registration: ' . $th->getMessage());
+      return redirect()->back()->with('error', 'Terjadi kesalahan dalam registrasi');
+    }
   }
 }

@@ -59,7 +59,8 @@
                             src="{{ Storage::url('assets/img/items/' . $item->picture) }}" alt="Card image cap">
                         <h6>Deskripsi</h6>
                         <p class="card-text">{{ $item->description }}</p>
-                        <button type="button" class="btn btn-outline-danger">
+                        <button type="button" class="btn btn-outline-danger rent" data-toggle="modal"
+                            data-target="#myModal" data-code="{{ $item->code }}">
                             <span class="tf-icons bx bx-pie-chart-alt me-1"></span>Pinjam
                         </button>
                     </div>
@@ -143,4 +144,74 @@
             </div>
         </div>
     @endif
+
+    <!-- Modal Detail -->
+    <form action="/rent" method="POST">
+        @csrf
+        <div class="modal fade" id="myModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header d-flex justify-content-between align-items-start">
+                        <div class="col">
+                            <h5 class="modal-title text-uppercase" id="modalCenterTitle">Detail Barang</h5>
+                            <h6 id="lab" class="badge bg-label-success"></h6>
+                        </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body pt-0">
+                        <div class="row">
+                            <div class="col-6">
+                                <label for="nameWithTitle" class="form-label">Foto Barang</label>
+                                <img id="pic" class="img-fluid" src="" alt="Card image cap">
+                                <div class="col mt-3">
+                                    <label class="form-label">Deskripsi Barang</label>
+                                    <p id="input-desk" class="card-text">
+                                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Adipisci, accusantium!
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="col mb-2">
+                                    <label for="nameWithTitle" class="form-label">Code Barang</label>
+                                    <input type="text" id="input-code" class="form-control" placeholder="Enter Name"
+                                        name="code" readonly>
+                                </div>
+                                <div class="col mb-2">
+                                    <label for="nameWithTitle" class="form-label">Nama Barang</label>
+                                    <input type="text" id="input-name" class="form-control" placeholder="Enter Name"
+                                        name="item" readonly>
+                                </div>
+                                <div class="col mb-2">
+                                    <label for="nameWithTitle" class="form-label">Jumlah</label>
+                                    <input type="number" value="1" id="amount" class="form-control"
+                                        name="amount" placeholder="Jumlah barang">
+                                </div>
+                                <div class="col mb-2">
+                                    <label for="nameWithTitle" class="form-label">Tanggal Peminjaman</label>
+                                    <input required type="date" id="nameWithTitle" class="form-control"
+                                        placeholder="Enter Name" name="date">
+                                </div>
+                                <div class="col mb-2">
+                                    <label for="nameWithTitle" class="form-label">Tanggal Pengembalian</label>
+                                    <input required type="date" id="nameWithTitle" class="form-control"
+                                        placeholder="Enter Name" name="due">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-danger">Pinjam</button>
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    {{-- End Modal Detail --}}
+
+    <script>
+        var baseUrl = "{{ asset('storage/assets/img/items') }}";
+    </script>
+
 @endsection

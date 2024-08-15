@@ -110,39 +110,11 @@
             </div>
         </div>
     </form>
-    {{-- End Modal Detail --}}
-
-    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#smallModal">
-        Small
-    </button>
-
-    <!-- Small Modal -->
-    <div class="modal fade" id="smallModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel2">Tambahkan Keterangan</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col mb-0">
-                            <label for="exampleFormControlTextarea1" class="form-label">Masukan Keterangan</label>
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-danger">Save changes</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    {{-- End Modal Detail --}}  
 
     <!-- Blade Template -->
     <script>
-        var baseUrl = "{{ asset('') }}";
+        var baseUrl = "{{ asset('storage/assets/img/items') }}";
     </script>
 
 @endsection

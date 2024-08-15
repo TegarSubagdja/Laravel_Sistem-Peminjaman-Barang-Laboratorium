@@ -24,7 +24,6 @@ class LoginBasic extends Controller
       'password' => ['required'],
     ]);
 
-    // Buat validasi untuk memeriksa apakah 'identifier' adalah email atau tidak
     $isEmail = Validator::make($request->all(), [
       'identifier' => 'email',
     ])->passes();
@@ -36,7 +35,6 @@ class LoginBasic extends Controller
       return redirect()->route('dashboard');
     }
 
-    // Tambahkan pesan login gagal ke session
     session()->flash('error', 'The provided credentials do not match our records.');
 
     return back()->withErrors([

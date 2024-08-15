@@ -216,6 +216,99 @@
                     document.querySelector('#form-add-new-record').reset();
                     document.querySelector('#form-add-new-record').setAttribute('action', '/add-item');
                 });
+
+                // Menambahkan event listener pada tombol card item
+                const cardButtons = document.querySelectorAll('.rent');
+
+                cardButtons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        const code = this.getAttribute('data-code');
+
+                        $.ajax({
+                            url: '/detail-item',
+                            type: 'POST',
+                            contentType: 'application/json',
+                            data: JSON.stringify({
+                                decodeText: code
+                            }),
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            success: function(response) {
+
+                                var item = response.item;
+                                var $code = document.getElementById('input-code');
+                                var $name = document.getElementById('input-name');
+                                var $desk = document.getElementById('input-desk');
+                                var $pic = document.getElementById('pic');
+                                var $lab = document.getElementById('lab');
+
+                                // Update the modal content
+                                $code.value = item.code;
+                                $name.value = item.name;
+                                $desk.innerHTML = item.description;
+                                $pic.src = `${baseUrl}/${item.picture}`;
+                                $lab.innerHTML = item.lab.name;
+
+                                // Show the modal
+                                $('#myModal').modal('show');
+                            },
+                            error: function(xhr, status, error) {
+                                console.error("Error sending data: ", error);
+                                alert("Failed to send data");
+                            }
+                        });
+                    });
+                });
+            });
+        </script>
+    @else
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Menambahkan event listener pada tombol card item
+                const cardButtons = document.querySelectorAll('.rent');
+
+                cardButtons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        const code = this.getAttribute('data-code');
+
+                        $.ajax({
+                            url: '/detail-item',
+                            type: 'POST',
+                            contentType: 'application/json',
+                            data: JSON.stringify({
+                                decodeText: code
+                            }),
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            success: function(response) {
+
+                                var item = response.item;
+                                console.log(document.getElementById('input-code'));
+                                var $code = document.getElementById('input-code');
+                                var $name = document.getElementById('input-name');
+                                var $desk = document.getElementById('input-desk');
+                                var $pic = document.getElementById('pic');
+                                var $lab = document.getElementById('lab');
+
+                                // Update the modal content
+                                $code.value = item.code;
+                                $name.value = item.name;
+                                $desk.innerHTML = item.description;
+                                $pic.src = `${baseUrl}/${item.picture}`;
+                                $lab.innerHTML = item.lab.name;
+
+                                // Show the modal
+                                $('#myModal').modal('show');
+                            },
+                            error: function(xhr, status, error) {
+                                console.error("Error sending data: ", error);
+                                alert("Failed to send data");
+                            }
+                        });
+                    });
+                });
             });
         </script>
     @endif

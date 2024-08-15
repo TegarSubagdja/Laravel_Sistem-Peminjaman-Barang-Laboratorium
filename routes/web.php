@@ -57,6 +57,7 @@ use Illuminate\Support\Facades\Auth;
 
 // authentication
 Route::post('/login', [LoginBasic::class, 'auth'])->name('login');
+Route::post('/register', [RegisterBasic::class, 'register'])->name('register');
 Route::get('/auth/login-basic', [LoginBasic::class, 'index'])->name('auth-login-basic');
 Route::get('/auth/register-basic', [RegisterBasic::class, 'index'])->name('auth-register-basic');
 Route::get('/auth/forgot-password-basic', [ForgotPasswordBasic::class, 'index'])->name('auth-reset-password-basic');
@@ -69,7 +70,6 @@ Route::middleware('auth')->group(function () {
 
   // Auth
   Route::post('/logout', [LoginBasic::class, 'logout'])->name('logout');
-  Route::post('/register', [RegisterBasic::class, 'register'])->name('register');
 
   // Dashboard
   Route::get('/', [Analytics::class, 'index'])->name('dashboard');
@@ -77,10 +77,6 @@ Route::middleware('auth')->group(function () {
 
   // inventory
   Route::get('/inventory/basic', [InventoryController::class, 'index'])->name('inventory-basic');
-  Route::post('/item', [InventoryController::class, 'getItems'])->name('detail');
-  Route::get('/inventory/search', [InventoryController::class, 'search'])->name('search');
-
-  // Admin
 
   // Admin Access
   Route::middleware('admin')->group(function () {

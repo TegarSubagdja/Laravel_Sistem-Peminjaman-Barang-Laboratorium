@@ -37,7 +37,7 @@ function onScanSuccess(decodedText, decodedResult) {
       $code.value = item.code;
       $name.value = item.name;
       $desk.innerHTML = item.description;
-      $pic.src = `${baseUrl}assets/img/items/${item.picture}`;
+      $pic.src = `${baseUrl}/${item.picture}`;
       $lab.innerHTML = item.lab.name;
 
       // Show the modal

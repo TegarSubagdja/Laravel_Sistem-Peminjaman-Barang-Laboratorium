@@ -21,90 +21,112 @@ class RequestController extends Controller
 
   public function getRequest()
   {
-    $user = Auth::user();
+    try {
+      $user = Auth::user();
 
-    if ($user->isAdmin()) {
-      // Ambil semua loans dengan relasi user dan item
-      $requests = Loan::with(['user', 'item'])->get();
-    } else {
-      // Ambil loans yang terkait dengan user yang sedang login
-      $requests = $user->loans()->with('item')->get();
+      if ($user->isAdmin()) {
+        $requests = Loan::with(['user', 'item'])->get();
+      } else {
+        $requests = $user->loans()->with('item')->get();
+      }
+      return view('content.request.request-basic', compact('requests'));
+    } catch (\Throwable $th) {
+      return view('content.request.request-basic')->with('error', 'Tidak dapat memuat data');
     }
-
-    return view('content.request.request-basic', compact('requests'));
   }
 
   public function approve($id, Request $request)
   {
-    $loan = Loan::find($id);
+    try {
+      $loan = Loan::find($id);
 
-    if ($request) {
-      $loan->status = "approved";
-      $loan->desc = $request->desc;
-    } else {
-      $loan->status = "approved";
+      if ($request) {
+        $loan->status = "approved";
+        $loan->desc = $request->desc;
+      } else {
+        $loan->status = "approved";
+      }
+      $loan->save();
+
+      return redirect()->back()->with('success', 'Status berhasil diperbarui.');
+    } catch (\Throwable $th) {
+      return redirect()->back()->with('error', 'Tidak dapat menerima permintaan');
     }
-    $loan->save();
-
-    return redirect()->back()->with('success', 'Status berhasil diperbarui.');
   }
 
   public function done($id)
   {
-    $loan = Loan::find($id);
-    $loan->status = "done";
-    $loan->save();
+    try {
+      $loan = Loan::find($id);
+      $loan->status = "done";
+      $loan->save();
 
-    return redirect()->back()->with('success', 'Status berhasil diperbarui.');
+      return redirect()->back()->with('success', 'Status berhasil diperbarui.');
+    } catch (\Throwable $th) {
+      return redirect()->back()->with('error', 'Tidak dapat mengubah status');
+    }
   }
 
   public function delete($id)
   {
-    $loan = Loan::find($id);
-    $loan->delete();
+    try {
+      $loan = Loan::find($id);
+      $loan->delete();
 
-    return redirect()->route('request-basic')->with('success', 'Data berhasil dihapus.');
+      return redirect()->back()->with('success', 'Data berhasil dihapus.');
+    } catch (\Throwable $th) {
+      return redirect()->back()->with('error', 'Tejadi kesalahan saat menghapus data');
+    }
   }
 
   public function newUser(Request $request)
   {
-    // Buat user baru
-    $user = new User();
-    $user->name = $request->username;
-    $user->email = $request->email;
-    $user->nrp = $request->nomorInduk;
-    $user->role = $request->role;
-    $user->password = Hash::make($request->password);
-    $user->save();
+    try {
+      $user = new User();
 
-    // Buat peminjaman baru dan kaitkan dengan user yang baru dibuat
-    $loan = new Loan();
-    $loan->user_id = $user->nrp;
-    $loan->item_id = $request->code;
-    $loan->loan_date = $request->loan_date;
-    $loan->return_date = $request->return_date;
-    // $loan->user()->associate($user);
-    $loan->save();
-    // $loan->save();
+      if ($user::where('nrp', $nrp)->first()) {
+        return redirect()->back()->with('error', 'Nomor telah terdaftar');
+      } else {
+        $user->name = $request->username;
+        $user->email = $request->email;
+        $user->nrp = $request->nomorInduk;
+        $user->role = $request->role;
+        $user->password = Hash::make($request->password);
+        $user->save();
 
-    // Redirect atau response sesuai kebutuhan
-    return redirect()->back()->with('success', 'User and loan created successfully.');
+        // Buat peminjaman baru dan kaitkan dengan user yang baru dibuat
+        $loan = new Loan();
+        $loan->user_id = $user->nrp;
+        $loan->item_id = $request->code;
+        $loan->loan_date = $request->loan_date;
+        $loan->return_date = $request->return_date;
+        $loan->save();
+
+        return redirect()->back()->with('success', 'User and loan created successfully.');
+      }
+    } catch (\Throwable $th) {
+      return redirect()->back()->with('error', 'Terjadi kesalahan');
+    }
   }
 
   public function user(Request $request)
   {
-    $input = $request->input('nrp');
+    try {
+      $input = $request->input('nrp');
 
-    $nrp = (int)Str::before($input, ' ');
+      $nrp = (int)Str::before($input, ' ');
 
-    $loan = new Loan();
-    $loan->user_id = $nrp;
-    $loan->item_id = $request->code;
-    $loan->loan_date = $request->loan_date;
-    $loan->return_date = $request->return_date;
+      $loan = new Loan();
+      $loan->user_id = $nrp;
+      $loan->item_id = $request->code;
+      $loan->loan_date = $request->loan_date;
+      $loan->return_date = $request->return_date;
 
-    $loan->save();
+      $loan->save();
 
-    return redirect()->back()->with('success', 'Record berhasil ditambahkan');
+      return redirect()->back()->with('success', 'Record berhasil ditambahkan');
+    } catch (\Throwable $th) {
+      return redirect()->back()->with('error', 'Terjadi Kesalahan');
+    }
   }
 }
