@@ -10,6 +10,7 @@ use PhpParser\Node\Expr\FuncCall;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Cache;
 
 class RequestController extends Controller
 {
@@ -48,6 +49,29 @@ class RequestController extends Controller
       }
       $loan->save();
 
+      Cache::put('waiting_loans_count', Loan::where('status', 'waiting')->count());
+
+      return redirect()->back()->with('success', 'Status berhasil diperbarui.');
+    } catch (\Throwable $th) {
+      return redirect()->back()->with('error', 'Tidak dapat menerima permintaan');
+    }
+  }
+
+  public function reject($id, Request $request)
+  {
+    try {
+      $loan = Loan::find($id);
+
+      if ($request) {
+        $loan->status = "rejected";
+        $loan->desc = $request->desc;
+      } else {
+        $loan->status = "rejected";
+      }
+      $loan->save();
+
+      Cache::put('waiting_loans_count', Loan::where('status', 'waiting')->count());
+
       return redirect()->back()->with('success', 'Status berhasil diperbarui.');
     } catch (\Throwable $th) {
       return redirect()->back()->with('error', 'Tidak dapat menerima permintaan');
@@ -84,7 +108,7 @@ class RequestController extends Controller
     try {
       $user = new User();
 
-      if ($user::where('nrp', $nrp)->first()) {
+      if ($user::where('nrp', $request->nrp)->exist()) {
         return redirect()->back()->with('error', 'Nomor telah terdaftar');
       } else {
         $user->name = $request->username;
@@ -94,10 +118,10 @@ class RequestController extends Controller
         $user->password = Hash::make($request->password);
         $user->save();
 
-        // Buat peminjaman baru dan kaitkan dengan user yang baru dibuat
         $loan = new Loan();
         $loan->user_id = $user->nrp;
         $loan->item_id = $request->code;
+        $loan->status = 'approved';
         $loan->loan_date = $request->loan_date;
         $loan->return_date = $request->return_date;
         $loan->save();
@@ -119,6 +143,7 @@ class RequestController extends Controller
       $loan = new Loan();
       $loan->user_id = $nrp;
       $loan->item_id = $request->code;
+      $loan->status = 'approved';
       $loan->loan_date = $request->loan_date;
       $loan->return_date = $request->return_date;
 

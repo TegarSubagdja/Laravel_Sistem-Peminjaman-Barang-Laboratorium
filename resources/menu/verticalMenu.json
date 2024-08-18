@@ -9,6 +9,10 @@
     {
       "url": "/request\/basic",
       "name": "Persetujuan",
+      "badge": [
+        "danger",
+        "5"
+      ],
       "icon": "menu-icon tf-icons bx bx-calendar-check",
       "slug": "request-basic"
     },

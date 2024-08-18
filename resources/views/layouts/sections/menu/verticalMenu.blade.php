@@ -62,8 +62,13 @@
                             @endisset
                             <div>{{ isset($menu->name) ? __($menu->name) : '' }}</div>
                             @isset($menu->badge)
-                                <div class="badge bg-{{ $menu->badge[0] }} rounded-pill ms-auto">{{ $menu->badge[1] }}
-                                </div>
+                                {{-- <div class="badge bg-{{ $menu->badge[0] }} rounded-pill ms-auto">{{ $menu->badge[1] }}
+                                </div> --}}
+                                @if ((Cache::get('waiting_loans_count', 0) > 0) and (Auth::user()->isAdmin()))
+                                    <div class="badge bg-danger rounded-pill ms-auto">
+                                        {{ Cache::get('waiting_loans_count', 0) }}
+                                    </div>
+                                @endif
                             @endisset
                         </a>
 

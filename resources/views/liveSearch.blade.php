@@ -1,43 +1,105 @@
-<!DOCTYPE html>
-<html>
+@extends('layouts/contentNavbarLayout')
 
-<head>
-    <title>Laravel 11 Autocomplete Search from Database - ItSolutionStuff.com</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js"></script>
-</head>
+@section('title', 'Inventory - Basic Tables')
 
-<body>
-    <div class="container">
-        <div class="card mt-5">
-            <h3 class="card-header p-3">Laravel 11 Autocomplete Search from Database - ItSolutionStuff.com</h3>
-            <div class="card-body">
-                <form action="#" method="POST" enctype="multipart/form-data" class="mt-2">
-                    @csrf
-                    <input class="typeahead form-control" id="search" type="text">
-                    <div class="mb-3 mt-3">
-                        <button type="submit" class="btn btn-success">Submit</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+@section('page-script')
+    <script src="{{ asset('assets/js/ui-popover.js') }}"></script>
+@endsection
 
-    <script type="text/javascript">
-        var path = "/search";
-        $('#search').typeahead({
-            source: function(query, process) {
-                return $.get(path, {
-                    query: query
-                }, function(data) {
-                    return process(data.map(function(user) {
-                        return user.nrp + ' ' + user.name;
-                    }));
-                });
+@section('content')
+    <table id="DataTables_Table_0" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Name</th>
+                <th>Position</th>
+                <th>Office</th>
+                <th>Salary</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th></th>
+                <th>Name</th>
+                <th>Position</th>
+                <th>Office</th>
+                <th>Salary</th>
+            </tr>
+        </tfoot>
+    </table>
+    <script src="{{ asset('assets/vendor/libs/DataTables/datatables.min.js') }}"></script>
+    <script>
+        // Formatting function for row details - modify as you need
+        function format(d) {
+            // `d` is the original data object for the row
+            return (
+                '<dl>' +
+                '<dt>Full name:</dt>' +
+                '<dd>' +
+                d.user_id +
+                '</dd>' +
+                '<dt>Extension number:</dt>' +
+                '<dd>' +
+                d.item_id +
+                '</dd>' +
+                '<dt>Extra info:</dt>' +
+                '<dd>And any further details here (images etc)...</dd>' +
+                '</dl>'
+            );
+        }
+
+        let table = new DataTable('#DataTables_Table_0', {
+            ajax: {
+                url: '/lives',
+                type: 'GET' // Menentukan metode POST untuk request
+            },
+            columns: [{
+                    className: 'dt-control',
+                    orderable: false,
+                    data: null,
+                    defaultContent: ''
+                },
+                {
+                    data: 'user_id'
+                },
+                {
+                    data: 'item_id'
+                },
+                {
+                    data: 'loan_date'
+                },
+                {
+                    data: 'return_date'
+                }
+            ],
+            layout: {
+                topStart: {
+                    buttons: ['createState', 'savedStates']
+                }
+            },
+            order: [
+                [1, 'asc']
+            ],
+            rowId: 'id'
+        });
+
+        // State handling for restoring child rows
+        table.on('requestChild', function(e, row) {
+            row.child(format(row.data())).show();
+        });
+
+        // Add event listener for opening and closing details
+        table.on('click', 'tbody td.dt-control', function(e) {
+            let tr = e.target.closest('tr');
+            let row = table.row(tr);
+
+            if (row.child.isShown()) {
+                // This row is already open - close it
+                row.child.hide();
+            } else {
+                // Open this row
+                row.child(format(row.data())).show();
             }
         });
     </script>
-</body>
-
-</html>
+@endsection

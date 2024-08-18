@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class BadgeController extends Controller
+class  BadgeController extends Controller
 {
     // Path to the verticalMenu.json file
     protected $menuFilePath;

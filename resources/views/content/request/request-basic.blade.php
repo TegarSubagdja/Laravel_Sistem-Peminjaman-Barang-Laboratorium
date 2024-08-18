@@ -29,7 +29,7 @@
     <div class="card">
         <div class="card-datatable table-responsive">
             <div class="dataTables_wrapper dt-bootstrap5 no-footer" id="DataTables_Table_0_wrapper">
-                <div class="card-header flex-column flex-md-row pb-2">
+                <div class="card-header d-flex flex-column flex-sm-row pb-2">
                     <div class="head-label text-start small">
                         <h5 class="card-title mb-0">Daftar Pengajuan</h5>
                     </div>
@@ -114,8 +114,11 @@
                                                 data-bs-toggle="dropdown"><i
                                                     class="bx bx-dots-vertical-rounded"></i></button>
                                             <div class="dropdown-menu">
-                                                <button class="dropdown-item" href="javascript:void(0);"><i
-                                                        class="bx bx-x me-1"></i> Reject</button>
+                                                <form action="/reject/{{ $req->id }}" method="POST">
+                                                  @csrf
+                                                    <button class="dropdown-item" href="javascript:void(0);"><i
+                                                            class="bx bx-x me-1"></i> Reject</button>
+                                                </form>
                                                 <button type="button" id="toggle" class="dropdown-item"
                                                     href="javascript:void(0);"><i class="bx bx-revision me-1"></i>
                                                     Returned</button>

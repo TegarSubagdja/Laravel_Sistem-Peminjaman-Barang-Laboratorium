@@ -48,12 +48,21 @@ use App\Http\Controllers\pages\AccountSettingsNotifications;
 use App\Http\Controllers\authentications\ForgotPasswordBasic;
 use App\Http\Controllers\badge\badgeController;
 use App\Http\Controllers\item\itemController;
+use App\Http\Controllers\lab\labController;
 use App\Http\Controllers\rent\rentController;
 use App\Http\Controllers\user\userController;
 use App\Http\Controllers\user_interface\PaginationBreadcrumbs;
-use App\Models\Item;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Loan;
+
+Route::get('/live', function () {
+  return view('liveSearch');
+});
+
+Route::get('/lives', function () {
+  $loan = Loan::all();
+
+  return response()->json(['data' => $loan]);
+});
 
 // authentication
 Route::post('/login', [LoginBasic::class, 'auth'])->name('login');
@@ -84,14 +93,18 @@ Route::middleware('auth')->group(function () {
     Route::post('/add-item', [itemController::class, 'addItem'])->name('addItem');
     Route::post('/add-loan', [RequestController::class, 'user'])->name('addLoan');
     Route::post('/add-loan-new', [RequestController::class, 'newUser'])->name('addLoan.new');
-    Route::post('/approve/{id}', [RequestController::class, 'approve'])->name('approve');
-    Route::post('/done/{id_loan}', [RequestController::class, 'done'])->name('done');
-    Route::post('/delete/{id_loan}', [RequestController::class, 'delete'])->name('delete');
+    Route::post('/add-lab', [labController::class, 'add'])->name('addLab.new');
     Route::post('/add-user', [userController::class, 'add'])->name('add.user');
+    Route::post('/approve/{id}', [RequestController::class, 'approve'])->name('approve');
+    Route::post('/reject/{id}', [RequestController::class, 'reject'])->name('reject');
+    Route::post('/done/{id_loan}', [RequestController::class, 'done'])->name('done');
     Route::post('/update-user/{nrp}', [userController::class, 'update'])->name('update.user');
-    Route::post('/delete-user/{nrp}', [userController::class, 'delete'])->name('delete.user');
     Route::post('/update-item/{code}', [itemController::class, 'updateItem'])->name('update.item');
+    Route::post('/update-lab/{id}', [labController::class, 'update'])->name('update.lab');
+    Route::post('/delete-user/{nrp}', [userController::class, 'delete'])->name('delete.user');
+    Route::post('/delete/{id_loan}', [RequestController::class, 'delete'])->name('delete');
     Route::post('/delete-item/{code}', [itemController::class, 'deleteItem'])->name('update.item');
+    Route::post('/delete-lab/{code}', [labController::class, 'delete'])->name('delete.item');
   });
 
   // Request

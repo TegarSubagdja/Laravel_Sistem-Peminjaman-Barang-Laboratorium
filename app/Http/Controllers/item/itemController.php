@@ -16,29 +16,32 @@ class itemController extends Controller
   public function addItem(Request $request)
   {
     try {
-      $item = new Item();
-      $item->name = $request->name;
-      $item->lab_id = $request->lab;
-      $item->description = $request->description;
-      $item->code = $request->code;
+      if (Item::where('code', $request->code)->exist()) {
+        $item = new Item();
+        $item->name = $request->name;
+        $item->lab_id = $request->lab;
+        $item->description = $request->description;
+        $item->code = $request->code;
 
-      if ($request->hasFile('picture')) {
-        $file = $request->file('picture');
-        $extension = $file->getClientOriginalExtension();
-        $filename = $item->code . '.' . $extension;
+        if ($request->hasFile('picture')) {
+          $file = $request->file('picture');
+          $extension = $file->getClientOriginalExtension();
+          $filename = $item->code . '.' . $extension;
 
-        // Make directory if it doesn't exist
-        if (!Storage::disk('public')->exists('assets/img/items')) {
-          Storage::disk('public')->makeDirectory('assets/img/items');
+          // Make directory if it doesn't exist
+          if (!Storage::disk('public')->exists('assets/img/items')) {
+            Storage::disk('public')->makeDirectory('assets/img/items');
+          }
+
+          $path = $file->storeAs('assets/img/items', $filename, 'public');
+          $item->picture = basename($path);
         }
 
-        $path = $file->storeAs('assets/img/items', $filename, 'public');
-        $item->picture = basename($path);
+        $item->save();
+
+        return redirect()->back()->with('success', 'Item berhasil ditambahkan!');
       }
-
-      $item->save();
-
-      return redirect()->back()->with('success', 'Item berhasil ditambahkan!');
+      return redirect()->back()->with('error', 'Code yang diberikan sudah terdaftar');
     } catch (\Exception $e) {
       Log::error('Error adding item: ' . $e->getMessage());
       return redirect()->back()->with('error', 'Gagal menambahkan item!');
@@ -87,12 +90,10 @@ class itemController extends Controller
     try {
       $item = Item::where('code', $code)->firstOrFail();
 
-      // Hapus gambar terkait jika ada
       if ($item->picture && Storage::disk('public')->exists('assets/img/items/' . $item->picture)) {
         Storage::disk('public')->delete('assets/img/items/' . $item->picture);
       }
 
-      // Hapus item dari database
       $item->delete();
 
       return redirect()->back()->with('success', 'Item berhasil dihapus!');

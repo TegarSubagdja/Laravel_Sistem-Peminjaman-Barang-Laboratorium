@@ -23,19 +23,21 @@ class rentController extends Controller
 
   public function rent(Request $request)
   {
-    // Membuat entri baru di tabel Loan
-    $loan = Loan::create([
-      'user_id' => Auth::user()->nrp,
-      'item_id' => $request->code,
-      'loan_date' => $request->date,
-      'return_date' => $request->due,
-      'status' => 'waiting',
-    ]);
+    try {
+      $loan = Loan::create([
+        'user_id' => Auth::user()->nrp,
+        'item_id' => $request->code,
+        'loan_date' => $request->date,
+        'return_date' => $request->due,
+        'status' => 'waiting',
+      ]);
 
-    // Kirim notifikasi ke Telegram
-    $this->sendMessage($loan);
+      $this->sendMessage($loan);
 
-    return redirect()->back()->with('success', 'Permintaan berhasil dikirim');
+      return redirect()->back()->with('success', 'Permintaan berhasil dikirim');
+    } catch (\Throwable $th) {
+      return redirect()->back()->with('error', 'Gagal dalam membuat peminjaman baru');
+    }
   }
 
   public function sendMessage($loan)

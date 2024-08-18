@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\authentications;
 
+use App\Models\Loan;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Validator;
 
 class LoginBasic extends Controller
@@ -32,6 +34,7 @@ class LoginBasic extends Controller
 
     if (Auth::attempt([$fieldType => $credentials['identifier'], 'password' => $credentials['password']])) {
       $request->session()->regenerate();
+      Cache::put('waiting_loans_count', Loan::where('status', 'waiting')->count());
       return redirect()->route('dashboard');
     }
 

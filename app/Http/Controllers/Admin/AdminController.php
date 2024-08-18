@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Lab;
 use App\Models\Item;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -13,8 +14,8 @@ class AdminController extends Controller
   public function index()
   {
     $users = User::all();
-    $items = Item::all();
+    $labs = Lab::all();
 
-    return view('content.Admin.Admin-basic', compact('users', 'items'));
+    return view('content.Admin.Admin-basic', compact('users', 'labs'));
   }
 }
