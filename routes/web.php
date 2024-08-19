@@ -123,7 +123,8 @@ Route::post('/login', [LoginBasic::class, 'auth'])->name('login');
 Route::post('/register', [RegisterBasic::class, 'register'])->name('register');
 Route::get('/auth/login-basic', [LoginBasic::class, 'index'])->name('auth-login-basic');
 Route::get('/auth/register-basic', [RegisterBasic::class, 'index'])->name('auth-register-basic');
-Route::get('/auth/forgot-password-basic', [ForgotPasswordBasic::class, 'index'])->name('auth-reset-password-basic');
+Route::get('/auth/forgot-password-basic', [ForgotPasswordBasic::class, 'index'])->name('auth-forgot-password-basic');
+Route::get('/auth/reset-password-basic', [ForgotPasswordBasic::class, 'reset'])->name('auth-reset-password-basic');
 
 Route::middleware('auth')->group(function () {
 
@@ -170,22 +171,6 @@ Route::middleware('auth')->group(function () {
   // Manage Menu Badge
   Route::get('/badge/add/{slug}/{badgeType}/{badgeText}', [badgeController::class, 'addBadge']);
   Route::get('/badge/remove/{slug}', [badgeController::class, 'removeBadge']);
-
-  // // Result Scanner
-  // Route::get('/data/{value}', [detailScanController::class, 'index']);
-
-  // Route::get('/data/{value}', function ($value) {
-  //   return response()->json(['success' => true, 'data' => $value]);
-  // });
-
-  // Route::post('/data', [detailScanController::class, 'receiveData']);
-
-  // Route::post('/datas', function (Request $request) {
-  //   return response()->json([
-  //     'message' => 'Data received successfully',
-  //     'data' => $request->all(),
-  //   ]);
-  // });
 });
 
 // layout

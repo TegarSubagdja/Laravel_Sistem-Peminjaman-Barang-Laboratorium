@@ -17,32 +17,28 @@
                     <div class="card-body">
                         <!-- Logo -->
                         <div class="app-brand justify-content-center">
-                            <a href="{{ url('/') }}" class="app-brand-link gap-2">
-                                <span class="app-brand-logo demo">@include('_partials.macros', [
-                                    'width' => 25,
-                                    'withbg' => 'var(--bs-danger)',
-                                ])</span>
-                                <span
-                                    class="app-brand-text demo text-body fw-bold">{{ config('variables.templateName') }}</span>
+                            <a href="{{ url('/') }}" class="app-brand-link">
+                                <img src="{{ asset('assets/img/logo/LOGOIF.png') }}" width="25" alt="">
+                                <span class="app-brand-text demo menu-text fw-bold ms-2">Informatika</span>
                             </a>
                         </div>
                         <!-- /Logo -->
-                        <h4 class="mb-2">Forgot Password? 🔒</h4>
-                        <p class="mb-4">Enter your email and we'll send you instructions to reset your password</p>
+                        <h4 class="mb-2">Lupas Password?</h4>
+                        <p class="mb-4">Silahkan masukan email untuk mengatur ulang password</p>
                         <form id="formAuthentication" class="mb-3" action="{{ url('/forgot-password') }}" method="POST">
-                          @csrf
+                            @csrf
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email</label>
                                 <input type="text" class="form-control" id="email" name="email"
-                                    placeholder="Enter your email" autofocus>
+                                    placeholder="Masukan Email" autofocus>
                             </div>
-                            <button type="submit" class="btn btn-danger d-grid w-100">Send Reset Link</button>
+                            <button type="submit" class="btn btn-danger d-grid w-100">Reset Password</button>
                         </form>
                         <div class="text-center">
                             <a href="{{ url('auth/login-basic') }}"
                                 class="d-flex align-items-center justify-content-center">
                                 <i class="bx bx-chevron-left scaleX-n1-rtl bx-sm"></i>
-                                Back to login
+                                Kembali ke Login
                             </a>
                         </div>
                     </div>
