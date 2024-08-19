@@ -13,7 +13,7 @@ class CreateUsersTable extends Migration
       $table->string('name');
       $table->unsignedBigInteger('nrp')->unique();
       $table->string('email')->unique();
-      $table->string('password');
+      $table->string('password')->nullable();
       $table->enum('role', ['user', 'admin', 'technician']);
       $table->timestamps();
   });

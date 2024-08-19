@@ -67,6 +67,11 @@
                                 <span>Daftar disini</span>
                             </a>
                         </p>
+                        <p class="text-center">
+                            <a href="{{ url('auth/forgot-password-basic') }}">
+                                <span>Lupa Password</span>
+                            </a>
+                        </p>
                     </div>
                 </div>
             </div>
