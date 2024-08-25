@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\rent;
 
+use App\Models\Item;
 use App\Models\Loan;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
@@ -24,21 +25,38 @@ class rentController extends Controller
   public function rent(Request $request)
   {
     try {
-      $loan = Loan::create([
-        'user_id' => Auth::user()->nrp,
-        'item_id' => $request->code,
-        'loan_date' => $request->date,
-        'return_date' => $request->due,
-        'status' => 'waiting',
-      ]);
+      DB::transaction(function () use ($request) {
+        // Mengunci baris item untuk update
+        $item = Item::where('code', $request->code)->lockForUpdate()->first();
 
-      $this->sendMessage($loan);
+        // Memeriksa apakah ada cukup barang yang tersedia
+        if ($item->quantity - $item->reserved <= 0) {
+          throw new \Exception('Barang tidak tersedia untuk dipinjam.');
+        }
+
+        // Mengupdate jumlah barang yang di-reserved
+        $item->reserved += 1;
+        $item->save();
+
+        // Membuat record peminjaman baru
+        $loan = Loan::create([
+          'user_id' => Auth::user()->nrp,
+          'item_id' => $request->code,
+          'quantity' => $request->quantity,
+          'loan_date' => $request->date,
+          'return_date' => $request->due,
+          'status' => 'waiting',
+        ]);
+
+        $this->sendMessage($loan);
+      });
 
       return redirect()->back()->with('success', 'Permintaan berhasil dikirim');
     } catch (\Throwable $th) {
-      return redirect()->back()->with('error', 'Gagal dalam membuat peminjaman baru');
+      return redirect()->back()->with('error', $th->getMessage());
     }
   }
+
 
   public function sendMessage($loan)
   {
@@ -65,11 +83,6 @@ class rentController extends Controller
         ],
         'verify' => false, // Tambahkan baris ini untuk melewati verifikasi SSL
       ]);
-      // if ($response->getStatusCode() == 200) {
-      //   // return redirect()->back()->with('success', 'Message sent successfully');
-      // } else {
-      //   // return redirect()->back()->with('error', 'Failed to send message');
-      // }
     } catch (\Exception $e) {
       return redirect()->back()->with('error', 'Error: ' . $e->getMessage());
     }

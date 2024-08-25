@@ -18,11 +18,10 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
                         </button>
                     </div>
-                @elseif (session('error'))
+                @elseif ($errors->any())
                     <div class="alert alert-danger alert-dismissible" role="alert">
-                        {{ session('error') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-                        </button>
+                        {{ $errors->first() }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
                 <!-- Register Card -->
@@ -41,8 +40,8 @@
 
                         <form class="mb-3" action="/reset-password" method="POST">
                             @csrf
-                            {{-- <input type="hidden" name="token" value="{{ $token }}"> --}}
-                            {{-- <input type="hidden" name="email" value="{{ $email }}"> --}}
+                            <input type="hidden" name="token" value="{{ $token }}">
+                            <input type="hidden" name="email" value="{{ $email }}">
                             <div class="mb-3 form-password-toggle">
                                 <label class="form-label" for="password">Password</label>
                                 <div class="input-group input-group-merge">
@@ -55,7 +54,7 @@
                                 <label class="form-label" for="password">Konfirmasi Password</label>
                                 <div class="input-group input-group-merge">
                                     <input type="password" id="password-confirmation" class="form-control"
-                                        name="password-confirmation" placeholder="Konfirmasi Password"
+                                        name="password_confirmation" placeholder="Konfirmasi Password"
                                         aria-describedby="password" />
                                     <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                                 </div>

@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\request;
 
+use App\Models\Item;
 use App\Models\Loan;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use PhpParser\Node\Expr\FuncCall;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -106,52 +107,76 @@ class RequestController extends Controller
   public function newUser(Request $request)
   {
     try {
-      $user = new User();
+      DB::beginTransaction();
 
-      if ($user::where('nrp', $request->nrp)->exist()) {
-        return redirect()->back()->with('error', 'Nomor telah terdaftar');
-      } else {
-        $user->name = $request->username;
-        $user->email = $request->email;
-        $user->nrp = $request->nomorInduk;
-        $user->role = $request->role;
-        $user->password = Hash::make($request->password);
-        $user->save();
+      $item = Item::where('code', $request->code)->lockForUpdate()->first();
 
-        $loan = new Loan();
-        $loan->user_id = $user->nrp;
-        $loan->item_id = $request->code;
-        $loan->status = 'approved';
-        $loan->loan_date = $request->loan_date;
-        $loan->return_date = $request->return_date;
-        $loan->save();
-
-        return redirect()->back()->with('success', 'User and loan created successfully.');
+      if (!$item) {
+        throw new \Exception('Barang tidak ditemukan.');
       }
+
+      if ($item->quantity - $item->reserved <= 0) {
+        throw new \Exception('Barang tidak tersedia untuk dipinjam.');
+      }
+
+      if (User::where('nrp', $request->nrp)->orWhere('email', $request->email)->exists()) {
+        throw new \Exception('Akun dengan NRP atau Email tersebut sudah terdaftar');
+      }
+
+      $user = new User();
+      $user->name = $request->username;
+      $user->email = $request->email;
+      $user->nrp = $request->nomorInduk;
+      $user->role = $request->role;
+      $user->password = Hash::make($request->password);
+      $user->save();
+
+      $loan = new Loan();
+      $loan->user_id = $user->nrp;
+      $loan->item_id = $request->code;
+      $loan->status = 'approved';
+      $loan->quantity = $request->quantity;
+      $loan->loan_date = $request->loan_date;
+      $loan->return_date = $request->return_date;
+      $loan->save();
+
+      DB::commit();
+      return back()->with('success', 'User and loan created successfully.');
     } catch (\Throwable $th) {
-      return redirect()->back()->with('error', 'Terjadi kesalahan');
+      DB::rollBack();
+      return back()->with('error', 'Terjadi kesalahan: ' . $th->getMessage());
     }
   }
 
   public function user(Request $request)
   {
     try {
-      $input = $request->input('nrp');
+      DB::beginTransaction();
 
+      $input = $request->input('nrp');
       $nrp = (int)Str::before($input, ' ');
+
+      $item = Item::where('code', $request->code)->lockForUpdate()->first();
+
+      if ($item->quantity - $item->reserved <= 0) {
+        throw new \Exception('Barang tidak tersedia');
+      }
 
       $loan = new Loan();
       $loan->user_id = $nrp;
       $loan->item_id = $request->code;
       $loan->status = 'approved';
+      $loan->quantity = $request->quantity;
       $loan->loan_date = $request->loan_date;
       $loan->return_date = $request->return_date;
 
       $loan->save();
 
-      return redirect()->back()->with('success', 'Record berhasil ditambahkan');
+      DB::commit();
+      return back()->with('success', 'Record berhasil ditambahkan');
     } catch (\Throwable $th) {
-      return redirect()->back()->with('error', 'Terjadi Kesalahan');
+      DB::rollBack();
+      return back()->with('error', $th->getMessage());
     }
   }
 }

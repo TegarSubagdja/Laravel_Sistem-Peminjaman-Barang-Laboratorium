@@ -47,28 +47,19 @@
                                 <label class="form-label" for="password">Password</label>
                                 <div class="input-group input-group-merge">
                                     <input type="password" id="password" class="form-control" name="password"
-                                        placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;" aria-describedby="password" />
+                                        placeholder="Masukan password" aria-describedby="password" />
                                     <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                                 </div>
                             </div>
-                            {{-- <div class="mb-3">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="terms-conditions" name="terms">
-                                    <label class="form-check-label" for="terms-conditions">
-                                        I agree to
-                                        <a href="javascript:void(0);">privacy policy & terms</a>
-                                    </label>
-                                </div>
-                            </div> --}}
                             <button type="submit" class="btn btn-danger d-grid w-100">
                                 Sign up
                             </button>
                         </form>
 
                         <p class="text-center">
-                            <span>Already have an account?</span>
+                            <span>Sudah memiliki akun?</span>
                             <a href="{{ url('auth/login-basic') }}">
-                                <span>Sign in instead</span>
+                                <span>Login</span>
                             </a>
                         </p>
                     </div>

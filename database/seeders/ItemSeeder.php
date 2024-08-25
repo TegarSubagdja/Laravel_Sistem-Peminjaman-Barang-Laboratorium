@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class ItemSeeder extends Seeder
 {
@@ -17,7 +16,9 @@ class ItemSeeder extends Seeder
       [
         'name' => 'Bosch GSB 550',
         'description' => 'Bor listrik dengan konsumsi daya 550 dan mata bor 13 mm',
-        'picture' => 'boschgsb550.png',
+        'picture' => '102030.jpg',
+        'quantity' => '1',
+        'reserved' => '0',
         'code' => '102030',
         'lab_id' => '1',
         'created_at' => now(),

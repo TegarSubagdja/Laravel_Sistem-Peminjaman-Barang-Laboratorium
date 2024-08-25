@@ -20,7 +20,19 @@
             </button>
         @endif
     </div>
-
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+            </button>
+        </div>
+    @elseif (session('error'))
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            {{ session('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+            </button>
+        </div>
+    @endif
     {{-- Content --}}
     <div class="row mb-5">
         @foreach ($items as $item)
@@ -184,8 +196,8 @@
                                 </div>
                                 <div class="col mb-2">
                                     <label for="nameWithTitle" class="form-label">Jumlah</label>
-                                    <input type="number" value="1" id="amount" class="form-control"
-                                        name="amount" placeholder="Jumlah barang">
+                                    <input type="number" value="1" id="quantity" class="form-control"
+                                        name="quantity" placeholder="Jumlah barang" min="1">
                                 </div>
                                 <div class="col mb-2">
                                     <label for="nameWithTitle" class="form-label">Tanggal Peminjaman</label>

@@ -19,6 +19,7 @@ class RegisterBasic extends Controller
   public function register(Request $request)
   {
     try {
+
       $user = User::create([
         'name' => $request->username,
         'email' => $request->email,

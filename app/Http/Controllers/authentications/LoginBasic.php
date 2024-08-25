@@ -21,38 +21,41 @@ class LoginBasic extends Controller
 
   public function auth(Request $request)
   {
-    $credentials = $request->validate([
-      'identifier' => ['required'],
-      'password' => ['required'],
-    ]);
+    try {
+      $credentials = $request->validate([
+        'identifier' => ['required'],
+        'password' => ['required'],
+      ]);
 
-    $isEmail = Validator::make($request->all(), [
-      'identifier' => 'email',
-    ])->passes();
+      $isEmail = Validator::make($request->all(), [
+        'identifier' => 'email',
+      ])->passes();
 
-    $fieldType = $isEmail ? 'email' : 'nrp';
+      $fieldType = $isEmail ? 'email' : 'nrp';
 
-    if (Auth::attempt([$fieldType => $credentials['identifier'], 'password' => $credentials['password']])) {
-      $request->session()->regenerate();
-      Cache::put('waiting_loans_count', Loan::where('status', 'waiting')->count());
-      return redirect()->route('dashboard');
+      if (Auth::attempt([$fieldType => $credentials['identifier'], 'password' => $credentials['password']])) {
+        $request->session()->regenerate();
+        Cache::put('waiting_loans_count', Loan::where('status', 'waiting')->count());
+        return redirect()->route('dashboard');
+      }
+      return back()->with('error', 'Login gagal, Username atau Password salah!');
+    } catch (\Throwable $th) {
+      return redirect()->back()->with('error', 'Terjadi kesalahan saat login, coba beberapa saat lagi');
     }
-
-    session()->flash('error', 'The provided credentials do not match our records.');
-
-    return back()->withErrors([
-      'identifier' => 'The provided credentials do not match our records.',
-    ])->onlyInput('identifier');
   }
 
   public function logout(Request $request)
   {
-    Auth::logout();
+    try {
+      Auth::logout();
 
-    $request->session()->invalidate();
+      $request->session()->invalidate();
 
-    $request->session()->regenerateToken();
+      $request->session()->regenerateToken();
 
-    return redirect('/');
+      return redirect()->route('/auth/login-basic');
+    } catch (\Throwable $th) {
+      return redirect()->back()->with('error', 'Terjadi Kesalahan, coba beberapa saat lagi');
+    }
   }
 }

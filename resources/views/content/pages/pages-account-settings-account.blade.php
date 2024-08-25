@@ -8,7 +8,7 @@
 
 @section('content')
     <h4 class="py-3 mb-4">
-        <span class="text-muted fw-light">Account Settings /</span>
+        <span class="text-muted fw-light">Account Detail /</span>
         <span class="text-danger">Account</span>
     </h4>
 
@@ -17,12 +17,12 @@
             <div class="card mb-4">
                 <h5 class="card-header">Profile Details</h5>
                 <!-- Account -->
-                <div class="card-body">
+                {{-- <div class="card-body">
                     <div class="d-flex align-items-start align-items-sm-center gap-4">
                         <img src="{{ asset('assets/img/avatars/1.png') }}" alt="user-avatar" class="d-block rounded"
                             height="100" width="100" id="uploadedAvatar" />
                     </div>
-                </div>
+                </div> --}}
                 <hr class="my-0">
                 <div class="card-body">
                     <form id="formAccountSettings" method="POST" onsubmit="return false">
@@ -55,7 +55,7 @@
                             <div class="mb-3 col-md-6">
                                 <label for="address" class="form-label">Alamat</label>
                                 <input readonly type="text" class="form-control" id="address" name="address"
-                                    placeholder="-" value="Cimahi" />
+                                    placeholder="-" value="-" />
                             </div>
                         </div>
                         {{-- <div class="mt-2">

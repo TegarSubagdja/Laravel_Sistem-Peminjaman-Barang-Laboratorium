@@ -15,12 +15,6 @@
 @endsection
 
 @section('content')
-    {{-- Heading --}}
-    <h4 class="py-3 mb-4">
-        <span class="text-muted fw-light">Dashboard /</span>
-        <span class="text-danger"> Scan QR-code</span>
-    </h4>
-    {{-- End Heading --}}
 
     {{-- Alert --}}
     @if (session('success'))
@@ -34,6 +28,75 @@
 
     {{-- Content Scan --}}
     <div class="row">
+        @if (Auth::user()->isAdmin())
+            <div class="col-12 mb-4">
+                <div class="card">
+                    <div class="card-widget-separator-wrapper">
+                        <div class="card-body card-widget-separator">
+                            <div class="row gy-4 gy-sm-1">
+                                <div class="col-sm-6 col-lg-3">
+                                    <div
+                                        class="d-flex justify-content-between align-items-center card-widget-1 border-end pb-4 pb-sm-0">
+                                        <div>
+                                            <h4 class="mb-0">{{ $jumlahPengajuan }}</h4>
+                                            <p class="mb-0">Jumal Pengajuan</p>
+                                        </div>
+                                        <div class="avatar me-sm-4">
+                                            <span class="avatar-initial rounded bg-label-warning text-heading">
+                                                <i class="bx bx-calendar-alt bx-24px text-warning"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <hr class="d-none d-sm-block d-lg-none me-4">
+                                </div>
+                                <div class="col-sm-6 col-lg-3">
+                                    <div
+                                        class="d-flex justify-content-between align-items-center card-widget-2 border-end pb-4 pb-sm-0">
+                                        <div>
+                                            <h4 class="mb-0">{{ $jumlahPeminjam }}</h4>
+                                            <p class="mb-0">Jumlah Peminjam</p>
+                                        </div>
+                                        <div class="avatar me-sm-4">
+                                            <span class="avatar-initial rounded bg-label-success text-heading">
+                                                <i class="bx bx-calendar-check bx-26px text-success"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <hr class="d-none d-sm-block d-lg-none">
+                                </div>
+                                <div class="col-sm-6 col-lg-3">
+                                    <div
+                                        class="d-flex justify-content-between align-items-center border-end pb-4 pb-sm-0 card-widget-3">
+                                        <div>
+                                            <h4 class="mb-0">{{ $jumlahPerluDikembalikan }}</h4>
+                                            <p class="mb-0">Perlu dikembalikan</p>
+                                        </div>
+                                        <div class="avatar me-sm-4">
+                                            <span class="avatar-initial rounded bg-label-secondary text-heading">
+                                                <i class="bx bx-undo bx-26px"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-lg-3">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h4 class="mb-0">{{ $jumlahMelebihiBatas }}</h4>
+                                            <p class="mb-0">Melebihi Batas</p>
+                                        </div>
+                                        <div class="avatar">
+                                            <span class="avatar-initial rounded bg-label-danger text-heading">
+                                                <i class="bx bx-error-circle bx-26px text-danger"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
         <div class="col-12 d-flex justify-content-center align-items-center">
             <div class="card w-100 h-100">
                 <div class="card-body d-flex flex-column justify-content-center align-items-center">
@@ -86,8 +149,8 @@
                                 </div>
                                 <div class="col mb-2">
                                     <label for="nameWithTitle" class="form-label">Jumlah</label>
-                                    <input type="number" value="1" id="amount" class="form-control" name="amount"
-                                        placeholder="Jumlah barang">
+                                    <input type="" value="1" id="quantity" class="form-control"
+                                        name="quantity" min="1" placeholder="Jumlah barang">
                                 </div>
                                 <div class="col mb-2">
                                     <label for="nameWithTitle" class="form-label">Tanggal Peminjaman</label>
@@ -110,7 +173,7 @@
             </div>
         </div>
     </form>
-    {{-- End Modal Detail --}}  
+    {{-- End Modal Detail --}}
 
     <!-- Blade Template -->
     <script>

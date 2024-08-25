@@ -12,8 +12,10 @@ class CreateItemsTable extends Migration
       $table->id();
       $table->string('name');
       $table->text('description');
+      $table->integer('quantity')->nullable();
+      $table->integer('reserved')->nullable();
       $table->string('picture')->nullable();
-      $table->unsignedBigInteger('code')->unique();
+      $table->unsignedInteger('code')->unique();
       $table->foreignId('lab_id')->constrained('labs')->onDelete('cascade');
       $table->timestamps();
     });

@@ -1,7 +1,7 @@
 <?php
 
-use App\Models\User;
 use App\Models\Loan;
+use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -48,6 +48,7 @@ use App\Http\Controllers\user_interface\ListGroups;
 use App\Http\Controllers\user_interface\Typography;
 use App\Http\Controllers\authentications\LoginBasic;
 use App\Http\Controllers\pages\MiscUnderMaintenance;
+use App\Http\Controllers\authentications\VerificationController;
 use App\Http\Controllers\form_layouts\HorizontalForm;
 use App\Http\Controllers\tables\Basic as TablesBasic;
 use App\Http\Controllers\extended_ui\PerfectScrollbar;
@@ -59,6 +60,7 @@ use App\Http\Controllers\pages\AccountSettingsConnections;
 use App\Http\Controllers\pages\AccountSettingsNotifications;
 use App\Http\Controllers\authentications\ForgotPasswordBasic;
 use App\Http\Controllers\user_interface\PaginationBreadcrumbs;
+use App\Http\Controllers\authentications\resetPasswordController;
 
 Route::get('/live', function () {
   return view('liveSearch');
@@ -70,61 +72,19 @@ Route::get('/lives', function () {
   return response()->json(['data' => $loan]);
 });
 
-Route::get('/forgot-password', function () {
-  return view('auth.forgot-password');
-})->middleware('guest')->name('password.request');
+Route::middleware('guest')->group(function () {
+  Route::post('/login', [LoginBasic::class, 'auth'])->name('login');
+  Route::post('/register', [RegisterBasic::class, 'register'])->name('register');
+  Route::get('/auth/login-basic', [LoginBasic::class, 'index'])->name('auth-login-basic');
+  Route::get('/auth/register-basic', [RegisterBasic::class, 'index'])->name('auth-register-basic');
+  Route::get('/auth/forgot-password-basic', [ForgotPasswordBasic::class, 'index'])->name('auth-forgot-password-basic');
+  Route::get('/auth/reset-password-basic', [ForgotPasswordBasic::class, 'reset'])->name('auth-reset-password-basic');
+  Route::get('/forgot-password', [resetPasswordController::class, 'forgotView'])->name('password.request');
+  Route::post('/forgot-password', [resetPasswordController::class, 'sendResetLink'])->name('password.email');
+  Route::get('/reset-password/{token}', [resetPasswordController::class, 'resetView'])->name('password.reset');
+  Route::post('/reset-password', [resetPasswordController::class, 'resetPassword'])->name('password.update');
+});
 
-Route::post('/forgot-password', function (Request $request) {
-  $request->validate(['email' => 'required|email']);
-
-  $status = Password::sendResetLink(
-    $request->only('email')
-  );
-
-  return $status === Password::RESET_LINK_SENT
-    ? back()->with(['status' => __($status)])
-    : back()->withErrors(['email' => __($status)]);
-})->middleware('guest')->name('password.email');
-
-Route::get('/reset-password/{token}', function (string $token, Request $request) {
-  $email = $request->query('email');
-  return view('content.authentications.auth-reset-password', ['token' => $token, 'email' => $email]);
-})->middleware('guest')->name('password.reset');
-
-
-Route::post('/reset-password', function (Request $request) {
-  $request->validate([
-    'token' => 'required',
-    'email' => 'required',
-    'password' => 'required',
-  ]);
-
-  $status = Password::reset(
-    $request->only('email', 'password', 'password_confirmation', 'token'),
-    function (User $user, string $password) {
-      $user->forceFill([
-        'password' => Hash::make($password)
-      ])->setRememberToken(Str::random(60));
-
-      $user->save();
-
-      event(new PasswordReset($user));
-    }
-  );
-
-  return $status === Password::PASSWORD_RESET
-    ? redirect()->route('login')->with('status', __($status))
-    : back()->withErrors(['email' => [__($status)]]);
-})->middleware('guest')->name('password.update');
-
-
-// authentication
-Route::post('/login', [LoginBasic::class, 'auth'])->name('login');
-Route::post('/register', [RegisterBasic::class, 'register'])->name('register');
-Route::get('/auth/login-basic', [LoginBasic::class, 'index'])->name('auth-login-basic');
-Route::get('/auth/register-basic', [RegisterBasic::class, 'index'])->name('auth-register-basic');
-Route::get('/auth/forgot-password-basic', [ForgotPasswordBasic::class, 'index'])->name('auth-forgot-password-basic');
-Route::get('/auth/reset-password-basic', [ForgotPasswordBasic::class, 'reset'])->name('auth-reset-password-basic');
 
 Route::middleware('auth')->group(function () {
 

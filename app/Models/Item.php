@@ -17,6 +17,8 @@ class Item extends Model
     'name',
     'description',
     'picture',
+    'quantity',
+    'reserved',
     'code',
     'lab_id',
   ];

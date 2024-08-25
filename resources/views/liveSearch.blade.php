@@ -1,105 +1,46 @@
-@extends('layouts/contentNavbarLayout')
+<!doctype html>
+<html lang="en">
 
-@section('title', 'Inventory - Basic Tables')
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
-@section('page-script')
-    <script src="{{ asset('assets/js/ui-popover.js') }}"></script>
-@endsection
+    <!-- Bootstrap CSS v5.2.1 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+</head>
 
-@section('content')
-    <table id="DataTables_Table_0" class="display" style="width:100%">
-        <thead>
-            <tr>
-                <th></th>
-                <th>Name</th>
-                <th>Position</th>
-                <th>Office</th>
-                <th>Salary</th>
-            </tr>
-        </thead>
-        <tfoot>
-            <tr>
-                <th></th>
-                <th>Name</th>
-                <th>Position</th>
-                <th>Office</th>
-                <th>Salary</th>
-            </tr>
-        </tfoot>
-    </table>
-    <script src="{{ asset('assets/vendor/libs/DataTables/datatables.min.js') }}"></script>
-    <script>
-        // Formatting function for row details - modify as you need
-        function format(d) {
-            // `d` is the original data object for the row
-            return (
-                '<dl>' +
-                '<dt>Full name:</dt>' +
-                '<dd>' +
-                d.user_id +
-                '</dd>' +
-                '<dt>Extension number:</dt>' +
-                '<dd>' +
-                d.item_id +
-                '</dd>' +
-                '<dt>Extra info:</dt>' +
-                '<dd>And any further details here (images etc)...</dd>' +
-                '</dl>'
-            );
-        }
+<body>
+    <div class="container-fluid">
+        <div class="d-flex flex-row align-items-center justify-content-center" style="height: 100vh; width: 100vw">
+            <form action="/register-verify" method="POST">
+                @csrf
+                <input type="email" class="form-control" name="email">
+                <button type="submit" class="btn btn-success mt-2">Verif</button>
+            </form>
+        </div>
+    </div>
 
-        let table = new DataTable('#DataTables_Table_0', {
-            ajax: {
-                url: '/lives',
-                type: 'GET' // Menentukan metode POST untuk request
-            },
-            columns: [{
-                    className: 'dt-control',
-                    orderable: false,
-                    data: null,
-                    defaultContent: ''
-                },
-                {
-                    data: 'user_id'
-                },
-                {
-                    data: 'item_id'
-                },
-                {
-                    data: 'loan_date'
-                },
-                {
-                    data: 'return_date'
-                }
-            ],
-            layout: {
-                topStart: {
-                    buttons: ['createState', 'savedStates']
-                }
-            },
-            order: [
-                [1, 'asc']
-            ],
-            rowId: 'id'
-        });
 
-        // State handling for restoring child rows
-        table.on('requestChild', function(e, row) {
-            row.child(format(row.data())).show();
-        });
 
-        // Add event listener for opening and closing details
-        table.on('click', 'tbody td.dt-control', function(e) {
-            let tr = e.target.closest('tr');
-            let row = table.row(tr);
 
-            if (row.child.isShown()) {
-                // This row is already open - close it
-                row.child.hide();
-            } else {
-                // Open this row
-                row.child(format(row.data())).show();
-            }
-        });
+
+
+
+
+
+
+
+    <!-- Bootstrap JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">
     </script>
-@endsection
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous">
+    </script>
+</body>
+
+</html>

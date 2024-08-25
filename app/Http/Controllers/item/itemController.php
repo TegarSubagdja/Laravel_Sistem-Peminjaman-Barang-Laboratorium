@@ -16,7 +16,9 @@ class itemController extends Controller
   public function addItem(Request $request)
   {
     try {
-      if (Item::where('code', $request->code)->exist()) {
+      if (Item::where('code', $request->code)->first()) {
+        return redirect()->back()->with('error', 'Item sudah tersedia');
+      } else {
         $item = new Item();
         $item->name = $request->name;
         $item->lab_id = $request->lab;
@@ -41,10 +43,8 @@ class itemController extends Controller
 
         return redirect()->back()->with('success', 'Item berhasil ditambahkan!');
       }
-      return redirect()->back()->with('error', 'Code yang diberikan sudah terdaftar');
-    } catch (\Exception $e) {
-      Log::error('Error adding item: ' . $e->getMessage());
-      return redirect()->back()->with('error', 'Gagal menambahkan item!');
+    } catch (\Throwable $th) {
+      return redirect()->back()->with('error', 'Gagal menambahkan item');
     }
   }
 
@@ -58,7 +58,6 @@ class itemController extends Controller
       $item->description = $request->description;
 
       if ($request->hasFile('picture')) {
-        // Hapus gambar lama jika ada
         if ($item->picture && Storage::disk('public')->exists('assets/img/items/' . $item->picture)) {
           Storage::disk('public')->delete('assets/img/items/' . $item->picture);
         }
@@ -67,7 +66,6 @@ class itemController extends Controller
         $extension = $file->getClientOriginalExtension();
         $filename = $item->code . '.' . $extension;
 
-        // Make directory if it doesn't exist
         if (!Storage::disk('public')->exists('assets/img/items')) {
           Storage::disk('public')->makeDirectory('assets/img/items');
         }

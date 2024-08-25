@@ -38,7 +38,11 @@
                         },
                         {
                             responsivePriority: 5,
-                            targets: 7,
+                            targets: 4,
+                        },
+                        {
+                            responsivePriority: 5,
+                            targets: 8,
                         },
                         {
                             className: '',
@@ -47,7 +51,7 @@
                         },
                     ],
                     order: [
-                        [3, 'desc']
+                        [5, 'desc']
                     ],
                     language: {
                         lengthMenu: "Show _MENU_ entries",
@@ -154,15 +158,23 @@
                     responsive: true,
                     columnDefs: [{
                             responsivePriority: 1,
-                            targets: 1
+                            targets: 0
                         },
                         {
                             responsivePriority: 2,
-                            targets: 2
+                            targets: 1
                         },
                         {
                             responsivePriority: 3,
+                            targets: 2
+                        },
+                        {
+                            responsivePriority: 4,
                             targets: 3
+                        },
+                        {
+                            responsivePriority: 5,
+                            targets: 4
                         },
                         {
                             className: '',
@@ -171,7 +183,7 @@
                         }
                     ],
                     order: [
-                        [3, 'desc']
+                        [5, 'desc']
                     ],
                     language: {
                         lengthMenu: "Show _MENU_ entries",

@@ -48,11 +48,12 @@
                     <thead>
                         <tr>
                             <th></th>
-                            <th class="text-start">Nama</th>
+                            <th class="text-start">Nama Pengaju</th>
                             <th class="text-start">Item</th>
+                            <th class="text-start">Jumlah</th>
                             <th class="text-start">Status</th>
-                            <th class="text-start">Tanggal Pinjam</th>
-                            <th class="text-start">Tanggal Kembali</th>
+                            <th class="text-start">Tanggal Peminjaman</th>
+                            <th class="text-start">Tanggal Pengembalian</th>
                             <th class="text-start">Keterangan</th>
                             @if (auth()->user()->isAdmin())
                                 <th class="text-start">Actions</th>
@@ -68,6 +69,9 @@
                                 </td>
                                 <td class="text-start">
                                     {{ $req->item->name }}
+                                </td>
+                                <td class="text-start">
+                                  {{ $req->quantity }}
                                 </td>
                                 <td class="text-start">
                                     @if ($req->status == 'waiting')
@@ -115,7 +119,7 @@
                                                     class="bx bx-dots-vertical-rounded"></i></button>
                                             <div class="dropdown-menu">
                                                 <form action="/reject/{{ $req->id }}" method="POST">
-                                                  @csrf
+                                                    @csrf
                                                     <button class="dropdown-item" href="javascript:void(0);"><i
                                                             class="bx bx-x me-1"></i> Reject</button>
                                                 </form>
@@ -169,7 +173,7 @@
                     <div class="tab-pane fade active show" id="navs-pills-justified-registered" role="tabpanel">
                         <form action="/add-loan" method="POST"
                             class="add-new-record pt-0 row g-2 fv-plugins-bootstrap5 fv-plugins-framework"
-                            id="form-add-record" novalidate="novalidate">
+                            id="form-add-record">
                             @csrf
                             <div class="col-sm-12 fv-plugins-icon-container">
                                 <label class="form-label" for="nomorInduk">NRP / NODOS</label>
@@ -192,6 +196,18 @@
                                 <div
                                     class="fv-plugins-message-container
                                     fv-plugins-message-container--enabled invalid-feedback">
+                                </div>
+                            </div>
+                            <div class="col-sm-12 fv-plugins-icon-container">
+                                <label class="form-label" for="code">Jumlah Barang</label>
+                                <div class="input-group input-group-merge has-validation">
+                                    <span class="input-group-text"><i class="bx bx-barcode"></i></span>
+                                    <input type="number" id="quantity1" name="quantity" class="form-control dt-code"
+                                        placeholder="Masukan Code Barang" value="102030" min="1" required>
+                                </div>
+                                <div
+                                    class="fv-plugins-message-container
+                                  fv-plugins-message-container--enabled invalid-feedback">
                                 </div>
                             </div>
                             <div class="col-sm-12 fv-plugins-icon-container">
@@ -227,11 +243,12 @@
                         </form>
                     </div>
                     {{-- End Tabs user --}}
+
                     {{-- Tabs new User --}}
                     <div class="tab-pane fade" id="navs-pills-justified-new-user" role="tabpanel">
                         <form action="/add-loan-new" method="POST"
                             class="add-new-record pt-0 row g-2 fv-plugins-bootstrap5 fv-plugins-framework"
-                            id="form-add-new-record" novalidate="novalidate">
+                            id="form-add-new-record">
                             @csrf
                             <div class="col-sm-12 fv-plugins-icon-container">
                                 <label class="form-label">NRP / NODOS</label>
@@ -303,6 +320,18 @@
                                 </div>
                             </div>
                             <div class="col-sm-12 fv-plugins-icon-container">
+                                <label class="form-label" for="code">Jumlah Barang</label>
+                                <div class="input-group input-group-merge has-validation">
+                                    <span class="input-group-text"><i class="bx bx-barcode"></i></span>
+                                    <input type="number" id="quantity2" name="quantity" class="form-control dt-code"
+                                        placeholder="Masukan Code Barang" value="102030" min="1" required>
+                                </div>
+                                <div
+                                    class="fv-plugins-message-container
+                                fv-plugins-message-container--enabled invalid-feedback">
+                                </div>
+                            </div>
+                            <div class="col-sm-12 fv-plugins-icon-container">
                                 <label class="form-label" for="loan_date">Tanggal Peminjaman</label>
                                 <div class="input-group input-group-merge has-validation">
                                     <span class="input-group-text"><i class="bx bx-calendar-plus"></i></span>
@@ -319,7 +348,7 @@
                                 <div class="input-group input-group-merge has-validation">
                                     <span class="input-group-text"><i class="bx bx-calendar-minus"></i></span>
                                     <input type="date" id="new-return_date" name="return_date"
-                                        class="form-control dt-return_date" placeholder="">
+                                        class="form-control dt-return_date" placeholder="" required>
                                 </div>
                                 <div
                                     class="fv-plugins-message-container

@@ -10,10 +10,11 @@ class CreateLoansTable extends Migration
   {
     Schema::create('loans', function (Blueprint $table) {
       $table->id();
-      $table->unsignedBigInteger('user_id');
-      $table->unsignedBigInteger('item_id');
+      $table->unsignedInteger('user_id');
+      $table->unsignedInteger('item_id');
       $table->foreign('user_id')->references('nrp')->on('users')->onDelete('cascade');
       $table->foreign('item_id')->references('code')->on('items')->onDelete('cascade');
+      $table->unsignedInteger('quantity');
       $table->dateTime('loan_date');
       $table->dateTime('return_date')->nullable();
       $table->string('desc')->nullable();
