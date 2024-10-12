@@ -150,7 +150,7 @@
                                 <div class="col mb-2">
                                     <label for="nameWithTitle" class="form-label">Jumlah</label>
                                     <input type="" value="1" id="quantity" class="form-control"
-                                        name="quantity" min="1" placeholder="Jumlah barang">
+                                        name="quantity" min="1" max="" placeholder="Jumlah barang">
                                 </div>
                                 <div class="col mb-2">
                                     <label for="nameWithTitle" class="form-label">Tanggal Peminjaman</label>

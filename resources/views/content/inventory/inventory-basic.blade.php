@@ -71,10 +71,25 @@
                             src="{{ Storage::url('assets/img/items/' . $item->picture) }}" alt="Card image cap">
                         <h6>Deskripsi</h6>
                         <p class="card-text">{{ $item->description }}</p>
-                        <button type="button" class="btn btn-outline-danger rent" data-toggle="modal"
-                            data-target="#myModal" data-code="{{ $item->code }}">
-                            <span class="tf-icons bx bx-pie-chart-alt me-1"></span>Pinjam
-                        </button>
+                        <div class="">
+                            <ul class="list-group gap-2">
+                                <li class=" d-flex justify-content-between align-items-center">
+                                    Jumlah :
+                                    <span class="badge badge-center bg-danger">{{ $item->quantity }}</span>
+                                </li>
+                                <li class=" d-flex justify-content-between align-items-center">
+                                    Tersedia :
+                                    <span
+                                        class="badge badge-center bg-danger">{{ $item->quantity - $item->reserved }}</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="grid">
+                            <button type="button" class="btn w-100 btn-outline-danger rent mt-4" data-toggle="modal"
+                                data-target="#myModal" data-code="{{ $item->code }}">
+                                <span class="tf-icons bx bx-pie-chart-alt me-1"></span>Pinjam
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -196,7 +211,7 @@
                                 </div>
                                 <div class="col mb-2">
                                     <label for="nameWithTitle" class="form-label">Jumlah</label>
-                                    <input type="number" value="1" id="quantity" class="form-control"
+                                    <input type="number" value="0" id="quantity" class="form-control"
                                         name="quantity" placeholder="Jumlah barang" min="1">
                                 </div>
                                 <div class="col mb-2">

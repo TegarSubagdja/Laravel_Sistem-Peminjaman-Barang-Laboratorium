@@ -35,7 +35,7 @@ class rentController extends Controller
         }
 
         // Mengupdate jumlah barang yang di-reserved
-        $item->reserved += 1;
+        $item->reserved += $request->quantity;
         $item->save();
 
         // Membuat record peminjaman baru
