@@ -71,7 +71,7 @@
                                     {{ $req->item->name }}
                                 </td>
                                 <td class="text-start">
-                                  {{ $req->quantity }}
+                                    {{ $req->quantity }}
                                 </td>
                                 <td class="text-start">
                                     @if ($req->status == 'waiting')
@@ -123,9 +123,12 @@
                                                     <button class="dropdown-item" href="javascript:void(0);"><i
                                                             class="bx bx-x me-1"></i> Reject</button>
                                                 </form>
-                                                <button type="button" id="toggle" class="dropdown-item"
-                                                    href="javascript:void(0);"><i class="bx bx-revision me-1"></i>
-                                                    Returned</button>
+                                                <form action="/done/{{ $req->id }}" method="POST">
+                                                    @csrf
+                                                    <button type="submit" id="toggle" class="dropdown-item"
+                                                        href="javascript:void(0);"><i class="bx bx-revision me-1"></i>
+                                                        Returned</button>
+                                                </form>
                                                 <form action="/delete/{{ $req->id }}" method="POST">
                                                     @csrf
                                                     <button type="submit" class="dropdown-item text-danger"><i

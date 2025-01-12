@@ -81,13 +81,50 @@ class RequestController extends Controller
 
   public function done($id)
   {
+    DB::beginTransaction();
+
     try {
       $loan = Loan::find($id);
+
       $loan->status = "done";
       $loan->save();
 
+      $item = Item::where('code', $loan->item_id)->first();
+
+      $item->reserved -= $loan->quantity;
+      $item->save();
+
+      DB::commit();
+
       return redirect()->back()->with('success', 'Status berhasil diperbarui.');
     } catch (\Throwable $th) {
+      DB::rollBack();
+
+      return redirect()->back()->with('error', $th);
+    }
+  }
+
+  public function returned($id)
+  {
+    DB::beginTransaction();
+
+    try {
+      $loan = Loan::find($id);
+
+      $loan->status = "done";
+      $loan->save();
+
+      $item = Item::find($loan->item_id);
+
+      $item->reserved += $loan->quantity;
+      $item->save();
+
+      DB::commit();
+
+      return redirect()->back()->with('success', 'Status berhasil diperbarui.');
+    } catch (\Throwable $th) {
+      DB::rollBack();
+
       return redirect()->back()->with('error', 'Tidak dapat mengubah status');
     }
   }
@@ -171,6 +208,9 @@ class RequestController extends Controller
       $loan->return_date = $request->return_date;
 
       $loan->save();
+
+      $item->reserved += $request->quantity;
+      $item->save();
 
       DB::commit();
       return back()->with('success', 'Record berhasil ditambahkan');
