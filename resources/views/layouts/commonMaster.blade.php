@@ -20,8 +20,8 @@
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/logo/LOGOIF.png') }}" />
     <!-- Data Table -->
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/DataTables/datatables.bootstrap5.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/DataTables/datatables.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/DataTables/datatables.bootstrap5.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/DataTables/datatables.min.css') }}">
     <!-- Scanner html5 -->
     <link rel="stylesheet" href="{{ asset('css/scan-qr.css') }}">
     <!-- Include Styles -->
