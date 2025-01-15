@@ -1,7 +1,5 @@
 /.phpunit.cache
 /node_modules
-/public/storage/img/items
-/storage/*.key
 
 /public/build
 /public/hot
