@@ -1,9 +1,10 @@
 /.phpunit.cache
 /node_modules
+/public/storage/img/items
+/storage/*.key
 
 /public/build
 /public/hot
-/storage/*.key
 /vendor
 
 # .env
@@ -27,4 +28,3 @@ yarn-error.log
 /public/assets/js
 /public/assets/css
 /public/assets/vendor
-/public/storage/img/items
