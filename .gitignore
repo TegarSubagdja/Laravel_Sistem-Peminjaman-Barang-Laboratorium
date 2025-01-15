@@ -3,7 +3,6 @@
 
 /public/build
 /public/hot
-# /public/storage
 /storage/*.key
 /vendor
 
@@ -28,3 +27,4 @@ yarn-error.log
 /public/assets/js
 /public/assets/css
 /public/assets/vendor
+/public/storage
