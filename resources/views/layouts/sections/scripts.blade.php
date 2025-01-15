@@ -257,6 +257,7 @@
                                 var $desk = document.getElementById('input-desk');
                                 var $pic = document.getElementById('pic');
                                 var $lab = document.getElementById('lab');
+                                var $quantity = document.getElementById('quantity');
 
                                 // Update the modal content
                                 $code.value = item.code;
@@ -264,6 +265,9 @@
                                 $desk.innerHTML = item.description;
                                 $pic.src = `${baseUrl}/${item.picture}`;
                                 $lab.innerHTML = item.lab.name;
+
+                              var maxQuantity = item.quantity - item.reserved;
+                              $quantity.max = maxQuantity;
 
                                 // Show the modal
                                 $('#myModal').modal('show');
