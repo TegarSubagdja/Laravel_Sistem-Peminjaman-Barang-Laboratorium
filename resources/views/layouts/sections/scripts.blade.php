@@ -9,12 +9,12 @@
 @if (Route::is('dashboard'))
     <script src="{{ asset(mix('js/scan-qr.js')) }}"></script>
 @elseif (!Route::is('inventory-basic'))
-    <script src="{{ asset('assets/vendor/libs/DataTables/datatables.min.js') }}"></script>
+    <script src="{{ asset('assets/DataTables/datatables.min.js') }}"></script>
 @endif
 
 @if (Route::is('request-basic'))
     @if (Auth::user()->isAdmin())
-        <script src="{{ asset('assets/vendor/libs/Typehead/bootstrap3-typeahead.min.js') }}"></script>
+        <script src="{{ asset('assets/Typehead/bootstrap3-typeahead.min.js') }}"></script>
 
         <script>
             $(document).ready(function() {
@@ -266,8 +266,8 @@
                                 $pic.src = `${baseUrl}/${item.picture}`;
                                 $lab.innerHTML = item.lab.name;
 
-                              var maxQuantity = item.quantity - item.reserved;
-                              $quantity.max = maxQuantity;
+                                var maxQuantity = item.quantity - item.reserved;
+                                $quantity.max = maxQuantity;
 
                                 // Show the modal
                                 $('#myModal').modal('show');
