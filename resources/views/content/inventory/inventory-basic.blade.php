@@ -67,8 +67,8 @@
                         @else
                             <h6 class="badge bg-label-success">{{ $item->lab->name }}</h6>
                         @endif
-                        <img class="img-fluid d-flex mx-auto mb-4 rounded"
-                            src="{{ Storage::url('assets/img/items/' . $item->picture) }}" alt="Card image cap">
+                        {{-- <img class="img-fluid d-flex mx-auto mb-4 rounded" src="{{ Storage::url('assets/img/items/' . $item->picture) }}" alt="Card image cap"> --}}
+                        <img class="img-fluid d-flex mx-auto mb-4 rounded" src="{{ Storage::url('assets/img/items/' . $item->picture) }}" alt="Card image cap">
                         <h6>Deskripsi</h6>
                         <p class="card-text">{{ $item->description }}</p>
                         <div class="">
@@ -139,9 +139,19 @@
                         <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
                         </div>
                         <div class="form-text">
-                            You can use letters, numbers &amp; periods
+                            Silahkan masukan deskripsi tentang item
                         </div>
                     </div>
+                    <div class="col-sm-12 fv-plugins-icon-container">
+                      <label class="form-label">Jumlah</label>
+                      <div class="input-group input-group-merge has-validation">
+                          <span class="input-group-text"><i class="bx bx-add-to-queue"></i></span>
+                          <input type="text" id="quantity" class="form-control dt-date flatpickr-input"
+                              id="basicDate" name="quantity" placeholder="Masukan code barang">
+                      </div>
+                      <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
+                      </div>
+                  </div>
                     <div class="col-sm-12 fv-plugins-icon-container">
                         <label class="form-label">Code Barang</label>
                         <div class="input-group input-group-merge has-validation">

@@ -23,6 +23,7 @@ class itemController extends Controller
         $item->name = $request->name;
         $item->lab_id = $request->lab;
         $item->description = $request->description;
+        $item->quantity = $request->quantity;
         $item->code = $request->code;
 
         if ($request->hasFile('picture')) {
