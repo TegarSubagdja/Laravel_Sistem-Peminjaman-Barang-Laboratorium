@@ -2,7 +2,7 @@ Path gambar : public\storage\assets\img\items\102030.jpg
 
 Langkah Install : 
 
-1. compuser install
+1. composer install
 2. npm install
 3. php artisan key:generate
 4. yarn
