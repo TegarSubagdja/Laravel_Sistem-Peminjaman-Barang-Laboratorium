@@ -29,7 +29,7 @@
       "slug": "admin-panel"
     },
     {
-      "url": "pages\/account-settings-account",
+      "url": "/User",
       "name": "Account",
       "icon": "menu-icon tf-icons bx bx-user",
       "slug": "pages-account-settings-account"

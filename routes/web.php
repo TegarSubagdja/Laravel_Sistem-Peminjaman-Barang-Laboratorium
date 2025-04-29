@@ -14,6 +14,7 @@ use App\Http\Controllers\authentications\RegisterBasic;
 use App\Http\Controllers\inventory\InventoryController;
 use App\Http\Controllers\authentications\ForgotPasswordBasic;
 use App\Http\Controllers\authentications\resetPasswordController;
+use App\Http\Controllers\pages\AccountSettingsAccount;
 
 Route::middleware('guest')->group(function () {
   Route::post('/login', [LoginBasic::class, 'auth'])->name('login');
@@ -67,6 +68,9 @@ Route::middleware('auth')->group(function () {
 
   // Request
   Route::get('/request/basic', [RequestController::class, 'getRequest'])->name('request-basic');
+
+  // User setting
+  Route::get('/User', [AccountSettingsAccount::class, 'index'])->name('User');
 
   // Rent
   Route::post('/rent', [rentController::class, 'rent'])->name('rent');
